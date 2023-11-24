@@ -131,7 +131,7 @@ export default {
         nature:'核心专业类',
         department:'计算机学院',
         credits:'4.5',
-        remaining:'容量:117/120\n对外:0/0',
+        remaining:'容量:117/120\n',
     };
     return {
       tableData: Array(10).fill(item),
