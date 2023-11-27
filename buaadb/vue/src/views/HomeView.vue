@@ -92,10 +92,10 @@
           type="danger"
           @click="handleDelete(scope.$index, scope.row)">退选</el-button>
       </template>
-    </el-table-column>  
-          
+    </el-table-column>
+
       </el-table>
-      <div style="padding:10px 0"> 
+      <div style="padding:10px 0">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
