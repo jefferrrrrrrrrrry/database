@@ -13,8 +13,4 @@ public class SchoolController {
     @Autowired
     private SchoolMapper schoolMapper;
 
-    @GetMapping("/")
-    public List<School> findAll() {
-        return schoolMapper.findAll();
-    }
 }
