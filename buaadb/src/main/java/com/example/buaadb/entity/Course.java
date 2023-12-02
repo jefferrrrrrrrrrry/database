@@ -8,7 +8,7 @@ public class Course {
     private String cname;
     private String cpos;
     private int tno;
-    private String ctype;
+    // private String ctype;
     private int ccredit;
     private int ccapacity;
     private int cremain;

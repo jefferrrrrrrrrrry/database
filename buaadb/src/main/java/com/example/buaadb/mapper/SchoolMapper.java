@@ -9,8 +9,5 @@ import java.util.List;
 
 @Mapper
 public interface SchoolMapper extends BaseMapper<School> {
-    @Select("SELECT * FROM school")
-    List<School> findAll();
-    int insert(School school);
-    Integer delete(Integer scid);
+
 }
