@@ -26,4 +26,14 @@ public class StudentController {
     public int login(@RequestBody LogInfo logInfo) {
         return studentService.login(logInfo);
     }
+
+    @PostMapping("/changepassword")
+    public boolean changepassword() {
+
+    }
+
+    @PostMapping("/test")
+    public String test(@RequestBody int num) {
+        return "POST内容：" + num;
+    }
 }

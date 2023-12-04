@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.buaadb.mapper.StudentMapper">
+    <select id="findAll" resultType="com.example.buaadb.entity.Course">
+        SELECT * FROM Course
+    </select>
+
+    <select id="login" resultType="com.example.buaadb.entity.Student">
+        SELECT * FROM Student WHERE Sname = #{name} and Spassword = #{password}
+    </select>
+
+</mapper>
+

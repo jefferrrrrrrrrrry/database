@@ -4,14 +4,12 @@ package com.example.buaadb.controller;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,21 +26,29 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/")
-    public List<Course> findAll() {
-        return courseService.list();
+    public Result findAll() {
+        return Result.success(courseService.list());
+    }
+
+    @DeleteMapping("/{cno}")
+    public Result del(@PathVariable String cno) {
+        courseService.removeById(cno);
+        return Result.success();
     }
 
     @GetMapping("/export")
-    public void export(HttpServletResponse response) throws IOException {
+    public Result export(HttpServletResponse response) throws IOException {
         List<Course> list = courseService.list();
         courseService.export(response, list);
+        return Result.success();
     }
 
     @PostMapping("/import")
-    public void imp(MultipartFile file) throws IOException {
+    public Result imp(MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         List<Course> list = reader.readAll(Course.class);
         courseService.saveBatch(list);
+        return Result.success();
     }
 }

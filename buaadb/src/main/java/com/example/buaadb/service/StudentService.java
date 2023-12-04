@@ -7,11 +7,17 @@ import com.example.buaadb.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentService extends ServiceImpl<StudentMapper, Student> {
     @Autowired
     private StudentMapper mapper;
     public int login(LogInfo logInfo) {
-        return 0; // TODO
+        List<Student> student = mapper.login(logInfo.getUsername(), logInfo.getPassword());
+        if (student.isEmpty()) {
+            return 1; // no such student
+        }
+        return 0;
     }
 }
