@@ -1,10 +1,12 @@
 package com.example.buaadb.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
 public class Teacher {
+    @TableId
     private int tno;
     private String tname;
     private String ttitle;

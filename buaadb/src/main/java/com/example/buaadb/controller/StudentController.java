@@ -2,6 +2,7 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
 import com.example.buaadb.mapper.StudentMapper;
@@ -29,7 +30,12 @@ public class StudentController {
 
     @PostMapping("/changepassword")
     public boolean changepassword() {
+        return false; // TODO
+    }
 
+    @GetMapping("/find")
+    public Result find(@RequestParam int sno, @RequestParam String sname) {
+        return Result.success(studentMapper.find(sno, sname));
     }
 
     @PostMapping("/test")

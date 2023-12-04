@@ -11,5 +11,8 @@
         SELECT * FROM Student WHERE Sname = #{name} and Spassword = #{password}
     </select>
 
+    <select id="find" resultType="com.example.buaadb.entity.Student">
+        SELECT * FROM STUDENT WHERE sname like concat('%', #{sname}, '%') and sno like concat('%', #{sno}, '%')
+    </select>
 </mapper>
 
