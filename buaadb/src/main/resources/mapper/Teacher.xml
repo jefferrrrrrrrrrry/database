@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.buaadb.mapper.TeacherMapper">
+
+    <select id="find" resultType="com.example.buaadb.entity.Teacher">
+        SELECT * FROM teacher WHERE tname like concat('%', #{tname}, '%') and tno like concat('%', #{tno}, '%')
+    </select>
+</mapper>
+

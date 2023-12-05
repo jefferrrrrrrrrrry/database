@@ -42,4 +42,9 @@ public class StudentController {
     public String test(@RequestBody int num) {
         return "POST内容：" + num;
     }
+
+    @PostMapping("/add")
+    public Result add(@RequestBody Student student) {
+        return Result.success(studentService.save(student));
+    }
 }
