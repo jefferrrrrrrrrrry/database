@@ -20,7 +20,7 @@ public class CourseService extends ServiceImpl<CourseMapper, Course> {
         writer.write(list);
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        String fileName = URLEncoder.encode("选课信息", "UTF-8");
+        String fileName = URLEncoder.encode("课程信息", "UTF-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
 
         ServletOutputStream out = response.getOutputStream();
