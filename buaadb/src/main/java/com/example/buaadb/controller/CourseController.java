@@ -3,7 +3,6 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.ExcelWriter;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.mapper.CourseMapper;
