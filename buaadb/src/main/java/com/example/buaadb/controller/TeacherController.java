@@ -55,7 +55,7 @@ public class TeacherController {
     }
 
     @PostMapping("/import")
-    public Result imp(MultipartFile file) throws IOException {
+    public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         List<Teacher> list = reader.readAll(Teacher.class);

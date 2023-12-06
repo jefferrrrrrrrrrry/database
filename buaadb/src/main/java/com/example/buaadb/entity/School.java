@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class School {
     @TableId
-    private int scno;
+    private Integer scno;
     private String scname;
 }

@@ -35,19 +35,19 @@ public class CourseController {
         return Result.success();
     }
 
-    @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
-        List<Course> list = courseService.list();
-        courseService.export(response, list);
-        return Result.success();
-    }
-
     @PostMapping("/import")
-    public Result imp(MultipartFile file) throws IOException {
+    public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         List<Course> list = reader.readAll(Course.class);
         courseService.saveBatch(list);
+        return Result.success();
+    }
+
+    @GetMapping("/export")
+    public Result export(HttpServletResponse response) throws IOException {
+        List<Course> list = courseService.list();
+        courseService.export(response, list);
         return Result.success();
     }
 }

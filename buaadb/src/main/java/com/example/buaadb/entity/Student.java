@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class Student {
     @TableId
-    private int sno;
+    private Integer sno;
     private String sname;
-    private int sage;
+    private Integer sage;
     private String ssex;
-    private int sgrade;
+    private Integer sgrade;
     @JsonIgnore
-    private int spassword;
-    private int clno;
+    private Integer spassword;
+    private Integer clno;
 }

@@ -4,8 +4,6 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Class;
-import com.example.buaadb.entity.Course;
-import com.example.buaadb.entity.Student;
 import com.example.buaadb.mapper.ClassMapper;
 import com.example.buaadb.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,7 @@ public class ClassController {
     }
 
     @PostMapping("/import")
-    public Result imp(MultipartFile file) throws IOException {
+    public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         List<Class> list = reader.readAll(Class.class);

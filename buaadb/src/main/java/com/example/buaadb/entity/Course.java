@@ -9,9 +9,9 @@ public class Course {
     private String cno;
     private String cname;
     private String cpos;
-    private int tno;
+    private Integer tno;
     private String ctype;
-    private int ccredit;
-    private int ccapacity;
-    private int cremain;
+    private Integer ccredit;
+    private Integer ccapacity;
+    private Integer cremain;
 }

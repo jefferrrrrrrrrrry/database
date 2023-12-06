@@ -56,20 +56,19 @@ public class StudentController {
         studentService.removeById(sno);
         return Result.success();
     }
+    @PostMapping("/import")
+    public Result imp(@RequestBody MultipartFile file) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        List<Student> list = reader.readAll(Student.class);
+        studentService.saveBatch(list);
+        return Result.success();
+    }
 
     @GetMapping("/export")
     public Result export(HttpServletResponse response) throws IOException {
         List<Student> list = studentService.list();
         studentService.export(response, list);
-        return Result.success();
-    }
-
-    @PostMapping("/import")
-    public Result imp(MultipartFile file) throws IOException {
-        InputStream inputStream = file.getInputStream();
-        ExcelReader reader = ExcelUtil.getReader(inputStream);
-        List<Student> list = reader.readAll(Student.class);
-        studentService.saveBatch(list);
         return Result.success();
     }
 }

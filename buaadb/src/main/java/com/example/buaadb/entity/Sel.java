@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Sel {
-    private int cno;
-    private int sno;
-    private int segrade;
+    private Integer cno;
+    private Integer sno;
+    private Integer segrade;
 }

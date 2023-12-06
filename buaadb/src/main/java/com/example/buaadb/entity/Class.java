@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class Class {
     @TableId
-    private int clno;
-    private int scno;
+    private Integer clno;
+    private Integer scno;
 }
