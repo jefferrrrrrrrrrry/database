@@ -1,0 +1,291 @@
+Index: buaadb/src/main/java/com/example/buaadb/controller/SchoolController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.buaadb.controller;\r\n\r\nimport com.example.buaadb.entity.School;\r\nimport com.example.buaadb.mapper.SchoolMapper;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(\"/school\")\r\npublic class SchoolController {\r\n    @Autowired\r\n    private SchoolMapper schoolMapper;\r\n\r\n    @GetMapping(\"/\")\r\n    public List<School> findAll() {\r\n        return schoolMapper.findAll();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/buaadb/src/main/java/com/example/buaadb/controller/SchoolController.java b/buaadb/src/main/java/com/example/buaadb/controller/SchoolController.java
+--- a/buaadb/src/main/java/com/example/buaadb/controller/SchoolController.java	(revision 3e6fe74ca65d3fcbfeb3a50da03d5769537ffb48)
++++ b/buaadb/src/main/java/com/example/buaadb/controller/SchoolController.java	(date 1701644694399)
+@@ -17,4 +17,14 @@
+     public List<School> findAll() {
+         return schoolMapper.findAll();
+     }
++
++    @PostMapping("/")
++    public int insertSchool(School school) {
++        return schoolMapper.insert(school);
++    }
++
++    @DeleteMapping("/{scid}")
++    public String deleteSchool(Integer scid) {
++        return schoolMapper.delete(scid);
++    }
+ }
+Index: buaadb/src/main/resources/mapper/Course.xml
+===================================================================
+diff --git a/buaadb/src/main/resources/mapper/Course.xml b/buaadb/src/main/resources/mapper/Course.xml
+deleted file mode 100644
+--- a/buaadb/src/main/resources/mapper/Course.xml	(revision 3e6fe74ca65d3fcbfeb3a50da03d5769537ffb48)
++++ /dev/null	(revision 3e6fe74ca65d3fcbfeb3a50da03d5769537ffb48)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8" ?>
+-<!DOCTYPE mapper
+-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+-<mapper namespace="com.example.buaadb.mapper.CourseMapper">
+-    <select id="findAll" resultType="com.example.buaadb.entity.Course">
+-        SELECT * FROM Course
+-    </select>
+-</mapper>
+-
+Index: buaadb/src/main/resources/mapper/School.xml
+===================================================================
+diff --git a/buaadb/src/main/resources/mapper/School.xml b/buaadb/src/main/resources/mapper/School.xml
+deleted file mode 100644
+--- a/buaadb/src/main/resources/mapper/School.xml	(revision 3e6fe74ca65d3fcbfeb3a50da03d5769537ffb48)
++++ /dev/null	(revision 3e6fe74ca65d3fcbfeb3a50da03d5769537ffb48)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8" ?>
+-<!DOCTYPE mapper
+-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+-<mapper namespace="com.example.buaadb.mapper.SchoolMapper">
+-
+-</mapper>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1701508300738)
++++ b/.idea/.gitignore	(date 1701508300738)
+@@ -0,0 +1,8 @@
++# 默认忽略的文件
++/shelf/
++/workspace.xml
++# 基于编辑器的 HTTP 客户端请求
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1701860933327)
++++ b/.idea/modules.xml	(date 1701860933327)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/database.iml" filepath="$PROJECT_DIR$/.idea/database.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/database.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/database.iml b/.idea/database.iml
+new file mode 100644
+--- /dev/null	(date 1701508313973)
++++ b/.idea/database.iml	(date 1701508313973)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1701860933342)
++++ b/.idea/misc.xml	(date 1701860933342)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/buaadb/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="21" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1701860933427)
++++ b/.idea/encodings.xml	(date 1701860933427)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/buaadb/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/buaadb/src/main/resources" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1701508314027)
++++ b/.idea/vcs.xml	(date 1701508314027)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1701860933394)
++++ b/.idea/compiler.xml	(date 1701860933394)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <annotationProcessing>
++      <profile name="Maven default annotation processors profile" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <module name="buaadb" />
++      </profile>
++    </annotationProcessing>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/dataSources.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/dataSources.xml b/.idea/dataSources.xml
+new file mode 100644
+--- /dev/null	(date 1701766465877)
++++ b/.idea/dataSources.xml	(date 1701766465877)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
++    <data-source source="LOCAL" name="@localhost" uuid="ca153381-c0ae-4f2b-b81d-c70f12fe3322">
++      <driver-ref>mysql.8</driver-ref>
++      <synchronize>true</synchronize>
++      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
++      <jdbc-url>jdbc:mysql://localhost:3306/</jdbc-url>
++      <working-dir>$ProjectFileDir$</working-dir>
++    </data-source>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1701860933451)
++++ b/.idea/jarRepositories.xml	(date 1701860933451)
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="alimaven" />
++      <option name="name" value="alimaven" />
++      <option name="url" value="https://maven.aliyun.com/repository/public" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/sqldialects.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/sqldialects.xml b/.idea/sqldialects.xml
+new file mode 100644
+--- /dev/null	(date 1702189472534)
++++ b/.idea/sqldialects.xml	(date 1702189472534)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="SqlDialectMappings">
++    <file url="PROJECT" dialect="MySQL" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1701661898032)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1701661898032)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
++  </profile>
++</component>
+\ No newline at end of file

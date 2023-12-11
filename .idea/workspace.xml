@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8448a253-93cd-403e-8cd5-2e84571965e0" name="更改" comment="code_generator" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../../apache-maven-3.9.6" />
+        <option name="userSettingsFile" value="D:\IDEA\apache-maven-3.9.6\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="vmOptions" value="-DarchetypeCatalog=internal" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2YyqhHvyiL2q6cH8y3GYdbaU6jN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/IDEA/code/database/buaadb/pom.xml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDK",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言": [
+      "MySQL"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="8448a253-93cd-403e-8cd5-2e84571965e0" name="更改" comment="" />
+      <created>1701076794173</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701076794173</updated>
+      <workItem from="1701508294228" duration="7020000" />
+      <workItem from="1701572641062" duration="316000" />
+      <workItem from="1701584885261" duration="6266000" />
+      <workItem from="1701601171014" duration="1792000" />
+      <workItem from="1701620340333" duration="1784000" />
+      <workItem from="1701637494367" duration="2773000" />
+      <workItem from="1701640631611" duration="6091000" />
+      <workItem from="1701660484557" duration="1352000" />
+      <workItem from="1701669821750" duration="3042000" />
+      <workItem from="1701682736687" duration="600000" />
+      <workItem from="1701691436570" duration="2963000" />
+      <workItem from="1701747923299" duration="1368000" />
+      <workItem from="1701758315505" duration="4877000" />
+      <workItem from="1701792682008" duration="972000" />
+      <workItem from="1701845938076" duration="2020000" />
+      <workItem from="1701851304256" duration="1561000" />
+      <workItem from="1701852904763" duration="3797000" />
+      <workItem from="1701857495185" duration="2897000" />
+      <workItem from="1701867462603" duration="368000" />
+      <workItem from="1701901677119" duration="1199000" />
+      <workItem from="1701912205428" duration="706000" />
+      <workItem from="1701918382954" duration="599000" />
+      <workItem from="1701926469669" duration="2289000" />
+      <workItem from="1701950427295" duration="4839000" />
+      <workItem from="1701980006033" duration="982000" />
+      <workItem from="1702014747477" duration="618000" />
+      <workItem from="1702018499254" duration="2052000" />
+      <workItem from="1702036308763" duration="600000" />
+      <workItem from="1702045847685" duration="961000" />
+      <workItem from="1702087505070" duration="1866000" />
+      <workItem from="1702105941663" duration="8165000" />
+      <workItem from="1702126482155" duration="623000" />
+      <workItem from="1702127120932" duration="1226000" />
+      <workItem from="1702142387503" duration="2399000" />
+      <workItem from="1702170737011" duration="597000" />
+      <workItem from="1702173306356" duration="2840000" />
+      <workItem from="1702180353444" duration="1845000" />
+      <workItem from="1702184372232" duration="7996000" />
+      <workItem from="1702209260608" duration="599000" />
+      <workItem from="1702225014450" duration="1862000" />
+      <workItem from="1702238011347" duration="3083000" />
+      <workItem from="1702288162915" duration="668000" />
+      <workItem from="1702294839287" duration="595000" />
+      <workItem from="1702303637219" duration="4970000" />
+      <workItem from="1702309762720" duration="48000" />
+    </task>
+    <task id="LOCAL-00001" summary="code_generator">
+      <option name="closed" value="true" />
+      <created>1702307601870</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702307601870</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="code_generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="code_generator" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
