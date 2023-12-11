@@ -2,17 +2,27 @@ package com.example.buaadb.entity;
 
 import java.io.Serializable;
 
-public class Sel extends SelKey implements Serializable {
-    private Integer segrade;
+public class SelKey implements Serializable {
+    private Integer clno;
+
+    private Integer sno;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getSegrade() {
-        return segrade;
+    public Integer getClno() {
+        return clno;
     }
 
-    public void setSegrade(Integer segrade) {
-        this.segrade = segrade;
+    public void setClno(Integer clno) {
+        this.clno = clno;
+    }
+
+    public Integer getSno() {
+        return sno;
+    }
+
+    public void setSno(Integer sno) {
+        this.sno = sno;
     }
 
     @Override
@@ -21,7 +31,8 @@ public class Sel extends SelKey implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", segrade=").append(segrade);
+        sb.append(", clno=").append(clno);
+        sb.append(", sno=").append(sno);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -38,10 +49,9 @@ public class Sel extends SelKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Sel other = (Sel) that;
+        SelKey other = (SelKey) that;
         return (this.getClno() == null ? other.getClno() == null : this.getClno().equals(other.getClno()))
-            && (this.getSno() == null ? other.getSno() == null : this.getSno().equals(other.getSno()))
-            && (this.getSegrade() == null ? other.getSegrade() == null : this.getSegrade().equals(other.getSegrade()));
+            && (this.getSno() == null ? other.getSno() == null : this.getSno().equals(other.getSno()));
     }
 
     @Override
@@ -50,7 +60,6 @@ public class Sel extends SelKey implements Serializable {
         int result = 1;
         result = prime * result + ((getClno() == null) ? 0 : getClno().hashCode());
         result = prime * result + ((getSno() == null) ? 0 : getSno().hashCode());
-        result = prime * result + ((getSegrade() == null) ? 0 : getSegrade().hashCode());
         return result;
     }
 }
