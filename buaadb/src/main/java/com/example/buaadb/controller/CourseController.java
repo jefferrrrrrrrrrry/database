@@ -5,6 +5,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
+import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class CourseController {
     public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname) {
         return Result.success(courseMapper.find(cno, cname, tname));
     }
+
+    @PostMapping("/teacherfind")
+    public Result teacherfind(@RequestBody Teacher teacher) {
+        return Result.success(courseMapper.teacherfind(teacher.getTno()));
+    }
     @PostMapping("/add")
     public Result add(@RequestBody Course course) {
         return Result.success(courseService.save(course));
@@ -47,9 +53,6 @@ public class CourseController {
     @PostMapping("/update")
     public Result update(@RequestBody Course course) {
         return Result.success(courseService.updateById(course));
-    }
-    public Result count() {
-        return Result.success(courseService.count());
     }
 
     @PostMapping("/import")
