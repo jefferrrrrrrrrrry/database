@@ -29,7 +29,10 @@ public class CourseController {
         return Result.success(courseService.list());
     }
 
-
+    @GetMapping("/find")
+    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname) {
+        return Result.success(courseMapper.find(cno, cname, tname));
+    }
     @PostMapping("/add")
     public Result add(@RequestBody Course course) {
         return Result.success(courseService.save(course));
