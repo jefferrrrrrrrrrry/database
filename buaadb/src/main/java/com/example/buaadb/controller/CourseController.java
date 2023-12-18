@@ -3,10 +3,9 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
+import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,15 @@ public class CourseController {
         return Result.success(courseService.list());
     }
 
+    @GetMapping("/find")
+    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname) {
+        return Result.success(courseMapper.find(cno, cname, tname));
+    }
 
+    @PostMapping("/teacherfind")
+    public Result teacherfind(@RequestBody Teacher teacher) {
+        return Result.success(courseMapper.teacherfind(teacher.getTno()));
+    }
     @PostMapping("/add")
     public Result add(@RequestBody Course course) {
         return Result.success(courseService.save(course));
@@ -48,10 +55,6 @@ public class CourseController {
         return Result.success(courseService.updateById(course));
     }
 
-    public Result count() {
-        return Result.success(courseService.count());
-    }
-
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
@@ -66,14 +69,5 @@ public class CourseController {
         List<Course> list = courseService.list();
         courseService.export(response, list);
         return Result.success();
-    }
-
-    // 分页查询 - mybatis-plus 的方式
-    @GetMapping("/page")
-    public IPage<Course> findPage(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize,
-                                  @RequestParam String cname) {
-        IPage<Course> page =new Page<>(pageNum,pageSize);
-        return courseService.page(page);
     }
 }
