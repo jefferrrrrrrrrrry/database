@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
+import com.example.buaadb.entity.output.CourseInfo;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -33,8 +36,10 @@ public class CourseController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname) {
-        return Result.success(courseMapper.find(cno, cname, tname));
+    public Result find(@RequestParam(defaultValue = "") Integer cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+        List<CourseInfo> list = courseMapper.find(cno, cname, tname);
+        return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
 
     @PostMapping("/teacherfind")
@@ -76,8 +81,7 @@ public class CourseController {
 
     @GetMapping("/page")
     public IPage<Course> findPage(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize,
-                                  @RequestParam String cname) {
+                                  @RequestParam Integer pageSize) {
         IPage<Course> page = new Page<>(pageNum, pageSize);
         return courseService.page(page);
     }

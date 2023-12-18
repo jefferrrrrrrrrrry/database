@@ -2,7 +2,6 @@ package com.example.buaadb.entity.output;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import org.springframework.context.annotation.Bean;
 
 @Data
 public class CourseInfo {
