@@ -2,6 +2,7 @@ package com.example.buaadb.controller;
 
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
+import com.example.buaadb.entity.Class;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Manager;
 import com.example.buaadb.mapper.ManagerMapper;
@@ -45,6 +46,11 @@ public class ManagerController {
     public Result del(@PathVariable int mno) {
         managerService.removeById(mno);
         return Result.success();
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Manager manager) {
+        return Result.success(managerService.updateById(manager));
     }
 
     @GetMapping("/export")

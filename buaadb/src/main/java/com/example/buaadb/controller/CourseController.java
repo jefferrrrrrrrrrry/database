@@ -3,6 +3,8 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.mapper.CourseMapper;
@@ -45,6 +47,7 @@ public class CourseController {
     public Result update(@RequestBody Course course) {
         return Result.success(courseService.updateById(course));
     }
+
     public Result count() {
         return Result.success(courseService.count());
     }
@@ -63,5 +66,14 @@ public class CourseController {
         List<Course> list = courseService.list();
         courseService.export(response, list);
         return Result.success();
+    }
+
+    // 分页查询 - mybatis-plus 的方式
+    @GetMapping("/page")
+    public IPage<Course> findPage(@RequestParam Integer pageNum,
+                                  @RequestParam Integer pageSize,
+                                  @RequestParam String cname) {
+        IPage<Course> page =new Page<>(pageNum,pageSize);
+        return courseService.page(page);
     }
 }

@@ -3,6 +3,7 @@ package com.example.buaadb.controller;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.entity.Class;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.School;
 import com.example.buaadb.entity.Student;
@@ -24,6 +25,11 @@ public class SchoolController {
     private SchoolMapper schoolMapper;
     @Autowired
     private SchoolService schoolService;
+
+    @PostMapping("/update")
+    public Result update(@RequestBody School school) {
+        return Result.success(schoolService.updateById(school));
+    }
 
     @PostMapping("/import")
     public Result imp(MultipartFile file) throws IOException {

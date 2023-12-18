@@ -39,6 +39,11 @@ public class ClassController {
         return Result.success();
     }
 
+    @PostMapping("/update")
+    public Result update(@RequestBody Class class1) {
+        return Result.success(classService.updateById(class1));
+    }
+
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();

@@ -4,6 +4,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
+import com.example.buaadb.entity.Class;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Student;
 import com.example.buaadb.entity.Teacher;
@@ -52,6 +53,11 @@ public class TeacherController {
     public Result del(@PathVariable int tno) {
         teacherService.removeById(tno);
         return Result.success();
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Teacher teacher) {
+        return Result.success(teacherService.updateById(teacher));
     }
 
     @PostMapping("/import")
