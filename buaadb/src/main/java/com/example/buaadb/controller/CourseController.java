@@ -29,12 +29,22 @@ public class CourseController {
         return Result.success(courseService.list());
     }
 
+
+    @PostMapping("/add")
+    public Result add(@RequestBody Course course) {
+        return Result.success(courseService.save(course));
+    }
+
     @DeleteMapping("/{cno}")
     public Result del(@PathVariable String cno) {
         courseService.removeById(cno);
         return Result.success();
     }
 
+    @PostMapping("/update")
+    public Result update(@RequestBody Course course) {
+        return Result.success(courseService.updateById(course));
+    }
     public Result count() {
         return Result.success(courseService.count());
     }

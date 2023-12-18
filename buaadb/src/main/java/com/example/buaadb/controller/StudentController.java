@@ -3,6 +3,7 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
@@ -48,6 +49,11 @@ public class StudentController {
     @PostMapping("/add")
     public Result add(@RequestBody Student student) {
         return Result.success(studentService.save(student));
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Student student) {
+        return Result.success(studentService.updateById(student));
     }
 
     @DeleteMapping("/{sno}")
