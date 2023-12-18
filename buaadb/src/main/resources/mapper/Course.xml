@@ -9,7 +9,7 @@
 
     <select id="find" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
-            FROM (course JOIN teacher) WHERE Cno LIKE concat('%', #{cno} ,'%')
+            FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE Cno LIKE concat('%', #{cno} ,'%')
                                         AND Cname LIKE concat('%', #{cname}, '%')
                                         AND Tname LIKE concat('%', #{tname}, '%')
     </select>

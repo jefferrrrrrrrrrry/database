@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
+import com.example.buaadb.entity.output.CourseInfo;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -33,8 +35,20 @@ public class CourseController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname) {
-        return Result.success(courseMapper.find(cno, cname, tname));
+    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname
+            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+        List<CourseInfo> list = courseMapper.find(cno, cname, tname);
+        int total = list.size();
+        int totalPage = (total / pageSize) + ((total % pageSize > 0) ? 1 : 0);
+        if (pageNum > totalPage || pageNum <= 0) {
+            return Result.error("页码不合法");
+        }
+        List<CourseInfo> page = list.subList((pageNum - 1) * pageSize, Math.min(pageNum * pageSize, total));
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("total", total);
+        res.put("totalPage", totalPage);
+        res.put("page", page);
+        return Result.success(res);
     }
 
     @PostMapping("/teacherfind")
@@ -76,8 +90,7 @@ public class CourseController {
 
     @GetMapping("/page")
     public IPage<Course> findPage(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize,
-                                  @RequestParam String cname) {
+                                  @RequestParam Integer pageSize) {
         IPage<Course> page = new Page<>(pageNum, pageSize);
         return courseService.page(page);
     }
