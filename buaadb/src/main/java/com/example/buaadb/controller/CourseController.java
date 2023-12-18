@@ -3,6 +3,8 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
@@ -39,6 +41,7 @@ public class CourseController {
     public Result teacherfind(@RequestBody Teacher teacher) {
         return Result.success(courseMapper.teacherfind(teacher.getTno()));
     }
+
     @PostMapping("/add")
     public Result add(@RequestBody Course course) {
         return Result.success(courseService.save(course));
@@ -69,5 +72,13 @@ public class CourseController {
         List<Course> list = courseService.list();
         courseService.export(response, list);
         return Result.success();
+    }
+
+    @GetMapping("/page")
+    public IPage<Course> findPage(@RequestParam Integer pageNum,
+                                  @RequestParam Integer pageSize,
+                                  @RequestParam String cname) {
+        IPage<Course> page = new Page<>(pageNum, pageSize);
+        return courseService.page(page);
     }
 }
