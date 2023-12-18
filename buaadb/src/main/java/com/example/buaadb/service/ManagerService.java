@@ -23,10 +23,10 @@ public class ManagerService extends ServiceImpl<ManagerMapper, Manager> {
     @Autowired
     private ManagerMapper mapper;
     public int login(LogInfo logInfo) {
-        List<Manager> manager = mapper.login(logInfo.getUsername(), logInfo.getPassword());
-        if (manager.isEmpty()) {
-            return 1; // no such student
-        }
+        // List<Manager> manager = mapper.login(logInfo.getUsername(), logInfo.getPassword());
+//        if (manager.isEmpty()) {
+//            return 1; // no such student
+//        }
         return 0;
     }
 

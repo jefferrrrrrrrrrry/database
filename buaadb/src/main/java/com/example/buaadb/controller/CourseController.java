@@ -35,6 +35,10 @@ public class CourseController {
         return Result.success();
     }
 
+    public Result count() {
+        return Result.success(courseService.count());
+    }
+
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();

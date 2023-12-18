@@ -5,7 +5,6 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
-import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Student;
 import com.example.buaadb.mapper.StudentMapper;
 import com.example.buaadb.service.StudentService;
@@ -27,8 +26,8 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/login")
-    public int login(@RequestBody LogInfo logInfo) {
-        return studentService.login(logInfo);
+    public Result login(@RequestBody LogInfo logInfo) {
+        return Result.success(studentService.login(logInfo));
     }
 
     @PostMapping("/changepassword")

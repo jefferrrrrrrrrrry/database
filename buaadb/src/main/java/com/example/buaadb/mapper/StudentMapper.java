@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface StudentMapper extends BaseMapper<Student> {
-    List<Student> login(String name, String password);
+    List<Student> login(@Param("username") int username, @Param("password") String password);
     List<Student> find(@Param("sno") int sno, @Param("sname") String sname);
 }

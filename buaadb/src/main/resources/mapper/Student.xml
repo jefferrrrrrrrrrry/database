@@ -8,7 +8,7 @@
     </select>
 
     <select id="login" resultType="com.example.buaadb.entity.Student">
-        SELECT * FROM Student WHERE Sname = #{name} and Spassword = #{password}
+        SELECT * FROM Student WHERE Sno = #{username} and Spassword = #{password}
     </select>
 
     <select id="find" resultType="com.example.buaadb.entity.Student">

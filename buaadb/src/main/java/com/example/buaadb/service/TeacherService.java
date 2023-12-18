@@ -25,10 +25,10 @@ public class TeacherService extends ServiceImpl<TeacherMapper, Teacher> {
     @Autowired
     private TeacherMapper mapper;
     public int login(LogInfo logInfo) {
-        List<Teacher> teacher = mapper.login(logInfo.getUsername(), logInfo.getPassword());
-        if (teacher.isEmpty()) {
-            return 1; // no such student
-        }
+        // List<Teacher> teacher = mapper.login(logInfo.getUsername(), logInfo.getPassword());
+//        if (teacher.isEmpty()) {
+//            return 1; // no such student
+//        }
         return 0;
     }
 
