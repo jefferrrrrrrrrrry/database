@@ -9,6 +9,7 @@ import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.entity.output.CourseInfo;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +36,10 @@ public class CourseController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam Integer cno, @RequestParam String cname, @RequestParam String tname
+    public Result find(@RequestParam(defaultValue = "") Integer cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
             , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
         List<CourseInfo> list = courseMapper.find(cno, cname, tname);
-        int total = list.size();
-        int totalPage = (total / pageSize) + ((total % pageSize > 0) ? 1 : 0);
-        if (pageNum > totalPage || pageNum <= 0) {
-            return Result.error("页码不合法");
-        }
-        List<CourseInfo> page = list.subList((pageNum - 1) * pageSize, Math.min(pageNum * pageSize, total));
-        HashMap<String, Object> res = new HashMap<>();
-        res.put("total", total);
-        res.put("totalPage", totalPage);
-        res.put("page", page);
-        return Result.success(res);
+        return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
 
     @PostMapping("/teacherfind")
