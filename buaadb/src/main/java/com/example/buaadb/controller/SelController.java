@@ -17,19 +17,14 @@ public class SelController {
     @Autowired
     private SelService selService;
 
-    @PostMapping("/selectCourse")
-    public Result selectCourse(@RequestBody Student student,
-                               @RequestBody Course course){
-        selMapper.insert(student.getSno(), course.getCno());
-        return Result.success();
-    }
+
 
     @PostMapping("/add")
     public Result add(@RequestBody Sel sel) {
         return Result.success(selService.save(sel));
     }
 
-    @DeleteMapping ("/del")
+    @DeleteMapping("/del")
     public Result del(@RequestBody Sel sel) {
         return Result.success(selService.removeById(sel));
     }

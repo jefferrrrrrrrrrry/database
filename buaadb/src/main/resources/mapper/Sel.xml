@@ -14,10 +14,5 @@
     <delete id="del">
         DELETE FROM Sel WHERE cno = #{cno} AND sno = #{sno}
     </delete>
-
-    <select id="find">
-        SELECT Cno, Cname, Cpos, Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
-        FROM course WHERE Cno = (SELECT Cno FROM Sel WHERE Sno = #{Sno} )
-    </select>
 </mapper>
 
