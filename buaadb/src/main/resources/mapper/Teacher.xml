@@ -18,8 +18,7 @@
     <select id="findPend" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain, Status
         FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE
-            course.Tno=#{Tno}
-            AND Status = 0
+            course.Tno=#{Tno} AND Status = 0
     </select>
 </mapper>
 
