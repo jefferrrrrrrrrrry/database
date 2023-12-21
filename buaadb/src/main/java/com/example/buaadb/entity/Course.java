@@ -14,4 +14,5 @@ public class Course {
     private Integer ccredit;
     private Integer ccapacity;
     private Integer cremain;
+    private Integer status;
 }

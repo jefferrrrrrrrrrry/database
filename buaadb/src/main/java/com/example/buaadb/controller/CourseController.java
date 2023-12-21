@@ -49,6 +49,7 @@ public class CourseController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Course course) {
+        course.setStatus(0);
         return Result.success(courseService.save(course));
     }
 
