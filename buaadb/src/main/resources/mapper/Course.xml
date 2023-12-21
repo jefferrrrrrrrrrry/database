@@ -9,7 +9,7 @@
 
     <select id="find" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
-            FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE true
+            FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE status = 1
                      <if test="cno != null"> AND Cno LIKE concat('%', #{cno} ,'%') </if>
                      AND Cname LIKE concat('%', #{cname}, '%')
                      AND Tname LIKE concat('%', #{tname}, '%')
@@ -19,5 +19,9 @@
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
             FROM (course JOIN teacher) WHERE course.Tno = #{tno}
     </select>
+
+    <update id="approve">
+        UPDATE Course SET status = 1 WHERE cno = #{cno}
+    </update>
 </mapper>
 

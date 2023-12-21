@@ -36,8 +36,18 @@ public class TeacherController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam int tno, @RequestParam String tname) {
+    public Result find(@RequestParam String tno, @RequestParam String tname) {
         return Result.success(teacherMapper.find(tno, tname));
+    }
+
+    @GetMapping("/findApprove")
+    public Result findApprove(@RequestParam String tno){
+        return Result.success(teacherMapper.findApprove(tno));
+    }
+
+    @GetMapping("/findPend")
+    public Result findPend(@RequestParam String tno){
+        return Result.success(teacherMapper.findPend(tno));
     }
 
     @PostMapping("/add")

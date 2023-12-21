@@ -36,7 +36,7 @@ public class CourseController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam(defaultValue = "") Integer cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+    public Result find(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
             , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
         List<CourseInfo> list = courseMapper.find(cno, cname, tname);
         return Result.success(PageDivision.getPage(list, pageNum, pageSize));
@@ -51,6 +51,19 @@ public class CourseController {
     public Result add(@RequestBody Course course) {
         course.setStatus(0);
         return Result.success(courseService.save(course));
+    }
+
+    @PostMapping("/approve")
+    public Result approve(@RequestBody Course course){
+        course.setStatus(1);
+        courseMapper.approve(course.getCno());
+        return Result.success();
+    }
+
+    @PostMapping("/disapprove")
+    public Result disapprove(@RequestBody Course course){
+        courseService.removeById(course.getCno());
+        return Result.success();
     }
 
     @DeleteMapping("/{cno}")
