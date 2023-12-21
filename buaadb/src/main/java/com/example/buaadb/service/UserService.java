@@ -23,6 +23,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         User user = null;
         try {
             user = getOne(queryWrapper);
+            if (user != null) {
+                //
+            } else {
+                //
+            }
         } catch (Exception e) {
             LOG.error(e);
         }
