@@ -7,10 +7,6 @@
         INSERT INTO Sel VALUES (#{cno}, #{sno}, null)
     </insert>
 
-    <update id="setscore">
-        UPDATE Sel SET segrade = #{segrade} WHERE cno = #{cno} AND sno = #{sno}
-    </update>
-
     <delete id="del">
         DELETE FROM Sel WHERE cno = #{cno} AND sno = #{sno}
     </delete>
@@ -18,6 +14,14 @@
     <select id="find">
         SELECT Cno, Cname, Cpos, Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
         FROM course WHERE Cno = (SELECT Cno FROM Sel WHERE Sno = #{Sno} )
+    </select>
+
+    <update id="setScore">
+        UPDATE Sel SET segrade = #{segrade} WHERE cno = #{cno} AND sno = #{sno}
+    </update>
+
+    <select id="getScore">
+        SELECT segrade FROM Sel WHERE Cno = #{cno} AND Sno = #{sno}
     </select>
 </mapper>
 
