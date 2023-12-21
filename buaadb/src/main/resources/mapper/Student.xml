@@ -14,5 +14,10 @@
     <select id="find" resultType="com.example.buaadb.entity.Student">
         SELECT * FROM STUDENT WHERE sname like concat('%', #{sname}, '%') and sno like concat('%', #{sno}, '%')
     </select>
+
+    <select id="find">
+        SELECT Cno, Cname, Cpos, Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
+        FROM course WHERE Cno = (SELECT Cno FROM Sel WHERE Sno = #{Sno} )
+    </select>
 </mapper>
 

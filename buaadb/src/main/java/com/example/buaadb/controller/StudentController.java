@@ -25,6 +25,13 @@ public class StudentController {
     private StudentMapper studentMapper;
     @Autowired
     private StudentService studentService;
+
+    @GetMapping("/selectCourse")
+    public Result selectCourse(@RequestParam String sno,
+                               @RequestParam String cno){
+        studentMapper.insert(sno, cno);
+        return Result.success();
+    }
     @PostMapping("/changepassword")
     public boolean changepassword() {
         return false; // TODO
