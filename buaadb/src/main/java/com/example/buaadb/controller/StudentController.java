@@ -3,10 +3,10 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
+import com.example.buaadb.function.InExport;
 import com.example.buaadb.mapper.StudentMapper;
 import com.example.buaadb.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public class StudentController {
     @GetMapping("/export")
     public Result export(HttpServletResponse response) throws IOException {
         List<Student> list = studentService.list();
-        studentService.export(response, list);
+        InExport.export(response, list, "学生信息");
         return Result.success();
     }
 }

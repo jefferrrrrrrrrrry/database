@@ -4,6 +4,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Class;
+import com.example.buaadb.function.InExport;
 import com.example.buaadb.mapper.ClassMapper;
 import com.example.buaadb.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class ClassController {
     @GetMapping("/export")
     public Result export(HttpServletResponse response) throws IOException {
         List<Class> list = classService.list();
-        classService.export(response, list);
+        InExport.export(response, list, "班级信息");
         return Result.success();
     }
 

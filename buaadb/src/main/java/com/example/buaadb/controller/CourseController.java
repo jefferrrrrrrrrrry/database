@@ -9,6 +9,7 @@ import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.entity.output.CourseInfo;
+import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
@@ -19,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -75,7 +75,7 @@ public class CourseController {
     @GetMapping("/export")
     public Result export(HttpServletResponse response) throws IOException {
         List<Course> list = courseService.list();
-        courseService.export(response, list);
+        InExport.export(response, list, "课程信息");
         return Result.success();
     }
 
