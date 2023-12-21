@@ -7,4 +7,5 @@ import lombok.Data;
 public class LogInfo {
     private String sys_username;
     private String sys_password;
+    private String token;
 }
