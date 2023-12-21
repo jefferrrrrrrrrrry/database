@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Teacher {
     @TableId
-    private Integer tno;
+    private String tno;
     private String tname;
     private String ttitle;
     @JsonIgnore

@@ -37,7 +37,7 @@ public class StudentController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam int sno, @RequestParam String sname) {
+    public Result find(@RequestParam String sno, @RequestParam String sname) {
         return Result.success(studentMapper.find(sno, sname));
     }
 
@@ -57,7 +57,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{sno}")
-    public Result del(@PathVariable int sno) {
+    public Result del(@PathVariable String sno) {
         studentService.removeById(sno);
         return Result.success();
     }

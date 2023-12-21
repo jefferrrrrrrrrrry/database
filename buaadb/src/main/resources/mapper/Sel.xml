@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.buaadb.mapper.SelMapper">
+    <insert id="insert">
+        INSERT INTO Sel VALUES (#{cno}, #{sno}, null)
+    </insert>
+
+    <update id="setscore">
+        UPDATE Sel SET segrade = #{segrade} WHERE cno = #{cno} AND sno = #{sno}
+    </update>
+
+    <delete id="del">
+        DELETE FROM Sel WHERE cno = #{cno} AND sno = #{sno}
+    </delete>
+
+
+</mapper>
+

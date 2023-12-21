@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Manager {
     @TableId
-    private Integer mno;
+    private String mno;
     private String mname;
     @JsonIgnore
     private String mpassword;

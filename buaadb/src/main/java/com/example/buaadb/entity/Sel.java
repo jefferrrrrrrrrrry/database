@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Sel {
     @TableId
-    private Integer cno;
+    private String cno;
     @TableField
     private Integer sno;
     private Integer segrade;
