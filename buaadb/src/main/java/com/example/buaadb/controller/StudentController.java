@@ -25,12 +25,6 @@ public class StudentController {
     private StudentMapper studentMapper;
     @Autowired
     private StudentService studentService;
-
-    @PostMapping("/login")
-    public Result login(@RequestBody LogInfo logInfo) {
-        return Result.success(studentService.login(logInfo));
-    }
-
     @PostMapping("/changepassword")
     public boolean changepassword() {
         return false; // TODO

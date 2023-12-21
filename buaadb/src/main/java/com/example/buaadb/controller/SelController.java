@@ -20,6 +20,7 @@ public class SelController {
     @PostMapping("/selectCourse")
     public Result selectCourse(@RequestBody Student student,
                                @RequestBody Course course){
+        selMapper.insert(student.getSno(), course.getCno());
         return Result.success();
     }
 

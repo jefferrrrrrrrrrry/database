@@ -13,11 +13,4 @@ import java.util.List;
 public class StudentService extends ServiceImpl<StudentMapper, Student> {
     @Autowired
     private StudentMapper mapper;
-    public int login(LogInfo logInfo) {
-        List<Student> student = mapper.login(logInfo.getUsername(), logInfo.getPassword());
-        if (student.isEmpty()) {
-            return 1; // no such student
-        }
-        return 0;
-    }
 }
