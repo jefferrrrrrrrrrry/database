@@ -24,8 +24,9 @@ public class UserController {
         if (false) {
             // 动作
         }
-        User user = userService.login(username, password);
-        return Result.success(user);
+        String token = userService.login(username, password);
+        logInfo.setToken(token);
+        return Result.success(logInfo);
     }
 
 
