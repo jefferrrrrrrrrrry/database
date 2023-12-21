@@ -33,4 +33,9 @@ public class SelController {
     public Result del(@RequestBody Sel sel) {
         return Result.success(selService.removeById(sel));
     }
+
+    @GetMapping("/find")
+    public Result find(@RequestParam String cno){
+        return Result.success(selMapper.find(cno));
+    }
 }
