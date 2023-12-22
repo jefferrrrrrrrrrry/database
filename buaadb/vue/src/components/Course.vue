@@ -77,6 +77,15 @@ export default {
       }
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
+    },exports(){
+      request.get("http://localhost:9090/course/export").then(res=>{
+        console.log(res)
+        if(res){
+          this.$message.success("导出成功")
+        }else{
+          this.$message.error("导出失败")
+        }
+      })
     }
   },
   data(){
@@ -138,8 +147,9 @@ export default {
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
-      <el-button type="primary" @click="handleAdd" v-if="loc==1">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="handleLoad" v-if="loc==1">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleAdd" v-if="loc==1||loc==2">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleLoad" v-if="loc==1||loc==2">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
       <el-table-column prop="cno" label="课程代码" width="200">
@@ -150,9 +160,9 @@ export default {
       </el-table-column>
       <el-table-column prop="ccredit" label="学分" width="170">
       </el-table-column>
-      <el-table-column prop="cremain" label="剩余人数" width="220">
+      <el-table-column prop="cremain" label="剩余人数" width="170">
       </el-table-column>
-      <el-table-column prop="ccapacity" label="容量" width="220">
+      <el-table-column prop="ccapacity" label="容量" width="170">
       </el-table-column>
       <el-table-column label="操作" v-if="loc==0">
         <template slot-scope="scope">

@@ -32,7 +32,7 @@ export default {
       this.loc=0;
     }else{
       this.id="管理"
-      this.loc=1;
+      this.loc=2;
     }
   }
 }
@@ -56,6 +56,10 @@ export default {
         <el-menu-item index="1" v-if="this.loc==1">全部课程</el-menu-item>
         <el-menu-item index="2" v-if="this.loc==1">待审核课程</el-menu-item>
         <el-menu-item index="3" v-if="this.loc==1">已开课程</el-menu-item>
+        <el-menu-item index="1" v-if="this.loc==2">管理课程</el-menu-item>
+        <el-menu-item index="2" v-if="this.loc==2">审核开课</el-menu-item>
+        <el-menu-item index="3" v-if="this.loc==2">管理人员</el-menu-item>
+
       </el-menu-item-group>
     </el-submenu>
   </el-menu>

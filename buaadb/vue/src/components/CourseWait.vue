@@ -114,20 +114,22 @@ export default {
       </el-table-column>
       <el-table-column prop="ccredit" label="学分" width="170">
       </el-table-column>
-      <el-table-column prop="cremain" label="剩余人数" width="220">
+      <el-table-column prop="cremain" label="剩余人数" width="170">
       </el-table-column>
-      <el-table-column prop="ccapacity" label="容量" width="220">
+      <el-table-column prop="ccapacity" label="容量" width="170">
       </el-table-column>
-      <el-table-column label="操作" v-if="this.loc==0">
-        <template slot-scope="scope">
+      <el-table-column label="操作" v-if="loc==1||loc==2">
+        <template slot-scope="scope" v-if="loc==2">
           <el-button
               size="mini"
               type="danger"
-              @click="del(scope.row.cno)">退选</el-button>
+              @click="del(scope.row.cno)">同意</el-button>
+          <el-button
+                     size="mini"
+                     type="danger"
+                     @click="del(scope.row.cno)">拒绝</el-button>
         </template>
-      </el-table-column>
-      <el-table-column label="操作" v-if="this.loc==1">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="loc==1">
           <el-button
               size="mini"
               type="danger"

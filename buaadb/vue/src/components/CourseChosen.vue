@@ -115,9 +115,9 @@ export default {
     </el-table-column>
     <el-table-column prop="ccredit" label="学分" width="170">
     </el-table-column>
-    <el-table-column prop="cremain" label="剩余人数" width="220">
+    <el-table-column prop="cremain" label="剩余人数" width="170">
     </el-table-column>
-    <el-table-column prop="ccapacity" label="容量" width="220">
+    <el-table-column prop="ccapacity" label="容量" width="170">
     </el-table-column>
     <el-table-column label="操作" v-if="this.loc==0">
       <template slot-scope="scope">

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import ElementUI from "element-ui";
 
 const request = axios.create({
     baseURL: '/api',
@@ -20,6 +21,7 @@ request.interceptors.request.use(config => {
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(
     response => {
+        console.log(response)
         let res = response.data;
         // 如果是返回的文件
         if (response.config.responseType === 'blob') {
@@ -27,7 +29,11 @@ request.interceptors.response.use(
         }
         // 兼容服务端返回的字符串数据
         if (typeof res === 'string') {
-            res = res ? JSON.parse(res) : res
+            try{
+                res = res ? JSON.parse(res) : res
+            }catch {
+                return res;
+            }
         }
         if(res.status!== "SUCCESS"){
             ElementUI.Message({

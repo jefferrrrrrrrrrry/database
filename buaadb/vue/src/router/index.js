@@ -9,6 +9,9 @@ import TeacherCourseWaitView from "@/views/TeacherCourseWaitView.vue";
 import TeacherCourseOpenView from "@/views/TeacherCourseOpenView.vue";
 import TeacherCourseView from "@/views/TeacherCourseView.vue";
 import login from "@/views/Login.vue";
+import ManagerWorkView from "@/views/ManagerWorkView.vue";
+import ManagerCourseView from "@/views/ManagerCourseView.vue";
+import ManagerManageAllView from "@/views/ManagerManageAllView.vue";
 
 Vue.use(VueRouter)
 
@@ -31,13 +34,17 @@ const routes = [
             {path: "course", name: "teacherCourse", component: TeacherCourseView},
             {path: "courseWait", name: "teacherCourseWait", component: TeacherCourseWaitView},
             {path: "courseOpen", name: "teacherCourseOpen", component: TeacherCourseOpenView},
-
         ]
     },
     {
         path: '/manager',
         name: 'manager',
-        component: ManagerView
+        component: ManagerView,
+        children: [
+            {path: "course", name: "ManagerCourse", component: ManagerCourseView},
+            {path: "work", name: "ManagerWork", component: ManagerWorkView},
+            {path: "manageAll", name: "ManagerManageAll", component: ManagerManageAllView},
+        ]
     },
     {
         path: '/login',

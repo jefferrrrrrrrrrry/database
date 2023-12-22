@@ -76,7 +76,7 @@ export default {
 <style scoped>
 .wrapper {
   height: 100vh;
-  background-image: url('~@/assets/buaa.jpg'); /* 请替换为你的图片路径 */
+  background-image: url('~@/assets/buaaa.png'); /* 请替换为你的图片路径 */
   background-size: contain; /* 图片将会被放大或缩小以完全覆盖整个容器 */
   background-position: center; /* 图片在容器中居中显示 */
   overflow: hidden;
