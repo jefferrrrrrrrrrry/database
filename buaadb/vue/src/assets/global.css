@@ -1,7 +1,20 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 
+#app {
+    min-height: 100vh;
+    height: 100%;
+    margin: 0; /* 设置页面外边距为0 */
+    padding: 0; /* 设置页面内边距为0 */
+    box-sizing: border-box; /* 让边距和填充不增加元素的实际尺寸 */
+  }
+body,html {
+margin: 0;
+padding: 0;
+min-height: 100vh;
+height: 100%;
+}
+  

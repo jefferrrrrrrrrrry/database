@@ -2,7 +2,7 @@
 import request from "@/utils/request";
 
 export default {
-  name: "Course",
+  name: "CourseWait",
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
@@ -55,28 +55,6 @@ export default {
       console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
-    },handleAdd() {
-      this.dialogFormVisible = true
-      this.form = {}
-    },
-    handleLoad() {
-      this.fileLoadVisible = true
-      this.form = {}
-    },
-    handleEdit(row) {
-    //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = true
-    },save(){
-      //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = false
-    },saveFile(){
-      this.fileLoadVisible=false;
-    },handleClose(){
-      _ => {
-        done();
-      }
-      this.fileLoadVisible=false;
-      this.dialogFormVisible = false;
     }
   },
   data(){
@@ -89,19 +67,8 @@ export default {
       s_cno:"",
       s_tname:"",
       dialogVisible: false,
-      path:"",
-      id:"",
       loc:0,
       page:1,
-      labelPosition: 'right',
-      formLabelAlign: {
-        name: '',
-        region: '',
-        type: ''
-      },
-      dialogFormVisible:false,
-      fileLoadVisible:false,
-      form:{},
     }
   },
   created() {
@@ -126,8 +93,7 @@ export default {
   <div>
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="this.loc==0"><a href='/${id}/course' >选课</a></el-breadcrumb-item>
-      <el-breadcrumb-item v-if="this.loc==1"><a href='/${id}/course' >全部课程</a></el-breadcrumb-item>
+      <el-breadcrumb-item v-if="this.loc==1"><a href='/${id}/courseOpen' >待审核课程</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-input style="flex:1;width:200px"  placeholder="请输入课程名" suffix-icon="el-icon-search" v-model="s_cname"
@@ -138,8 +104,6 @@ export default {
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
-      <el-button type="primary" @click="handleAdd" v-if="loc==1">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="handleLoad" v-if="loc==1">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
       <el-table-column prop="cno" label="课程代码" width="200">
@@ -154,15 +118,15 @@ export default {
       </el-table-column>
       <el-table-column prop="ccapacity" label="容量" width="220">
       </el-table-column>
-      <el-table-column label="操作" v-if="loc==0">
+      <el-table-column label="操作" v-if="this.loc==0">
         <template slot-scope="scope">
           <el-button
               size="mini"
               type="danger"
-              @click="del(scope.row.cno)">选课</el-button>
+              @click="del(scope.row.cno)">退选</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作" v-if="loc==1">
+      <el-table-column label="操作" v-if="this.loc==1">
         <template slot-scope="scope">
           <el-button
               size="mini"
@@ -183,54 +147,6 @@ export default {
           :total="total">
       </el-pagination>
     </div>
-
-  <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
-    <el-form label-width="80px" size="small">
-      <el-form-item label="课程代码">
-        <el-input v-model="form.cno" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="课程名称">
-        <el-input v-model="form.cname" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="校区">
-        <el-input v-model="form.cpos" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="学分">
-        <el-input v-model="form.credit" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="剩余人数">
-        <el-input v-model="form.cremain" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="容量">
-        <el-input v-model="form.ccapacity" autocomplete="off"></el-input>
-      </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="save">确 定</el-button>
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
-    </div>
-  </el-dialog>
-    <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
-      <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
-        <el-form label-width="80px" size="small" >
-          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple accept=".xls, .xlsx">
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb</div>
-          </el-upload>
-        </el-form>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveFile">确 定</el-button>
-        <el-button @click="fileLoadVisible = false">取 消</el-button>
-      </div>
-    </el-dialog>
-
-
-
-
-
-
   </div>
 </template>
 

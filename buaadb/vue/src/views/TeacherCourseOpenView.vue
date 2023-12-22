@@ -12,7 +12,7 @@
 // @ is an alias to /src
 import CourseChosen from "@/components/CourseChosen.vue";
 export default {
-  name: 'StudentCourseChosenView',
+  name: 'TeacherCourseOpenView',
   data(){
     return {
       sideWidth:200,
@@ -38,9 +38,9 @@ export default {
         this.collapseBtnClass='el-icon-s-fold'
       }
     },open() {
-    this.$alert('这是一段内容', '标题名称', {
-      confirmButtonText: '确定'
-    });
+      this.$alert('这是一段内容', '标题名称', {
+        confirmButtonText: '确定'
+      });
     }
   }
 }

@@ -10,8 +10,7 @@ const request = axios.create({
 // 比如统一加token，对请求参数统一加密
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
-
-    // config.headers['token'] = user.token;  // 设置请求头
+    config.headers['token'] = localStorage.getItem("token");  // 设置请求头
     return config
 }, error => {
     return Promise.reject(error)
@@ -29,6 +28,12 @@ request.interceptors.response.use(
         // 兼容服务端返回的字符串数据
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
+        }
+        if(res.status!== "SUCCESS"){
+            ElementUI.Message({
+                massage:res.msg,
+                type:"error"
+            })
         }
         return res;
     },

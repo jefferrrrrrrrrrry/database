@@ -22,7 +22,7 @@ import Header from "@/components/Header.vue";
 import Course from "@/components/CourseChosen.vue";
 import request from "@/utils/request";
 export default {
-  name: 'StudentView',
+  name: 'TeacherView',
   data(){
     return {
       sideWidth:200,

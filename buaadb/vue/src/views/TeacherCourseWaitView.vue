@@ -2,7 +2,7 @@
   <div>
     <el-container style="height: 100%;">
       <el-main >
-        <CourseChosen />
+        <CourseWait />
       </el-main>
     </el-container>
   </div>
@@ -10,9 +10,10 @@
 
 <script>
 // @ is an alias to /src
-import CourseChosen from "@/components/CourseChosen.vue";
+import Course from "@/components/Course.vue";
+import CourseWait from "@/components/CourseWait.vue";
 export default {
-  name: 'StudentCourseChosenView',
+  name: 'TeacherCourseView',
   data(){
     return {
       sideWidth:200,
@@ -24,7 +25,7 @@ export default {
 
   },
   components:{
-    CourseChosen
+    CourseWait
   },
   methods:{
     collapse(){
@@ -38,9 +39,9 @@ export default {
         this.collapseBtnClass='el-icon-s-fold'
       }
     },open() {
-    this.$alert('这是一段内容', '标题名称', {
-      confirmButtonText: '确定'
-    });
+      this.$alert('这是一段内容', '标题名称', {
+        confirmButtonText: '确定',
+      });
     }
   }
 }
