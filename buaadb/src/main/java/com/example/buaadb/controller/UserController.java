@@ -32,7 +32,7 @@ public class UserController {
         return Result.success();
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/")
     public Result find() {
         return Result.success(userService.list());
     }

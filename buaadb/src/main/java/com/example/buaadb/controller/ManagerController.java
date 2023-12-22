@@ -40,7 +40,7 @@ public class ManagerController {
         }
     }
 
-    @DeleteMapping("/{tno}")
+    @DeleteMapping("/{mno}")
     public Result del(@PathVariable int mno) {
         managerService.removeById(mno);
         return Result.success();
