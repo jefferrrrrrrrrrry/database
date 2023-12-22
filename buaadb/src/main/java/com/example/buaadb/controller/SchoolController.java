@@ -39,9 +39,8 @@ public class SchoolController {
     }
 
     @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
+    public void export(HttpServletResponse response) throws IOException {
         List<School> list = schoolService.list();
         InExport.export(response, list, "院系信息");
-        return Result.success();
     }
 }

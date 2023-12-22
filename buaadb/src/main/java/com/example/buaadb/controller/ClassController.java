@@ -55,10 +55,9 @@ public class ClassController {
     }
 
     @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
+    public void export(HttpServletResponse response) throws IOException {
         List<Class> list = classService.list();
         InExport.export(response, list, "班级信息");
-        return Result.success();
     }
 
 }

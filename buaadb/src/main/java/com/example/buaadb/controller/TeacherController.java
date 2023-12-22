@@ -25,16 +25,6 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @PostMapping("/login")
-    public int login(@RequestBody LogInfo logInfo) {
-        return teacherService.login(logInfo);
-    }
-
-    @PostMapping("/changepassword")
-    public boolean changepassword() {
-        return false; // TODO
-    }
-
     @GetMapping("/find")
     public Result find(@RequestParam String tno, @RequestParam String tname) {
         return Result.success(teacherMapper.find(tno, tname));
@@ -76,9 +66,8 @@ public class TeacherController {
     }
 
     @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
+    public void export(HttpServletResponse response) throws IOException {
         List<Teacher> list = teacherService.list();
         InExport.export(response, list, "教师信息");
-        return Result.success();
     }
 }

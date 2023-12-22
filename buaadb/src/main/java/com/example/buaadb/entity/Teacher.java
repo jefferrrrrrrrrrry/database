@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-public class Teacher {
+public class Teacher implements UserEntity {
     @TableId
     private String tno;
     private String tname;

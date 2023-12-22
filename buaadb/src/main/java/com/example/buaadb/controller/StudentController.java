@@ -77,9 +77,8 @@ public class StudentController {
     }
 
     @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
+    public void export(HttpServletResponse response) throws IOException {
         List<Student> list = studentService.list();
         InExport.export(response, list, "学生信息");
-        return Result.success();
     }
 }

@@ -22,16 +22,6 @@ public class ManagerController {
     @Autowired
     private ManagerService managerService;
 
-    @PostMapping("/login")
-    public int login(@RequestBody LogInfo logInfo) {
-        return managerService.login(logInfo);
-    }
-
-    @PostMapping("/changepassword")
-    public boolean changepassword() {
-        return false; // TODO
-    }
-
     @GetMapping("/find")
     public Result find(@RequestParam int tno, @RequestParam String tname) {
         return Result.success(managerMapper.find(tno, tname));

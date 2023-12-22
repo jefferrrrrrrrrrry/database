@@ -93,9 +93,8 @@ public class CourseController {
     }
 
     @GetMapping("/export")
-    public Result export(HttpServletResponse response) throws IOException {
+    public void export(HttpServletResponse response) throws IOException {
         List<Course> list = courseService.list();
         InExport.export(response, list, "课程信息");
-        return Result.success();
     }
 }
