@@ -25,11 +25,21 @@ public class UserController {
     }
 
     @PostMapping("/changepassword")
-    public Result changepassword(@RequestBody String password) {
+    public Result changepassword(@RequestBody String password) { // 用户改自身的密码
         User user = TokenUtils.getCurrentUser();
         user.setSys_password(password);
         userService.updateById(user);
         return Result.success();
+    }
+
+    @PostMapping("/changeuserpassword")
+    public Result changeUserPassword(@RequestBody User user) { // 管理员改密码
+        user.setPermission(null);
+        if (!userService.updateById(user)) {
+            return Result.error("该用户不存在");
+        } else {
+            return Result.success();
+        }
     }
 
     @GetMapping("/user/")
