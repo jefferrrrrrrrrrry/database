@@ -23,7 +23,7 @@ public class Result {
     }
 
     public static Result error(String msg) {
-        return new Result(UNKNOWN_ERROR, msg, null);
+        return new Result(ERROR, msg, null);
     }
     public static Result error(Status status, String msg) {
         return new Result(status, msg, null);

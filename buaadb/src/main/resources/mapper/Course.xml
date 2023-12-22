@@ -28,5 +28,13 @@
         SELECT AVG(Sel.segrade) AS GradeAverage FROM Sel WHERE
             Sel.cno = #{cno}
     </select>
+
+    <select id="average" resultType="com.example.buaadb.entity.output.ScoreInfo">
+        SELECT cno, AVG(Segrade) AS score FROM Sel GROUP BY Cno
+    </select>
+
+    <select id="teacherAverage" resultType="com.example.buaadb.entity.output.ScoreInfo">
+        SELECT cno, AVG(Segrade) AS score FROM Sel GROUP BY Cno
+    </select>
 </mapper>
 

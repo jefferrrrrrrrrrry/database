@@ -1,6 +1,5 @@
 package com.example.buaadb.service;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,13 +26,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         try {
             user = getOne(queryWrapper);
         } catch (Exception e) {
-            throw new ServiceException(Status.UNKNOWN_ERROR, "系统错误");
+            throw new ServiceException(Status.ERROR, "系统错误");
         }
         if (user != null) {
             logInfo.setToken(TokenUtils.genToken(logInfo.getSys_username(), logInfo.getSys_password()));
             logInfo.setPermission(user.getPermission());
         } else {
-            throw new ServiceException(Status.UNKNOWN_ERROR, "用户名或密码错误");
+            throw new ServiceException(Status.ERROR, "用户名或密码错误");
         }
     }
 

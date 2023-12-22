@@ -4,11 +4,14 @@ package com.example.buaadb.controller;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
+import com.example.buaadb.entity.User;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.mapper.StudentMapper;
 import com.example.buaadb.service.StudentService;
+import com.example.buaadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +28,8 @@ public class StudentController {
     private StudentMapper studentMapper;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/selectCourse")
     public Result selectCourse(@RequestParam String sno,
@@ -54,19 +59,26 @@ public class StudentController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Student student) {
-        return Result.success(studentService.save(student));
-    }
-
-    @PostMapping("/update")
-    public Result update(@RequestBody Student student) {
-        return Result.success(studentService.updateById(student));
+        if (userService.getById(student.getSno()) != null) {
+            return Result.error(Status.ERROR, "添加失败，用户名已存在");
+        } else {
+            userService.save(new User(student.getSno(), student.getSpassword(), 1));
+            return Result.success(studentService.save(student));
+        }
     }
 
     @DeleteMapping("/{sno}")
     public Result del(@PathVariable String sno) {
         studentService.removeById(sno);
+        userService.removeById(sno);
         return Result.success();
     }
+    @PostMapping("/update")
+    public Result update(@RequestBody Student student) {
+        return Result.success(studentService.updateById(student));
+    }
+
+
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();

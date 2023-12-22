@@ -1,12 +1,13 @@
 package com.example.buaadb.controller;
 
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
+import com.example.buaadb.entity.*;
 import com.example.buaadb.entity.Class;
-import com.example.buaadb.entity.Course;
-import com.example.buaadb.entity.Manager;
 import com.example.buaadb.mapper.ManagerMapper;
 import com.example.buaadb.service.ManagerService;
+import com.example.buaadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,8 @@ public class ManagerController {
     private ManagerMapper managerMapper;
     @Autowired
     private ManagerService managerService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/find")
     public Result find(@RequestParam int tno, @RequestParam String tname) {
@@ -29,10 +32,15 @@ public class ManagerController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Manager manager) {
-        return Result.success(managerService.save(manager));
+        if (userService.getById(manager.getMno()) != null) {
+            return Result.error(Status.ERROR, "添加失败，用户名已存在");
+        } else {
+            userService.save(new User(manager.getMno(), manager.getMpassword(), 3));
+            return Result.success(managerService.save(manager));
+        }
     }
 
-    @DeleteMapping("/{mno}")
+    @DeleteMapping("/{tno}")
     public Result del(@PathVariable int mno) {
         managerService.removeById(mno);
         return Result.success();

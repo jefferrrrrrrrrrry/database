@@ -12,7 +12,6 @@ public class Student implements UserEntity {
     private Integer sage;
     private String ssex;
     private Integer sgrade;
-    @JsonIgnore
     private String spassword;
     private Integer clno;
 }

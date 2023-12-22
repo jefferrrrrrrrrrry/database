@@ -6,9 +6,11 @@ import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.entity.Course;
 import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.entity.output.CourseInfo;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.CourseMapper;
@@ -43,8 +45,10 @@ public class CourseController {
     }
 
     @PostMapping("/teacherfind")
-    public Result teacherfind(@RequestBody Teacher teacher) {
-        return Result.success(courseMapper.teacherfind(teacher.getTno()));
+    public Result teacherfind(@RequestBody Teacher teacher
+            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+        return Result.success(PageDivision.getPage(courseMapper.teacherfind(teacher.getTno()),
+                pageNum, pageSize));
     }
 
     @PostMapping("/add")
@@ -54,22 +58,33 @@ public class CourseController {
     }
 
     @PostMapping("/approve")
-    public Result approve(@RequestBody Course course){
-        course.setStatus(1);
-        courseMapper.approve(course.getCno());
-        return Result.success();
+    public Result approve(@RequestBody String cno){
+        int i = courseMapper.approve(cno);
+        if (i > 1) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @PostMapping("/disapprove")
-    public Result disapprove(@RequestBody Course course){
-        courseService.removeById(course.getCno());
-        return Result.success();
+    public Result disapprove(@RequestBody String cno){
+        boolean b = courseService.removeById(cno);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @DeleteMapping("/{cno}")
     public Result del(@PathVariable String cno) {
-        courseService.removeById(cno);
-        return Result.success();
+        boolean b = courseService.removeById(cno);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @PostMapping("/update")
@@ -80,7 +95,9 @@ public class CourseController {
 
     @GetMapping("/average")
     public Result average(@RequestParam String cno){
-        return Result.success(courseMapper.average(cno));
+        // return Result.success(courseMapper.average(cno));
+        // TODO
+        return Result.success();
     }
 
     @PostMapping("/import")

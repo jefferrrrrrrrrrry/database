@@ -9,6 +9,5 @@ public class Manager implements UserEntity {
     @TableId
     private String mno;
     private String mname;
-    @JsonIgnore
     private String mpassword;
 }

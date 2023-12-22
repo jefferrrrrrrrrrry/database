@@ -38,11 +38,12 @@ public class TokenUtils {
             if (StrUtil.isNotBlank(token)) {
                 String userid = JWT.decode(token).getAudience().get(0);
                 return staticuserService.getById(userid);
+            } else {
+                throw new Exception();
             }
         } catch (Exception e){
-            throw new ServiceException(Status.UNKNOWN_ERROR, "未获取到用户，请尝试重新登录");
+            throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
         }
-        return null;
     }
 
     public static String getUsername() {
@@ -53,7 +54,7 @@ public class TokenUtils {
                 return JWT.decode(token).getAudience().get(0);
             }
         } catch (Exception e){
-            throw new ServiceException(Status.UNKNOWN_ERROR, "未获取到用户，请尝试重新登录");
+            throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
         }
         return null;
     }

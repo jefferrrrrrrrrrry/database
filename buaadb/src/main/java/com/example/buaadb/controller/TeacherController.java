@@ -3,11 +3,14 @@ package com.example.buaadb.controller;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Teacher;
+import com.example.buaadb.entity.User;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.mapper.TeacherMapper;
 import com.example.buaadb.service.TeacherService;
+import com.example.buaadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +27,8 @@ public class TeacherController {
     private TeacherMapper teacherMapper;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/find")
     public Result find(@RequestParam String tno, @RequestParam String tname) {
@@ -42,7 +47,12 @@ public class TeacherController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Teacher teacher) {
-        return Result.success(teacherService.save(teacher));
+        if (userService.getById(teacher.getTno()) != null) {
+            return Result.error(Status.ERROR, "添加失败，用户名已存在");
+        } else {
+            userService.save(new User(teacher.getTno(), teacher.getTpassword(), 2));
+            return Result.success(teacherService.save(teacher));
+        }
     }
 
     @DeleteMapping("/{tno}")

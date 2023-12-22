@@ -10,6 +10,5 @@ public class Teacher implements UserEntity {
     private String tno;
     private String tname;
     private String ttitle;
-    @JsonIgnore
     private String tpassword;
 }
