@@ -77,6 +77,12 @@ public class CourseController {
         return Result.success(courseService.updateById(course));
     }
 
+
+    @GetMapping("/average")
+    public Result average(@RequestParam String cno){
+        return Result.success(courseMapper.average(cno));
+    }
+
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
@@ -92,5 +98,4 @@ public class CourseController {
         InExport.export(response, list, "课程信息");
         return Result.success();
     }
-
 }

@@ -37,9 +37,14 @@ public class StudentController {
         return false; // TODO
     }
 
-    @GetMapping("/find")
-    public Result find(@RequestParam String sno, @RequestParam String sname) {
-        return Result.success(studentMapper.find(sno, sname));
+    @GetMapping("/findStudent")
+    public Result findStudent(@RequestParam String sno, @RequestParam String sname) {
+        return Result.success(studentMapper.findStudent(sno, sname));
+    }
+
+    @GetMapping("/findCourse")
+    public Result findCourse(@RequestParam String sno){
+        return Result.success(studentMapper.findCourse(sno));
     }
 
     @PostMapping("/test")

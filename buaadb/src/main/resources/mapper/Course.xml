@@ -23,5 +23,10 @@
     <update id="approve">
         UPDATE Course SET status = 1 WHERE cno = #{cno}
     </update>
+
+    <select id="average" resultType="Double">
+        SELECT AVG(Sel.segrade) AS GradeAverage FROM Sel WHERE
+            Sel.cno = #{cno}
+    </select>
 </mapper>
 
