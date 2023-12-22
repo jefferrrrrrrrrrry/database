@@ -93,10 +93,4 @@ public class CourseController {
         return Result.success();
     }
 
-    @GetMapping("/page")
-    public IPage<Course> findPage(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize) {
-        IPage<Course> page = new Page<>(pageNum, pageSize);
-        return courseService.page(page);
-    }
 }

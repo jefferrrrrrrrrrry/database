@@ -19,10 +19,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private UserMapper mapper;
     private static final Log LOG = Log.get();
 
-    public String login(String username, String password) {
+    public void login(LogInfo logInfo) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sys_username", username);
-        queryWrapper.eq("sys_password", password);
+        queryWrapper.eq("sys_username", logInfo.getSys_username());
+        queryWrapper.eq("sys_password", logInfo.getSys_password());
         User user = null;
         try {
             user = getOne(queryWrapper);
@@ -30,7 +30,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             throw new ServiceException(Status.UNKNOWN_ERROR, "系统错误");
         }
         if (user != null) {
-            return TokenUtils.genToken(username, password);
+            logInfo.setToken(TokenUtils.genToken(logInfo.getSys_username(), logInfo.getSys_password()));
+            logInfo.setPermission(user.getPermission());
         } else {
             throw new ServiceException(Status.UNKNOWN_ERROR, "用户名或密码错误");
         }
