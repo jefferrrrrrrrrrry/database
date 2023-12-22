@@ -9,7 +9,7 @@ public class Course {
     private String cno;
     private String cname;
     private String cpos;
-    private Integer tno;
+    private String tno;
     private String ctype;
     private Integer ccredit;
     private Integer ccapacity;

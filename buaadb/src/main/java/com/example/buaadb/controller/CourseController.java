@@ -13,6 +13,7 @@ import com.example.buaadb.entity.output.CourseInfo;
 import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
+import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,26 +40,27 @@ public class CourseController {
 
     @GetMapping("/find")
     public Result find(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) { // 查课
         List<CourseInfo> list = courseMapper.find(cno, cname, tname);
         return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
 
     @PostMapping("/teacherfind")
-    public Result teacherfind(@RequestBody Teacher teacher
+    public Result teacherfind(@RequestBody Teacher teacher // 教师查询其已开课程
             , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
         return Result.success(PageDivision.getPage(courseMapper.teacherfind(teacher.getTno()),
                 pageNum, pageSize));
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Course course) {
+    public Result add(@RequestBody Course course) { // 教师提交加课申请
+        course.setTno(TokenUtils.getUsername());
         course.setStatus(0);
         return Result.success(courseService.save(course));
     }
 
     @PostMapping("/approve")
-    public Result approve(@RequestBody String cno){
+    public Result approve(@RequestBody String cno){ // 管理员同意加课
         int i = courseMapper.approve(cno);
         if (i > 1) {
             return Result.success();
@@ -68,7 +70,7 @@ public class CourseController {
     }
 
     @PostMapping("/disapprove")
-    public Result disapprove(@RequestBody String cno){
+    public Result disapprove(@RequestBody String cno){ // 管理员拒绝加课
         boolean b = courseService.removeById(cno);
         if (b) {
             return Result.success();
@@ -77,8 +79,14 @@ public class CourseController {
         }
     }
 
+    @GetMapping("studentselect")
+    public Result studentselect(@RequestParam String sno
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
+        return Result.success(PageDivision.getPage(courseMapper.studentselect(sno), pageNum, pageSize));
+    }
+
     @DeleteMapping("/{cno}")
-    public Result del(@PathVariable String cno) {
+    public Result del(@PathVariable String cno) { // 删除课程
         boolean b = courseService.removeById(cno);
         if (b) {
             return Result.success();
@@ -88,13 +96,12 @@ public class CourseController {
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody Course course) {
+    public Result update(@RequestBody Course course) { // 更新课程
         return Result.success(courseService.updateById(course));
     }
 
-
     @GetMapping("/average")
-    public Result average(@RequestParam String cno){
+    public Result average(@RequestParam String cno) { // 计算课程平均分
         // return Result.success(courseMapper.average(cno));
         // TODO
         return Result.success();

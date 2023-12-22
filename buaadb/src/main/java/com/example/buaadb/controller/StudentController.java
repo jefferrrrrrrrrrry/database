@@ -1,6 +1,7 @@
 package com.example.buaadb.controller;
 
 
+import cn.hutool.db.Page;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
@@ -9,6 +10,7 @@ import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
 import com.example.buaadb.entity.User;
 import com.example.buaadb.function.InExport;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.StudentMapper;
 import com.example.buaadb.service.StudentService;
 import com.example.buaadb.service.UserService;
@@ -37,24 +39,18 @@ public class StudentController {
         studentMapper.insert(sno, cno);
         return Result.success();
     }
-    @PostMapping("/changepassword")
-    public boolean changepassword() {
-        return false; // TODO
+
+    @GetMapping("/findstudent") // 找学生
+    public Result findStudent(@RequestParam(defaultValue = "") String sno,
+                              @RequestParam(defaultValue = "") String sname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
+        return Result.success(PageDivision.getPage(studentMapper.findStudent(sno, sname), pageNum, pageSize));
     }
 
-    @GetMapping("/findStudent")
-    public Result findStudent(@RequestParam String sno, @RequestParam String sname) {
-        return Result.success(studentMapper.findStudent(sno, sname));
-    }
-
-    @GetMapping("/findCourse")
-    public Result findCourse(@RequestParam String sno){
-        return Result.success(studentMapper.findCourse(sno));
-    }
-
-    @PostMapping("/test")
-    public Result test(@RequestBody int num) {
-        return Result.success("POST内容：" + num);
+    @GetMapping("/coursechosen")
+    public Result coursechosen(@RequestParam String cno
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) { // 查询某一门课被什么学生选
+        return Result.success(PageDivision.getPage(studentMapper.coursechosen(cno), pageNum, pageSize));
     }
 
     @PostMapping("/add")

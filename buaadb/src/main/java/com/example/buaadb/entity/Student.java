@@ -1,11 +1,10 @@
 package com.example.buaadb.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-public class Student implements UserEntity {
+public class Student {
     @TableId
     private String sno;
     private String sname;

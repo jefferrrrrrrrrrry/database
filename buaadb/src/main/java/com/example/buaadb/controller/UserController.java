@@ -3,6 +3,7 @@ package com.example.buaadb.controller;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.User;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ClassMapper;
 import com.example.buaadb.mapper.UserMapper;
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/user/")
-    public Result find() {
-        return Result.success(userService.list());
+    public Result find(@RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+        return Result.success(PageDivision.getPage(userService.list(), pageNum, pageSize));
     }
 }
