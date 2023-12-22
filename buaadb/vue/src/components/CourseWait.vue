@@ -85,6 +85,7 @@ export default {
       this.id="manager";
       this.loc=2;
     }
+    console.log(this.id);
   }
 }
 </script>
@@ -114,23 +115,21 @@ export default {
       </el-table-column>
       <el-table-column prop="ccredit" label="学分" width="170">
       </el-table-column>
-      <el-table-column prop="cremain" label="剩余人数" width="170">
+      <el-table-column prop="cremain" label="剩余人数" width="120">
       </el-table-column>
-      <el-table-column prop="ccapacity" label="容量" width="170">
+      <el-table-column prop="ccapacity" label="容量" width="120">
       </el-table-column>
       <el-table-column label="操作" v-if="loc==1||loc==2">
-        <template slot-scope="scope" v-if="loc==2">
-          <el-button
-              size="mini"
-              type="danger"
-              @click="del(scope.row.cno)">同意</el-button>
-          <el-button
-                     size="mini"
-                     type="danger"
-                     @click="del(scope.row.cno)">拒绝</el-button>
-        </template>
-        <template slot-scope="scope" v-if="loc==1">
-          <el-button
+        <template slot-scope="scope" >
+          <el-button v-if="loc==2"
+               size="mini"
+               type="primary"
+               @click="del(scope.row.cno)">同意</el-button>
+          <el-button v-if="loc==2"
+               size="mini"
+               type="danger"
+               @click="del(scope.row.cno)">拒绝</el-button>
+          <el-button v-if="loc==1"
               size="mini"
               type="danger"
               @click="del(scope.row.cno)">取消开课</el-button>
