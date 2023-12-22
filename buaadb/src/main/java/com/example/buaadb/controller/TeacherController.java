@@ -56,7 +56,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{tno}")
-    public Result del(@PathVariable int tno) {
+    public Result del(@PathVariable String tno) {
         teacherService.removeById(tno);
         return Result.success();
     }

@@ -5,6 +5,7 @@ import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.*;
 import com.example.buaadb.entity.Class;
+import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ManagerMapper;
 import com.example.buaadb.service.ManagerService;
 import com.example.buaadb.service.UserService;
@@ -26,7 +27,7 @@ public class ManagerController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam int tno, @RequestParam String tname) {
+    public Result find(@RequestParam String tno, @RequestParam String tname) {
         return Result.success(managerMapper.find(tno, tname));
     }
 
@@ -41,7 +42,10 @@ public class ManagerController {
     }
 
     @DeleteMapping("/{mno}")
-    public Result del(@PathVariable int mno) {
+    public Result del(@PathVariable String mno) {
+        if (mno.equals(TokenUtils.getUsername())) {
+            return Result.error(Status.ERROR, "不能删除当前用户！");
+        }
         managerService.removeById(mno);
         return Result.success();
     }

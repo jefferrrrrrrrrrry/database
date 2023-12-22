@@ -11,5 +11,5 @@ import java.util.List;
 @Mapper
 public interface ManagerMapper extends BaseMapper<Manager> {
     List<Manager> login(String name, String password);
-    List<Manager> find(@Param("mno") int mno, @Param("mname") String mname);
+    List<Manager> find(@Param("mno") String mno, @Param("mname") String mname);
 }
