@@ -35,11 +35,14 @@
             Sel.cno = #{cno}
     </select>
 
-    <select id="average" resultType="com.example.buaadb.entity.output.ScoreInfo">
-        SELECT cno, AVG(Segrade) AS score FROM Sel GROUP BY Cno
+    <select id="average" resultType="com.example.buaadb.entity.output.CourseInfo">
+        SELECT course.Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain, AVG(Segrade) AS score
+            FROM (course JOIN teacher ON course.Tno = teacher.Tno) JOIN Sel ON course.cno = sel.Cno
+            WHERE status = 1
+            GROUP BY sel.Cno
     </select>
 
-    <select id="teacherAverage" resultType="com.example.buaadb.entity.output.ScoreInfo">
+    <select id="teacherAverage" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT cno, AVG(Segrade) AS score FROM Sel GROUP BY Cno
     </select>
 </mapper>

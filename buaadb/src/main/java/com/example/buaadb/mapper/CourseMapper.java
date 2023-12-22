@@ -16,6 +16,6 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<CourseInfo> teacherfind(@Param("tno") String tno);
     List<CourseInfo> studentselect(@Param("sno") String sno);
     Integer approve(@Param("cno") String cno);
-    List<ScoreInfo> average();
+    List<CourseInfo> average();
 
 }
