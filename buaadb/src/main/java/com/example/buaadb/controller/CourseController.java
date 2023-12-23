@@ -59,6 +59,13 @@ public class CourseController {
 
     @PostMapping("/selectCourse")
     public Result selectCourse(@RequestBody String cno) { // 学生选课
+        QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sno", TokenUtils.getUsername());
+        queryWrapper.eq("cno", cno);
+        Sel sel = selService.getOne(queryWrapper);
+        if (sel != null) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
         boolean b = selService.save(new Sel(cno, TokenUtils.getUsername(), null));
         if (b) {
             return Result.success();
@@ -70,7 +77,12 @@ public class CourseController {
     @PostMapping("/withdraw")
     public Result withdraw(@RequestBody String cno) {
         QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sno", TokenUtils.getUsername());
         queryWrapper.eq("cno", cno);
+        Sel sel = selService.getOne(queryWrapper);
+        if (sel.getSegrade() != null) {
+            throw new ServiceException(Status.ERROR, "教师已打分，无法退课");
+        }
         boolean b = selService.remove(queryWrapper);
         if (b) {
             return Result.success();
