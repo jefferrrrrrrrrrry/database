@@ -173,6 +173,7 @@ export default {
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
       <el-breadcrumb-item v-if="this.loc==1"><a href='/${id}/courseOpen' >待审核课程</a></el-breadcrumb-item>
+      <el-breadcrumb-item v-if="this.loc==2"><a href='/${id}/courseOpen' >审核开课</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-input style="flex:1;width:200px"  placeholder="请输入课程名" suffix-icon="el-icon-search" v-model="s_cname"
