@@ -8,9 +8,8 @@ export default {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
       request.get("http://localhost:9090/course/").then(res=>{
-        //console.log(res.data);
         this.tableData=res.data;
-        this.total=res.length;
+        this.total=res.data.length;
       });
     },reset(){
       this.s_cname="";
@@ -130,7 +129,7 @@ export default {
   created() {
     //console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
-    this.find();
+    this.load();
     if(this.$route.path.includes("teacher")){
       this.id="teacher";
       this.loc=1;
