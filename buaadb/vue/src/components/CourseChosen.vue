@@ -9,13 +9,23 @@ export default {
     load(){
       console.log(this.loc);
       if(this.loc==0){
-        request.get("http://localhost:9090/course/studentselect").then(res => {
+        request.get("http://localhost:9090/course/studentselect",{
+          params:{
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res => {
           console.log(res);
           this.tableData = res.data.page;
           this.total = res.data.total;
         });
       }else if(this.loc==1){
-        request.get("http://localhost:9090/course/findApprove").then(res => {
+        request.get("http://localhost:9090/course/findApprove",{
+          params:{
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res => {
           console.log(res);
           this.tableData = res.data.page;
           this.total = res.data.total;
@@ -28,7 +38,7 @@ export default {
       this.find();
     },
     find(){
-      if(this.loc==1){
+      if(this.loc==0){
         request.get("http://localhost:9090/course/studentselect",{
           params:{
             cno:this.s_cno,
@@ -43,7 +53,7 @@ export default {
           this.tableData=res.data.page;
           this.total=res.data.total;
         });}
-      else if(this.loc==2){
+      else if(this.loc==1){
         request.get("http://localhost:9090/course/findApprove",{
           params:{
             cno:this.s_cno,
