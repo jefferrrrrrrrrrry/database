@@ -135,10 +135,10 @@ public class CourseController {
     }
 
     @GetMapping("/studentselect")
-    public Result studentselect(@RequestParam String sno // 学生查询已选课程
-            , @RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+    public Result studentselect( // 学生查询已选课程
+            @RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(courseMapper.studentselect(sno, cno, cname, tname), pageNum, pageSize));
+        return Result.success(PageDivision.getPage(courseMapper.studentselect(TokenUtils.getUsername(), cno, cname, tname), pageNum, pageSize));
     }
 
     @DeleteMapping("/{cno}")
