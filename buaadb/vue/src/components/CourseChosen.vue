@@ -6,11 +6,19 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/studentselect").then(res=>{
-        console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.length;
-      });
+      if(this.loc==1){
+        request.get("http://localhost:9090/course/studentselect").then(res => {
+          console.log(res.data);
+          this.tableData = res.data;
+          this.total = res.length;
+        });
+      }else if(this.loc==2){
+        request.get("http://localhost:9090/course/studentselect").then(res => {
+          console.log(res.data);
+          this.tableData = res.data;
+          this.total = res.length;
+        });
+      }
     },reset(){
       this.s_cname="";
       this.s_cno="";

@@ -14,24 +14,25 @@ import ManagerCourseView from "@/views/ManagerCourseView.vue";
 import ManagerManageAllView from "@/views/ManagerManageAllView.vue";
 import ManagerDepartmentView from "@/views/ManagerDepartmentView.vue";
 import ManagerClassView from "@/views/ManagerClassView.vue";
-
+import NotFoundView from "@/views/404View.vue";
 Vue.use(VueRouter)
-
+// 在父级路由上添加 meta 信息
 const routes = [
     {
         path: '/student',
         name: 'student',
         component: StudentView,
+        meta: { requiresAuth: true }, // 添加 meta 信息
         children: [
             {path: "course", name: "studentCourse", component: StudentCourseView},
             {path: "courseChosen", name: "studentCourseChosen", component: StudentCourseChosenView},
-
         ]
     },
     {
         path: '/teacher',
         name: 'teacher',
         component: TeacherView,
+        meta: { requiresAuth: true }, // 添加 meta 信息
         children: [
             {path: "course", name: "teacherCourse", component: TeacherCourseView},
             {path: "courseWait", name: "teacherCourseWait", component: TeacherCourseWaitView},
@@ -42,6 +43,7 @@ const routes = [
         path: '/manager',
         name: 'manager',
         component: ManagerView,
+        meta: { requiresAuth: true }, // 添加 meta 信息
         children: [
             {path: "course", name: "ManagerCourse", component: ManagerCourseView},
             {path: "work", name: "ManagerWork", component: ManagerWorkView},
@@ -53,18 +55,17 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: login
     },
     {
         path: '/about',
         name: 'about',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    },
+    {
+        path: '*',
+        name: '404',
+        component: NotFoundView,
     }
 ]
 
@@ -73,5 +74,25 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
+// 在路由守卫中检查 meta 信息
+router.beforeEach((to, from, next) => {
+    console.log("-----------------------------")
+    console.log(to);
+    console.log(from);
+    console.log("-----------------------------")
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // 需要认证的路由
+        if (!from.fullPath.includes("login")&&to.fullPath.substring(0,4)!==from.fullPath.substring(0,4)) {
+            alert("拒绝访问,请重新登录");
+            router.push("/login");
+        } else {
+            // 用户已认证，继续导航
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router
