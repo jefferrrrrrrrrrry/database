@@ -6,13 +6,14 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      if(this.loc==1){
+      console.log(this.loc);
+      if(this.loc==0){
         request.get("http://localhost:9090/course/studentselect").then(res => {
-          console.log(res.data);
-          this.tableData = res.data;
-          this.total = res.length;
+          console.log(res);
+          this.tableData = res.data.page;
+          this.total = res.data.total;
         });
-      }else if(this.loc==2){
+      }else if(this.loc==1){
       }
     },reset(){
       this.s_cname="";
@@ -38,7 +39,7 @@ export default {
        }
     },
     del(id){
-      request.delete("http://localhost:9090/course/"+id).then(res=>{
+      request.post("http://localhost:9090/course/withdraw",id).then(res=>{
         if(res){
           this.$message.success("退选成功")
           this.dialogVisible=false;
@@ -80,8 +81,6 @@ export default {
   },
   created() {
     console.log(this.$route);
-    //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
-    this.find();
     if(this.$route.path.includes("teacher")){
       this.id="teacher";
       this.loc=1;
@@ -92,6 +91,7 @@ export default {
       this.id="manager";
       this.loc=2;
     }
+    this.load();
   }
 }
 </script>

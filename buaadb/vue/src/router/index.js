@@ -90,7 +90,7 @@ router.beforeEach((to, from, next) => {
     console.log(loc)
     console.log(new_loc)
     if (!from.fullPath.includes("login")&&new_loc!=loc) {
-            alert("拒绝访问");
+
             if(loc===1){
                 router.push('/student');
             }else if(loc===2){
@@ -98,6 +98,7 @@ router.beforeEach((to, from, next) => {
             }else if(loc===3){
                 router.push('/manager');
             }else{
+                alert("拒绝访问");
                 router.push('/login');
             }
 
