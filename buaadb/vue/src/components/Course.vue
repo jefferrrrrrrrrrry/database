@@ -1,5 +1,6 @@
 <script>
 import request from "@/utils/request";
+import * as XLSX from "xlsx";
 
 export default {
   name: "Course",
@@ -91,7 +92,11 @@ export default {
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
     },exports(){
-      window.open("http://localhost:9090/course/export");
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '全部课程.xlsx');
+      //window.open("http://localhost:9090/course/export");
     }
   },
   data(){

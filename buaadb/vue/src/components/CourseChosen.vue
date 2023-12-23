@@ -1,5 +1,6 @@
 <script>
 import request from "@/utils/request";
+import * as XLSX from "xlsx";
 
 export default {
   name: "CourseChosen",
@@ -62,7 +63,18 @@ export default {
       this.currentPage=currentPage;
       this.find();
     },exports(){
-    window.open("http://localhost:9090/student/export");
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        if(this.loc==0){
+          XLSX.writeFile(wb, '已选课程.xlsx');
+        }else if(this.loc==1){
+          XLSX.writeFile(wb, '已开课程.xlsx');
+        }else{
+          XLSX.writeFile(wb, '已选课程.xlsx');
+        }
+
+        //window.open("http://localhost:9090/course/export");
   }
   },
   data(){
