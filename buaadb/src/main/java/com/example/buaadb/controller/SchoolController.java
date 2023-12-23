@@ -2,9 +2,11 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.entity.School;
 import com.example.buaadb.function.InExport;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.SchoolMapper;
 import com.example.buaadb.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,28 @@ public class SchoolController {
     @Autowired
     private SchoolService schoolService;
 
+    @PostMapping("/add")
+    public Result add(@RequestBody School school) {
+        return Result.success(schoolService.save(school));
+    }
+
+
     @PostMapping("/update")
     public Result update(@RequestBody School school) {
         return Result.success(schoolService.updateById(school));
+    }
+
+    @DeleteMapping("/{scno}")
+    public Result del(@PathVariable String scno) {
+        return Result.success(schoolService.removeById(scno));
+    }
+
+    @GetMapping("/find")
+    public Result find(@RequestParam String scname // 根据系名模糊查找系
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
+        QueryWrapper<School> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("scname", scname);
+        return Result.success(PageDivision.getPage(schoolService.list(queryWrapper), pageNum, pageSize));
     }
 
     @PostMapping("/import")
