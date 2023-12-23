@@ -7,11 +7,30 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/findPend").then(res=>{
-        console.log(res.data);
-        this.tableData=res.data.page;
-        this.total=res.data.total;
-      });
+      if(this.loc==1){
+        request.get("http://localhost:9090/course/findPend",{
+          params:{
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }else if(this.loc==2){
+        request.get("http://localhost:9090/course/managerfindPend",{
+          params:{
+            cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }
     },reset(){
       this.s_cname="";
       this.s_cno="";
@@ -19,18 +38,34 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/course/findPend",{
-        params:{
-          cno:this.s_cno,
-          cname:this.s_cname,
-          tname:this.s_tname,
-          pageNum:this.currentPage,
-          pageSize:this.pageSize
-        }
-      }).then(res=>{
-        this.tableData=res.data.page;
-        this.total=res.data.total;
-      });
+      if(this.loc==1){
+        request.get("http://localhost:9090/course/findPend",{
+          params:{
+            cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }else if(this.loc==2){
+        request.get("http://localhost:9090/course/managerfindPend",{
+          params:{
+            cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }
+
     },
     del(id){
       request.delete("http://localhost:9090/course/"+id).then(res=>{
@@ -40,6 +75,26 @@ export default {
           this.load();
         }else{
           this.$message.error("退选失败")
+        }
+      })
+    },
+    accept(id){
+      request.post("http://localhost:9090/course/approve",id).then(res=>{
+        if(res.status==="SUCCESS"){
+          this.$message.success("同意开课成功")
+          this.load()
+        }else{
+          this.$message.error("同意开课失败")
+        }
+      })
+    },
+    refuse(id){
+      request.post("http://localhost:9090/course/disapprove",id).then(res=>{
+        if(res.status==="SUCCESS"){
+          this.$message.success("拒绝开课成功")
+          this.load()
+        }else{
+          this.$message.error("拒绝开课失败")
         }
       })
     },
@@ -96,9 +151,8 @@ export default {
     }
   },
   created() {
-    console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
-    this.load();
+
     if(this.$route.path.includes("teacher")){
       this.id="teacher";
       this.loc=1;
@@ -109,7 +163,7 @@ export default {
       this.id="manager";
       this.loc=2;
     }
-    console.log(this.id);
+    this.load();
   }
 }
 </script>
@@ -153,11 +207,11 @@ export default {
           <el-button v-if="loc==2"
                size="mini"
                type="primary"
-               @click="del(scope.row.cno)">同意</el-button>
+               @click="accept(scope.row.cno)">同意</el-button>
           <el-button v-if="loc==2"
                size="mini"
                type="danger"
-               @click="del(scope.row.cno)">拒绝</el-button>
+               @click="refuse(scope.row.cno)">拒绝</el-button>
           <el-button v-if="loc==1"
               size="mini"
               type="danger"
