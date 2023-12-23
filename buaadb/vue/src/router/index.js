@@ -12,6 +12,8 @@ import login from "@/views/Login.vue";
 import ManagerWorkView from "@/views/ManagerWorkView.vue";
 import ManagerCourseView from "@/views/ManagerCourseView.vue";
 import ManagerManageAllView from "@/views/ManagerManageAllView.vue";
+import ManagerDepartmentView from "@/views/ManagerDepartmentView.vue";
+import ManagerClassView from "@/views/ManagerClassView.vue";
 
 Vue.use(VueRouter)
 
@@ -44,6 +46,8 @@ const routes = [
             {path: "course", name: "ManagerCourse", component: ManagerCourseView},
             {path: "work", name: "ManagerWork", component: ManagerWorkView},
             {path: "manageAll", name: "ManagerManageAll", component: ManagerManageAllView},
+            {path: "department", name: "ManagerDepartment", component: ManagerDepartmentView},
+            {path: "class", name: "ManagerClass", component: ManagerClassView},
         ]
     },
     {

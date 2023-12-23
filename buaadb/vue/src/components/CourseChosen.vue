@@ -6,7 +6,7 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/").then(res=>{
+      request.get("http://localhost:9090/course/studentselect").then(res=>{
         console.log(res.data);
         this.tableData=res.data;
         this.total=res.length;
@@ -18,11 +18,9 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/course/find",{
+      request.get("http://localhost:9090/course/studentselect",{
         params:{
           cno:this.s_cno,
-          cname:this.s_cname,
-          tname:this.s_tname,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
@@ -107,19 +105,24 @@ export default {
               clearable></el-input>
     <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
     <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
+    <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
   </div>
   <el-table :data="tableData">
-    <el-table-column prop="cno" label="课程代码" width="200">
+    <el-table-column prop="cno" label="课程代码" width="150">
     </el-table-column>
     <el-table-column prop="cname" label="课程名称" width="200">
     </el-table-column>
-    <el-table-column prop="cpos" label="校区" width="200">
+    <el-table-column prop="ctype" label="课程类型" width="150">
     </el-table-column>
-    <el-table-column prop="ccredit" label="学分" width="170">
+    <el-table-column prop="tname" label="开课老师" width="150">
     </el-table-column>
-    <el-table-column prop="cremain" label="剩余人数" width="120">
+    <el-table-column prop="cpos" label="校区" width="150">
     </el-table-column>
-    <el-table-column prop="ccapacity" label="容量" width="120">
+    <el-table-column prop="ccredit" label="学分" width="120">
+    </el-table-column>
+    <el-table-column prop="cremain" label="剩余人数" width="80">
+    </el-table-column>
+    <el-table-column prop="ccapacity" label="容量" width="80">
     </el-table-column>
     <el-table-column label="操作" v-if="this.loc==0">
       <template slot-scope="scope">

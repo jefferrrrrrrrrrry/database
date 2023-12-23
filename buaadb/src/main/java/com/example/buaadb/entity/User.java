@@ -1,9 +1,7 @@
 package com.example.buaadb.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -43,6 +43,17 @@ export default {
         }
       })
     },
+    choose(id){
+      request.post("http://localhost:9090/course/selectCourse",id).then(res=>{
+        if(res){
+          this.$message.success("选课成功")
+          this.load();
+        }else{
+          this.$message.error("选课失败")
+        }
+      })
+
+    },
     formatText(text) {
       // 将换行符 \n 替换为 <br>
       return text.replace(/\n/g, "<br>");
@@ -145,24 +156,28 @@ export default {
       <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="cno" label="课程代码" width="200">
+      <el-table-column prop="cno" label="课程代码" width="150">
       </el-table-column>
       <el-table-column prop="cname" label="课程名称" width="200">
       </el-table-column>
-      <el-table-column prop="cpos" label="校区" width="200">
+      <el-table-column prop="ctype" label="课程类型" width="150">
       </el-table-column>
-      <el-table-column prop="ccredit" label="学分" width="170">
+      <el-table-column prop="tname" label="开课老师" width="150">
       </el-table-column>
-      <el-table-column prop="cremain" label="剩余人数" width="120">
+      <el-table-column prop="cpos" label="校区" width="150">
       </el-table-column>
-      <el-table-column prop="ccapacity" label="容量" width="120">
+      <el-table-column prop="ccredit" label="学分" width="120">
+      </el-table-column>
+      <el-table-column prop="cremain" label="剩余人数" width="80">
+      </el-table-column>
+      <el-table-column prop="ccapacity" label="容量" width="80">
       </el-table-column>
       <el-table-column label="操作" >
         <template slot-scope="scope" >
           <el-button v-if="loc==0"
               size="mini"
               type="danger"
-              @click="del(scope.row.cno)">选课</el-button>
+              @click="choose(scope.row.cno)">选课</el-button>
           <el-button v-if="loc==1"
               size="mini"
               type="danger"
@@ -198,6 +213,12 @@ export default {
       </el-form-item>
       <el-form-item label="课程名称">
         <el-input v-model="form.cname" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="课程类型">
+        <el-input v-model="form.ctype" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="教师姓名">
+        <el-input v-model="form.tname" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="校区">
         <el-input v-model="form.cpos" autocomplete="off"></el-input>
