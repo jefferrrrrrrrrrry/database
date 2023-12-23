@@ -35,7 +35,8 @@ export default {
     del(id){
       var out_cno=id;
       request.post("http://localhost:9090/course/withdraw",out_cno).then(res=>{
-        if(res){
+        console.log(res)
+        if(res.status==="SUCCESS"){
           this.$message.success("退选成功");
           this.load();
         }else{
@@ -46,11 +47,11 @@ export default {
     choose(id){
       var out_cno=id;
       request.post("http://localhost:9090/course/selectCourse",out_cno).then(res=>{
-        if(res){
+        if(res.status==="SUCCESS"){
           this.$message.success("选课成功");
           this.load();
         }else{
-          this.$message.error("选课失败")
+          this.$message.error("选课失败，你已选")
         }
       })
 

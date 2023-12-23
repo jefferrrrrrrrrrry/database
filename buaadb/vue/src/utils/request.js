@@ -32,12 +32,6 @@ request.interceptors.response.use(
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }
-        if(res.status!== "SUCCESS"){
-            ElementUI.Message({
-                massage:res.msg,
-                type:"error"
-            })
-        }
         return res;
     },
     error => {

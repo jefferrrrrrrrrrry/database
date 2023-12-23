@@ -83,9 +83,9 @@ router.beforeEach((to, from, next) => {
     console.log("-----------------------------")
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // 需要认证的路由
-        if (!from.fullPath.includes("login")&&to.fullPath.substring(0,4)!==from.fullPath.substring(0,4)) {
+        if (!from.fullPath==="/"&&!from.fullPath.includes("login")&&to.fullPath.substring(0,4)!==from.fullPath.substring(0,4)) {
             alert("拒绝访问,请重新登录");
-            router.push("/login");
+            router.push('/login');
         } else {
             // 用户已认证，继续导航
             next();
