@@ -17,8 +17,6 @@ public class SelController {
     @Autowired
     private SelService selService;
 
-
-
     @PostMapping("/add")
     public Result add(@RequestBody Sel sel) {
         return Result.success(selService.save(sel));

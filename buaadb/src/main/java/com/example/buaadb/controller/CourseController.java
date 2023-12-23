@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/course")
@@ -171,6 +172,13 @@ public class CourseController {
 
     @PostMapping("recordgrade")
     public Result recordgrade(@RequestBody Sel sel) {
+        Course course = courseService.getById(sel.getCno());
+        if (course == null) {
+            throw new ServiceException(Status.ERROR, "课程不存在");
+        }
+        if (!Objects.equals(course.getTno(), TokenUtils.getUsername())) {
+            throw new ServiceException(Status.ERROR, "你没有权限更改此成绩");
+        }
         try {
             QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("cno", sel.getCno());
