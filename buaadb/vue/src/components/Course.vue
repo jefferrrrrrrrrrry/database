@@ -101,22 +101,15 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
-    },handleSuccess(response, file, fileList){
-      if(file==null){
-        console.log(file)
-        this.$message.error("添加失败，请核对文件格式")
-      } else{
-        request.post("http://localhost:9090/course/import",file).then(res=>{
-          console.log(res)
-          if(res.status==="SUCCESS"){
-            this.$message.success("添加成功");
-            this.load();
-          }else{
-            this.$message.error("添加失败，请核对文件格式")
-          }
-        })
-        this.fileLoadVisible=false;
+    },handleFileUploadSuccess(res) {
+      if(res.status==="SUCCESS"){
+        this.$message.success("添加成功")
+        this.load()
+      }else{
+        this.$message.success("添加失败，请重新检查格式")
+        this.load()
       }
+
     },handleClose(){
       _ => {
         done();
@@ -281,8 +274,8 @@ export default {
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <el-form label-width="80px" size="small" >
-          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" accept=".xls, .xlsx"
-                     :on-success="handleSuccess">
+          <el-upload class="upload-demo" drag action="http://localhost:9090/course/import" accept=".xls, .xlsx"
+                     :on-success="handleFileUploadSuccess">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb，格式请参考新增</div>
