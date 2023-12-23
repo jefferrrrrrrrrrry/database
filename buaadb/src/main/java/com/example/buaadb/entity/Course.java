@@ -1,9 +1,11 @@
 package com.example.buaadb.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Course {
     @TableId
     private String cno;

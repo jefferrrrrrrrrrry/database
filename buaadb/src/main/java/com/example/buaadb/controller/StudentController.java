@@ -11,6 +11,7 @@ import com.example.buaadb.entity.Student;
 import com.example.buaadb.entity.User;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
+import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.StudentMapper;
 import com.example.buaadb.service.StudentService;
 import com.example.buaadb.service.UserService;
@@ -32,14 +33,6 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private UserService userService;
-
-    @GetMapping("/selectCourse")
-    public Result selectCourse(@RequestParam String sno,
-                               @RequestParam String cno){
-        studentMapper.insert(sno, cno);
-        return Result.success();
-    }
-
     @GetMapping("/findstudent") // 找学生
     public Result findStudent(@RequestParam(defaultValue = "") String sno,
                               @RequestParam(defaultValue = "") String sname
@@ -48,7 +41,7 @@ public class StudentController {
     }
 
     @GetMapping("/coursechosen")
-    public Result coursechosen(@RequestParam String cno
+    public Result coursechosen(@RequestParam String cno // 选某课的名单
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) { // 查询某一门课被什么学生选
         return Result.success(PageDivision.getPage(studentMapper.coursechosen(cno), pageNum, pageSize));
     }

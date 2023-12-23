@@ -3,11 +3,13 @@ package com.example.buaadb.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.common.Status;
 import com.example.buaadb.entity.Course;
+import com.example.buaadb.entity.Sel;
 import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.entity.output.CourseInfo;
 import com.example.buaadb.exception.ServiceException;
@@ -16,6 +18,7 @@ import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.CourseMapper;
 import com.example.buaadb.service.CourseService;
+import com.example.buaadb.service.SelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +35,8 @@ public class CourseController {
     private CourseMapper courseMapper;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private SelService selService;
 
     @GetMapping("/")
     public Result findAll() {
@@ -40,7 +45,7 @@ public class CourseController {
 
     @GetMapping("/find")
     public Result find(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) { // 查课
+            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) { // 查询总课表
         List<CourseInfo> list = courseMapper.find(cno, cname, tname);
         return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
@@ -52,11 +57,49 @@ public class CourseController {
                 pageNum, pageSize));
     }
 
+    @GetMapping("/selectCourse")
+    public Result selectCourse(@RequestParam String cno) { // 学生选课
+        boolean b = selService.save(new Sel(cno, TokenUtils.getUsername(), null));
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
+    }
+
+    @GetMapping("/withdraw")
+    public Result withdraw(@RequestParam String cno) {
+        QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("cno", cno);
+        boolean b = selService.remove(queryWrapper);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
+    }
+
     @PostMapping("/add")
     public Result add(@RequestBody Course course) { // 教师提交加课申请
         course.setTno(TokenUtils.getUsername());
         course.setStatus(0);
-        return Result.success(courseService.save(course));
+        boolean b = courseService.save(course);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
+    }
+
+    @PostMapping("/manageradd")
+    public Result manageradd(@RequestBody Course course) { // 管理员提交加课申请
+        course.setStatus(1);
+        boolean b = courseService.save(course);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @PostMapping("/approve")
@@ -79,8 +122,8 @@ public class CourseController {
         }
     }
 
-    @GetMapping("studentselect")
-    public Result studentselect(@RequestParam String sno
+    @GetMapping("/studentselect")
+    public Result studentselect(@RequestParam String sno // 学生查询已选课程
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         return Result.success(PageDivision.getPage(courseMapper.studentselect(sno), pageNum, pageSize));
     }
@@ -88,6 +131,19 @@ public class CourseController {
     @DeleteMapping("/{cno}")
     public Result del(@PathVariable String cno) { // 删除课程
         boolean b = courseService.removeById(cno);
+        if (b) {
+            return Result.success();
+        } else {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
+    }
+
+    @PostMapping("recordgrade")
+    public Result recordgrade(@RequestBody Sel sel) {
+        QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("cno", sel.getCno());
+        queryWrapper.eq("sno", sel.getSno());
+        boolean b = selService.update(sel, queryWrapper);
         if (b) {
             return Result.success();
         } else {

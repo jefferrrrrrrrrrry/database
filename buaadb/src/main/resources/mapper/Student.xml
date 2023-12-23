@@ -11,11 +11,6 @@
         SELECT * FROM STUDENT WHERE sname like concat('%', #{sname}, '%') and sno like concat('%', #{sno}, '%')
     </select>
 
-    <select id="findCourse" resultType="com.example.buaadb.entity.Course">
-        SELECT Course.Cno, Cname, Cpos, Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
-        FROM (Course JOIN Sel ON (Course.Cno = Sel.Cno AND Sel.Sno = #{Sno}))
-    </select>
-
     <select id="coursechosen" resultType="com.example.buaadb.entity.Student">
         SELECT * FROM student WHERE sno IN (SELECT sno FROM sel WHERE cno = #{cno})
     </select>
