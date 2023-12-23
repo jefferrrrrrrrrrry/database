@@ -52,10 +52,11 @@ public class TokenUtils {
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
                 return JWT.decode(token).getAudience().get(0);
+            } else {
+                throw new Exception();
             }
         } catch (Exception e){
             throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
         }
-        return null;
     }
 }
