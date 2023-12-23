@@ -57,6 +57,9 @@ export default {
       })
 
     },
+    cancel(id){
+
+    },
     formatText(text) {
       // 将换行符 \n 替换为 <br>
       return text.replace(/\n/g, "<br>");
@@ -186,10 +189,6 @@ export default {
               size="mini"
               type="danger"
               @click="choose(scope.row.cno)">选课</el-button>
-          <el-button v-if="loc==1"
-              size="mini"
-              type="danger"
-              @click="del(scope.row.cno)">取消开课</el-button>
           <el-button v-if="loc==2"
               size="mini"
               type="primary"

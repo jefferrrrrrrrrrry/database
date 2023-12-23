@@ -34,12 +34,27 @@ export default {
     },
     del(id){
       request.delete("http://localhost:9090/course/"+id).then(res=>{
-        if(res){
+        if(res.data.status==="SUCCESS"){
           this.$message.success("退选成功")
           this.dialogVisible=false;
           this.load();
         }else{
           this.$message.error("退选失败")
+        }
+      })
+    },
+    cancel(id){
+      request.delete("http://localhost:9090/course/"+id,{
+        params:{
+          cno:id,
+        }
+      }).then(res=>{
+        if(res.data.status==="SUCCESS"){
+          this.$message.success("取消开课成功")
+          this.dialogVisible=false;
+          this.load();
+        }else{
+          this.$message.error("取消开课失败")
         }
       })
     },
@@ -132,7 +147,7 @@ export default {
           <el-button v-if="loc==1"
               size="mini"
               type="danger"
-              @click="del(scope.row.cno)">取消开课</el-button>
+              @click="cancel(scope.row.cno)">取消开课</el-button>
         </template>
       </el-table-column>
 
