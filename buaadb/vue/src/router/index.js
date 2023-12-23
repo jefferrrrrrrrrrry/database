@@ -89,7 +89,7 @@ router.beforeEach((to, from, next) => {
     }
     console.log(loc)
     console.log(new_loc)
-    if (!from.fullPath.includes("login")&&new_loc!=loc) {
+    if (!to.fullPath.includes("login")&&!from.fullPath.includes("login")&&new_loc!=loc) {
 
             if(loc===1){
                 router.push('/student');

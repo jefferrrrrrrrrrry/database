@@ -48,9 +48,7 @@ export default {
           console.log(this.user)
 
           request.post("http://localhost:9090/login", this.user).then(res => {
-            if (res) {
-              console.log("!!----------------------")
-              console.log(res)
+            if (res.status=="SUCCESS") {
               localStorage.setItem("token", res.data.token)  // 存储用户信息到浏览器
               // 动态设置当前用户的路由
               // setRoutes()

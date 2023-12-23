@@ -32,7 +32,7 @@ export default {
     },
     del(id){
       request.delete("http://localhost:9090/course/"+id).then(res=>{
-        if(res){
+        if(res.data.status==="SUCCESS"){
           this.$message.success("退选成功")
           this.dialogVisible=false;
           this.load();
