@@ -4,8 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.buaadb.mapper.TeacherMapper">
 
-    <select id="find" resultType="com.example.buaadb.entity.Teacher">
-        SELECT * FROM teacher WHERE tname like concat('%', #{tname}, '%') and tno like concat('%', #{tno}, '%')
+    <select id="find" resultType="com.example.buaadb.entity.output.TeacherInfoeacher">
+        SELECT tno, tname, tsex, ttitle, teacher.scno, scname FROM teacher JOIN school ON teacher.Scno = school.Scno
+        WHERE tname like concat('%', #{tname}, '%')
+          and tno like concat('%', #{tno}, '%')
+          and scname like concat('%', #{scname}, '%')
     </select>
+
+
 </mapper>
 

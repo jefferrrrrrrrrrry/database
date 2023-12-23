@@ -10,7 +10,9 @@ public class Teacher {
     @TableId
     private String tno;
     private String tname;
+    private String tsex;
     private String ttitle;
+    private Integer scno;
     private String tpassword;
 
     public static void sortByTno(List<Teacher> list, int up) {

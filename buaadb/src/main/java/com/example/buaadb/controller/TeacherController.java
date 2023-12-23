@@ -36,8 +36,8 @@ public class TeacherController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam String tno, @RequestParam String tname) {
-        return Result.success(teacherMapper.find(tno, tname));
+    public Result find(@RequestParam String tno, @RequestParam String tname, @RequestParam String scname) {
+        return Result.success(teacherMapper.find(tno, tname, scname));
     }
 
     @PostMapping("/add")
