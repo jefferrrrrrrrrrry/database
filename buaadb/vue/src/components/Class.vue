@@ -17,17 +17,17 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/class/",{
+      request.get("http://localhost:9090/class/find",{
         params:{
-          clno:this.s_clno,
+          // clno:this.s_clno,
           scno:this.s_scno,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
       }).then(res=>{
         console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.data.length;
+        this.tableData=res.data.page;
+        this.total=res.data.total;
       });
     },
     del(id){

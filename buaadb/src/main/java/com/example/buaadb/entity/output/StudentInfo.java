@@ -1,7 +1,9 @@
 package com.example.buaadb.entity.output;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
+@Data
 public class StudentInfo {
     @TableId
     private String sno;
