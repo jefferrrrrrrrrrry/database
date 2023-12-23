@@ -48,7 +48,7 @@ export default {
           cno:id,
         }
       }).then(res=>{
-        if(res.data.status==="SUCCESS"){
+        if(res.status==="SUCCESS"){
           this.$message.success("取消开课成功")
           this.dialogVisible=false;
           this.load();
