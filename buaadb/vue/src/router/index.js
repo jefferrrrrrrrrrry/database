@@ -17,12 +17,14 @@ import ManagerClassView from "@/views/Manager/ManagerClassView.vue";
 import NotFoundView from "@/views/404View.vue";
 Vue.use(VueRouter)
 // 在父级路由上添加 meta 信息
+var loc=0//localStorage.getItem("loc")
+
 const routes = [
     {
         path: '/student',
         name: 'student',
         component: StudentView,
-        meta: { requiresAuth: true }, // 添加 meta 信息
+        meta: { requiresAuth: true}, // 添加 meta 信息
         children: [
             {path: "course", name: "studentCourse", component: StudentCourseView},
             {path: "courseChosen", name: "studentCourseChosen", component: StudentCourseChosenView},
@@ -32,7 +34,7 @@ const routes = [
         path: '/teacher',
         name: 'teacher',
         component: TeacherView,
-        meta: { requiresAuth: true }, // 添加 meta 信息
+        meta: { requiresAuth: true}, // 添加 meta 信息
         children: [
             {path: "course", name: "teacherCourse", component: TeacherCourseView},
             {path: "courseWait", name: "teacherCourseWait", component: TeacherCourseWaitView},
@@ -43,7 +45,7 @@ const routes = [
         path: '/manager',
         name: 'manager',
         component: ManagerView,
-        meta: { requiresAuth: true }, // 添加 meta 信息
+        meta: { requiresAuth: true}, // 添加 meta 信息
         children: [
             {path: "course", name: "ManagerCourse", component: ManagerCourseView},
             {path: "work", name: "ManagerWork", component: ManagerWorkView},
@@ -58,7 +60,7 @@ const routes = [
         component: login
     },
     {
-        path: '/about',
+        path: '/',
         name: 'about',
         component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     },
@@ -77,20 +79,39 @@ const router = new VueRouter({
 
 // 在路由守卫中检查 meta 信息
 router.beforeEach((to, from, next) => {
-    console.log("-----------------------------")
-    console.log(to);
-    console.log(from);
-    console.log("-----------------------------")
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        // 需要认证的路由
-        if (!from.fullPath==="/"&&!from.fullPath.includes("login")&&to.fullPath.substring(0,4)!==from.fullPath.substring(0,4)) {
-            alert("拒绝访问,请重新登录");
-            router.push('/login');
-        } else {
-            // 用户已认证，继续导航
-            next();
-        }
+    var new_loc=0;
+    if(to.fullPath.includes("student")){
+        new_loc=1;
+    }else if(to.fullPath.includes("teacher")){
+        new_loc=2;
+    }else if(to.fullPath.includes("manager")) {
+        new_loc = 3;
+    }
+    console.log(loc)
+    console.log(new_loc)
+    if (!from.fullPath.includes("login")&&new_loc!=loc) {
+            alert("拒绝访问");
+            if(loc===1){
+                router.push('/student');
+            }else if(loc===2){
+                router.push('/teacher');
+            }else if(loc===3){
+                router.push('/manager');
+            }else{
+                router.push('/login');
+            }
+
     } else {
+        if(to.fullPath.includes("student")){
+            loc=1;
+            //localStorage.setItem("loc",loc )
+        }else if(to.fullPath.includes("teacher")){
+            loc=2;
+            //localStorage.setItem("loc",loc )
+        }else if(to.fullPath.includes("manager")){
+            loc=3;
+            //localStorage.setItem("loc",loc )
+        }
         next();
     }
 });

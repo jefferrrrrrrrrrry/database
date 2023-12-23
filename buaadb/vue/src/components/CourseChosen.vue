@@ -13,11 +13,6 @@ export default {
           this.total = res.length;
         });
       }else if(this.loc==2){
-        request.get("http://localhost:9090/course/studentselect").then(res => {
-          console.log(res.data);
-          this.tableData = res.data;
-          this.total = res.length;
-        });
       }
     },reset(){
       this.s_cname="";
@@ -26,17 +21,21 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/course/studentselect",{
-        params:{
-          cno:this.s_cno,
-          pageNum:this.currentPage,
-          pageSize:this.pageSize
-        }
-      }).then(res=>{
-        console.log(res.data);
-        this.tableData=res.data.page;
-        this.total=res.data.total;
-      });
+      if(this.loc==1){
+        request.get("http://localhost:9090/course/studentselect",{
+          params:{
+            cno:this.s_cno,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });}
+      else if(this.loc==2){
+
+       }
     },
     del(id){
       request.delete("http://localhost:9090/course/"+id).then(res=>{
