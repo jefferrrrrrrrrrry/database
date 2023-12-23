@@ -170,7 +170,7 @@ public class CourseController {
         return Result.success();
     }
 
-    @PostMapping("recordgrade")
+    @PostMapping("/recordgrade")
     public Result recordgrade(@RequestBody Sel sel) {
         Course course = courseService.getById(sel.getCno());
         if (course == null) {
@@ -180,6 +180,7 @@ public class CourseController {
             throw new ServiceException(Status.ERROR, "你没有权限更改此成绩");
         }
         try {
+            System.out.println(sel);
             QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("cno", sel.getCno());
             queryWrapper.eq("sno", sel.getSno());

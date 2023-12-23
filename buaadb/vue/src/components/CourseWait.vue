@@ -1,5 +1,6 @@
 <script>
 import request from "@/utils/request";
+import * as XLSX from "xlsx";
 
 export default {
   name: "CourseWait",
@@ -69,6 +70,15 @@ export default {
       console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
+    },exports(){
+      const ws = XLSX.utils.json_to_sheet(this.tableData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      if(this.loc==1){
+        XLSX.writeFile(wb, '待审核课程.xlsx');
+      }else if(this.loc==2){
+        XLSX.writeFile(wb, '待审核课程.xlsx');
+      }
     }
   },
   data(){
@@ -119,19 +129,24 @@ export default {
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
+      <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="cno" label="课程代码" width="200">
+      <el-table-column prop="cno" label="课程代码" width="100">
       </el-table-column>
-      <el-table-column prop="cname" label="课程名称" width="200">
+      <el-table-column prop="cname" label="课程名称" width="150">
       </el-table-column>
-      <el-table-column prop="cpos" label="校区" width="200">
+      <el-table-column prop="ctype" label="课程类型" width="150">
       </el-table-column>
-      <el-table-column prop="ccredit" label="学分" width="170">
+      <el-table-column prop="tname" label="开课老师" width="150">
       </el-table-column>
-      <el-table-column prop="cremain" label="剩余人数" width="120">
+      <el-table-column prop="cpos" label="校区" width="150">
       </el-table-column>
-      <el-table-column prop="ccapacity" label="容量" width="120">
+      <el-table-column prop="ccredit" label="学分" width="120">
+      </el-table-column>
+      <el-table-column prop="cremain" label="剩余人数" width="80">
+      </el-table-column>
+      <el-table-column prop="ccapacity" label="容量" width="80">
       </el-table-column>
       <el-table-column label="操作" v-if="loc==1||loc==2">
         <template slot-scope="scope" >

@@ -46,8 +46,7 @@ export default {
       })
     },
     choose(id){
-      var out_cno=id;
-      request.post("http://localhost:9090/course/selectCourse",out_cno).then(res=>{
+      request.post("http://localhost:9090/course/selectCourse",id).then(res=>{
         if(res.status==="SUCCESS"){
           this.$message.success("选课成功");
           this.load();
@@ -55,16 +54,23 @@ export default {
           this.$message.error("选课失败，你已选")
         }
       })
-
-    },
-    cancel(id){
-
-    },
-    formatText(text) {
+    },save(){
+      //this.form = JSON.parse(JSON.stringify(row))
+      this.form.status="1";
+      request.post("http://localhost:9090/course/add",this.form).then(res=>{
+        console.log(res)
+        if(res.status==="SUCCESS"){
+          this.$message.success("申请已递交教务审核");
+          this.load();
+        }else{
+          this.$message.error("申请失败，请核对信息")
+        }
+      })
+      //this.dialogFormVisible = false
+    }, formatText(text) {
       // 将换行符 \n 替换为 <br>
       return text.replace(/\n/g, "<br>");
-    },
-    handleSizeChange(pageSize){
+    }, handleSizeChange(pageSize){
       //console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
@@ -79,13 +85,6 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
-    },
-    handleEdit(row) {
-    //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = true
-    },save(){
-      //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = false
     },saveFile(){
       this.fileLoadVisible=false;
     },handleClose(){
@@ -162,14 +161,14 @@ export default {
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
-      <el-button type="primary" @click="handleAdd" v-if="loc==2||loc==3">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="handleLoad" v-if="loc==2||loc==3">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleAdd" v-if="loc==1||loc==2">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleLoad" v-if="loc==2">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="cno" label="课程代码" width="150">
+      <el-table-column prop="cno" label="课程代码" width="100">
       </el-table-column>
-      <el-table-column prop="cname" label="课程名称" width="200">
+      <el-table-column prop="cname" label="课程名称" width="150">
       </el-table-column>
       <el-table-column prop="ctype" label="课程类型" width="150">
       </el-table-column>
@@ -231,7 +230,7 @@ export default {
         <el-input v-model="form.cpos" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="学分">
-        <el-input v-model="form.credit" autocomplete="off"></el-input>
+        <el-input v-model="form.ccredit" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="剩余人数">
         <el-input v-model="form.cremain" autocomplete="off"></el-input>

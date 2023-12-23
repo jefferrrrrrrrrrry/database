@@ -73,7 +73,6 @@ export default {
       request.post("http://localhost:9090/course/withdraw",id).then(res=>{
         if(res.data.status==="SUCCESS"){
           this.$message.success("退选成功")
-          this.dialogVisible=false;
           this.load();
         }else{
           this.$message.error("退选失败")
@@ -88,10 +87,19 @@ export default {
       }).then(res=>{
         if(res.status==="SUCCESS"){
           this.$message.success("取消开课成功")
-          this.dialogVisible=false;
           this.load();
         }else{
           this.$message.error("取消开课失败")
+        }
+      })
+    },
+    grade(){
+      request.post("http://localhost:9090/course/recordgrade",this.sel).then(res=>{
+        if(res.status==="SUCCESS"){
+          this.$message.success("录入成功")
+          this.load();
+        }else{
+          this.$message.error("录入失败")
         }
       })
     },
@@ -107,6 +115,13 @@ export default {
       console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
+    },handleGrade(){
+      this.dialogVisible = true;
+    },handleClose(){
+      _ => {
+        done();
+      }
+      this.dialogVisible = false;
     },exports(){
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
@@ -132,6 +147,7 @@ export default {
       dialogVisible: false,
       loc:0,
       page:1,
+      sel:{}
     }
   },
   created() {
@@ -170,9 +186,9 @@ export default {
     <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
   </div>
   <el-table :data="tableData">
-    <el-table-column prop="cno" label="课程代码" width="150">
+    <el-table-column prop="cno" label="课程代码" width="100">
     </el-table-column>
-    <el-table-column prop="cname" label="课程名称" width="200">
+    <el-table-column prop="cname" label="课程名称" width="150">
     </el-table-column>
     <el-table-column prop="ctype" label="课程类型" width="150">
     </el-table-column>
@@ -198,6 +214,10 @@ export default {
       <template slot-scope="scope">
         <el-button
             size="mini"
+            type="primary"
+            @click="handleGrade(scope.row.cno)">成绩录入</el-button>
+        <el-button
+            size="mini"
             type="danger"
             @click="cancel(scope.row.cno)">取消开课</el-button>
       </template>
@@ -215,6 +235,25 @@ export default {
       :total="total">
     </el-pagination>
   </div>
+  <el-dialog title="成绩信息" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+      <el-form label-width="80px" size="small" >
+        <el-form-item label="课程代码">
+          <el-input v-model="sel.cno" autocomplete="off" placeholder="请再次确认课程代码"></el-input>
+        </el-form-item>
+        <el-form-item label="学号">
+          <el-input v-model="sel.sno" autocomplete="off" placeholder="请输入正确的学号"></el-input>
+        </el-form-item>
+        <el-form-item label="分数">
+          <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入1-100的整数"></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="grade">确 定</el-button>
+      <el-button @click="dialogVisible = false">取 消</el-button>
+    </div>
+  </el-dialog>
 </div>
 </template>
 
