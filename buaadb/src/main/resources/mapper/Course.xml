@@ -63,16 +63,17 @@
         UPDATE Course SET status = 1 WHERE cno = #{cno}
     </update>
 
-    <select id="average" resultType="Double">
-        SELECT AVG(Sel.segrade) AS GradeAverage FROM Sel WHERE
-            Sel.cno = #{cno}
+    <select id="average" resultType="com.example.buaadb.entity.output.CourseInfo">
+        SELECT course.Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain, AVG(Segrade) AS score, course.status
+        FROM (course JOIN teacher ON course.Tno = teacher.Tno) JOIN Sel ON course.cno = sel.Cno WHERE course.status = 1
+        AND course.Tno = #{tno}
+        GROUP BY sel.Cno
     </select>
 
-    <select id="average" resultType="com.example.buaadb.entity.output.CourseInfo">
-        SELECT course.Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain, AVG(Segrade) AS score
-            FROM (course JOIN teacher ON course.Tno = teacher.Tno) JOIN Sel ON course.cno = sel.Cno
-            WHERE status = 1
-            GROUP BY sel.Cno
+    <select id="manageraverage" resultType="com.example.buaadb.entity.output.CourseInfo">
+        SELECT course.Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain, AVG(Segrade) AS score, course.status
+        FROM (course JOIN teacher ON course.Tno = teacher.Tno) JOIN Sel ON course.cno = sel.Cno WHERE course.status = 1
+        GROUP BY sel.Cno
     </select>
 
     <select id="teacherAverage" resultType="com.example.buaadb.entity.output.CourseInfo">

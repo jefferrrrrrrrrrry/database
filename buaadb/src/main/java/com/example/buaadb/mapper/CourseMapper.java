@@ -15,6 +15,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<CourseInfo> findApprove(@Param("tno") String tno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
     List<CourseInfo> findPend(@Param("tno") String tno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
     Integer approve(@Param("cno") String cno);
-    List<CourseInfo> average();
+    List<CourseInfo> average(@Param("tno") String tno);
+    List<CourseInfo> manageraverage();
     List<Object> managerfindPend(@Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
 }

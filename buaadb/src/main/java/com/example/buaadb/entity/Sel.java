@@ -8,9 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Sel {
-    @TableId
     private String cno;
-    @TableField
     private String sno;
     private Integer segrade;
 }

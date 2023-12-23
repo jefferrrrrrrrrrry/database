@@ -75,14 +75,19 @@ public class CourseController {
         queryWrapper.eq("cno", cno);
         Sel sel = selService.getOne(queryWrapper);
         if (sel != null) {
+            throw new ServiceException(Status.ERROR, "已选此课");
+        }
+        Course course = courseService.getById(cno);
+        if (course == null) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
-        boolean b = selService.save(new Sel(cno, TokenUtils.getUsername(), null));
-        if (b) {
-            return Result.success();
-        } else {
-            throw new ServiceException(Status.ERROR, "操作失败");
+        if (course.getCremain() <= 0) {
+            throw new ServiceException(Status.ERROR, "此课已满");
         }
+        selService.save(new Sel(cno, TokenUtils.getUsername(), null));
+        course.setCremain(course.getCremain() - 1);
+        courseService.updateById(course);
+        return Result.success();
     }
 
     @PostMapping("/withdraw")
@@ -170,7 +175,7 @@ public class CourseController {
             QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("cno", sel.getCno());
             queryWrapper.eq("sno", sel.getSno());
-            boolean b = selService.update(sel, queryWrapper);
+            selService.update(sel, queryWrapper);
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
@@ -187,10 +192,14 @@ public class CourseController {
     }
 
     @GetMapping("/average")
-    public Result average(@RequestParam String cno) { // 计算课程平均分
-        // return Result.success(courseMapper.average(cno));
-        // TODO
-        return Result.success();
+    public Result average(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) { // 计算课程平均分
+        return Result.success(PageDivision.getPage(courseMapper.average(TokenUtils.getUsername()), pageNum, pageSize));
+    }
+
+    @GetMapping("/manageraverage")
+    public Result manageraverage(@RequestParam String cno, @RequestParam(defaultValue = "1") Integer pageNum,
+                                 @RequestParam(defaultValue = "20") Integer pageSize) { // 计算课程平均分
+        return Result.success(PageDivision.getPage(courseMapper.manageraverage(), pageNum, pageSize));
     }
 
     @PostMapping("/import")
