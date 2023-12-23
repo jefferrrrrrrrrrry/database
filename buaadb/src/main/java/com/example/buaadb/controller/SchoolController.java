@@ -4,7 +4,9 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.entity.School;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.SchoolMapper;
@@ -28,18 +30,30 @@ public class SchoolController {
 
     @PostMapping("/add")
     public Result add(@RequestBody School school) {
-        return Result.success(schoolService.save(school));
+        try {
+            return Result.success(schoolService.save(school));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
 
     @PostMapping("/update")
     public Result update(@RequestBody School school) {
-        return Result.success(schoolService.updateById(school));
+        try {
+            return Result.success(schoolService.updateById(school));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @DeleteMapping("/{scno}")
     public Result del(@PathVariable String scno) {
-        return Result.success(schoolService.removeById(scno));
+        try {
+            return Result.success(schoolService.removeById(scno));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @GetMapping("/find")

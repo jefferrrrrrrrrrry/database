@@ -36,7 +36,7 @@ public class ManagerController {
         if (userService.getById(manager.getMno()) != null) {
             return Result.error(Status.ERROR, "添加失败，用户名已存在");
         } else {
-            userService.save(new User(manager.getMno(), manager.getMpassword(), 3));
+            // userService.save(new User(manager.getMno(), manager.getMpassword(), 3));
             return Result.success(managerService.save(manager));
         }
     }

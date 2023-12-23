@@ -95,43 +95,45 @@ public class CourseController {
     public Result add(@RequestBody Course course) { // 教师提交加课申请
         course.setTno(TokenUtils.getUsername());
         course.setStatus(0);
-        boolean b = courseService.save(course);
-        if (b) {
-            return Result.success();
-        } else {
+        course.setCremain(course.getCcapacity());
+        try {
+            courseService.save(course);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("/manageradd")
     public Result manageradd(@RequestBody Course course) { // 管理员提交加课申请
         course.setStatus(1);
-        boolean b = courseService.save(course);
-        if (b) {
-            return Result.success();
-        } else {
+        course.setCremain(course.getCcapacity());
+        try {
+            courseService.save(course);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("/approve")
     public Result approve(@RequestBody String cno){ // 管理员同意加课
-        int i = courseMapper.approve(cno);
-        if (i > 1) {
-            return Result.success();
-        } else {
+        try {
+            courseMapper.approve(cno);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("/disapprove")
     public Result disapprove(@RequestBody String cno){ // 管理员拒绝加课
-        boolean b = courseService.removeById(cno);
-        if (b) {
-            return Result.success();
-        } else {
+        try {
+            courseService.removeById(cno);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @GetMapping("/studentselect")
@@ -143,30 +145,34 @@ public class CourseController {
 
     @DeleteMapping("/{cno}")
     public Result del(@PathVariable String cno) { // 删除课程
-        boolean b = courseService.removeById(cno);
-        if (b) {
-            return Result.success();
-        } else {
+        try {
+            courseService.removeById(cno);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("recordgrade")
     public Result recordgrade(@RequestBody Sel sel) {
-        QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("cno", sel.getCno());
-        queryWrapper.eq("sno", sel.getSno());
-        boolean b = selService.update(sel, queryWrapper);
-        if (b) {
-            return Result.success();
-        } else {
+        try {
+            QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("cno", sel.getCno());
+            queryWrapper.eq("sno", sel.getSno());
+            boolean b = selService.update(sel, queryWrapper);
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("/update")
     public Result update(@RequestBody Course course) { // 更新课程
-        return Result.success(courseService.updateById(course));
+        try {
+            return Result.success(courseService.updateById(course));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @GetMapping("/average")

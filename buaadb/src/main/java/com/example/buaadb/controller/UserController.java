@@ -1,8 +1,10 @@
 package com.example.buaadb.controller;
 
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.User;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ClassMapper;
@@ -27,19 +29,23 @@ public class UserController {
 
     @PostMapping("/changepassword")
     public Result changepassword(@RequestBody String password) { // 用户改自身的密码
-        User user = TokenUtils.getCurrentUser();
-        user.setSys_password(password);
-        userService.updateById(user);
-        return Result.success();
+        try {
+            User user = TokenUtils.getCurrentUser();
+            user.setSys_password(password);
+            userService.updateById(user);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @PostMapping("/changeuserpassword")
     public Result changeUserPassword(@RequestBody User user) { // 管理员改密码
         user.setPermission(null);
-        if (!userService.updateById(user)) {
-            return Result.error("该用户不存在");
-        } else {
-            return Result.success();
+        try {
+            return Result.success(userService.updateById(user));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
         }
     }
 

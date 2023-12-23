@@ -13,4 +13,6 @@ public class StudentInfo {
     private Integer sgrade;
     private String spassword;
     private Integer clno;
+    private Integer scno;
+    private String scname;
 }

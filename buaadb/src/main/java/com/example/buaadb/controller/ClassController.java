@@ -4,7 +4,9 @@ import cn.hutool.db.Page;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
+import com.example.buaadb.common.Status;
 import com.example.buaadb.entity.Class;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.mapper.ClassMapper;
@@ -33,18 +35,30 @@ public class ClassController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Class class1) {
-        return Result.success(classService.save(class1));
+        try {
+            return Result.success(classService.save(class1));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @DeleteMapping("/{clno}")
     public Result del(@PathVariable int clno) {
-        classService.removeById(clno);
-        return Result.success();
+        try {
+            classService.removeById(clno);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @PostMapping("/update")
     public Result update(@RequestBody Class class1) {
-        return Result.success(classService.updateById(class1));
+        try {
+            return Result.success(classService.updateById(class1));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @GetMapping("/find")

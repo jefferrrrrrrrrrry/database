@@ -9,6 +9,7 @@ import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Student;
 import com.example.buaadb.entity.User;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
@@ -51,20 +52,32 @@ public class StudentController {
         if (userService.getById(student.getSno()) != null) {
             return Result.error(Status.ERROR, "添加失败，用户名已存在");
         } else {
-            userService.save(new User(student.getSno(), student.getSpassword(), 1));
-            return Result.success(studentService.save(student));
+            // userService.save(new User(student.getSno(), student.getSpassword(), 1));
+            try {
+                return Result.success(studentService.save(student));
+            } catch (Exception e) {
+                throw new ServiceException(Status.ERROR, "操作失败");
+            }
         }
     }
 
     @DeleteMapping("/{sno}")
     public Result del(@PathVariable String sno) {
-        studentService.removeById(sno);
-        userService.removeById(sno);
-        return Result.success();
+        try {
+            studentService.removeById(sno);
+            // userService.removeById(sno);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
     @PostMapping("/update")
     public Result update(@RequestBody Student student) {
-        return Result.success(studentService.updateById(student));
+        try {
+            return Result.success(studentService.updateById(student));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
 

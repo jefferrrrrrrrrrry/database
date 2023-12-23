@@ -24,11 +24,6 @@ public class SelController {
         return Result.success(selService.save(sel));
     }
 
-    @DeleteMapping("/del")
-    public Result del(@RequestBody Sel sel) {
-        return Result.success(selService.removeById(sel));
-    }
-
     @PostMapping("/setScore")
     public Result setScore(@RequestParam String cno, @RequestParam String sno, @RequestParam Integer segrade){
         selMapper.setScore(cno, sno, segrade);
@@ -36,7 +31,7 @@ public class SelController {
     }
 
     @GetMapping("/getScore")
-    public Result getScore(@RequestParam String cno,@RequestParam String sno){
+    public Result getScore(@RequestParam String cno, @RequestParam String sno){
         return Result.success(selMapper.getScore(cno, sno));
     }
 }
