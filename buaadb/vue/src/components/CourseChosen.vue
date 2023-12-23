@@ -34,7 +34,7 @@ export default {
     },reset(){
       this.s_cname="";
       this.s_cno="";
-      this.s_tname;
+      this.s_tname="";
       this.find();
     },
     find(){
@@ -140,7 +140,7 @@ export default {
       tableData: [],
       total:0,
       currentPage:1,
-      pageSize:2,
+      pageSize:5,
       s_cname:"",
       s_cno:"",
       s_tname:"",

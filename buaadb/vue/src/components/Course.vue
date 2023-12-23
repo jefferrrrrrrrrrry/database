@@ -7,14 +7,19 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/").then(res=>{
-        this.tableData=res.data;
-        this.total=res.data.length;
+      request.get("http://localhost:9090/course/find",{
+        params:{
+          pageNum:this.currentPage,
+          pageSize:this.pageSize
+        }
+      }).then(res=>{
+        this.tableData=res.data.page;
+        this.total=res.data.total;
       });
     },reset(){
       this.s_cname="";
       this.s_cno="";
-      this.s_tname;
+      this.s_tname="";
       this.find();
     },
     find(){
@@ -56,15 +61,27 @@ export default {
     },save(){
       //this.form = JSON.parse(JSON.stringify(row))
       this.form.status="1";
-      request.post("http://localhost:9090/course/add",this.form).then(res=>{
-        console.log(res)
-        if(res.status==="SUCCESS"){
-          this.$message.success("申请已递交教务审核");
-          this.load();
-        }else{
-          this.$message.error("申请失败，请核对信息")
-        }
-      })
+      if(this.loc==1){
+        request.post("http://localhost:9090/course/add",this.form).then(res=>{
+          console.log(res)
+          if(res.status==="SUCCESS"){
+            this.$message.success("申请已递交教务审核");
+            this.load();
+          }else{
+            this.$message.error("申请失败，请核对信息")
+          }
+        })
+      }else{
+        request.post("http://localhost:9090/course/manageradd",this.form).then(res=>{
+          console.log(res)
+          if(res.status==="SUCCESS"){
+            this.$message.success("申请已递交教务审核");
+            this.load();
+          }else{
+            this.$message.error("申请失败，请核对信息")
+          }
+        })
+      }
       //this.dialogFormVisible = false
     }, formatText(text) {
       // 将换行符 \n 替换为 <br>
@@ -105,7 +122,7 @@ export default {
       tableData: [],
       total:0,
       currentPage:1,
-      pageSize:2,
+      pageSize:5,
       s_cname:"",
       s_cno:"",
       s_tname:"",
@@ -150,6 +167,7 @@ export default {
       <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
       <el-breadcrumb-item v-if="this.loc==0"><a href='/${id}/course' >选课</a></el-breadcrumb-item>
       <el-breadcrumb-item v-if="this.loc==1"><a href='/${id}/course' >全部课程</a></el-breadcrumb-item>
+      <el-breadcrumb-item v-if="this.loc==2"><a href='/${id}/course' >课程管理</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-input style="flex:1;width:200px"  placeholder="请输入课程名" suffix-icon="el-icon-search" v-model="s_cname"
@@ -258,15 +276,8 @@ export default {
         <el-button @click="fileLoadVisible = false">取 消</el-button>
       </div>
     </el-dialog>
-
-
-
-
-
-
   </div>
 </template>
-
 <style scoped>
 
 </style>

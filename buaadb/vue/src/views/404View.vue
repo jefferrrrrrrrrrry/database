@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: "NotFoundView"
+  name: "NotFoundView",
+  created() {
+    this.$router.push("/login")
+  }
 }
 </script>
 

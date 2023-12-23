@@ -84,7 +84,7 @@ export default {
       tableData: [],
       total:0,
       currentPage:1,
-      pageSize:2,
+      pageSize:5,
       s_scno:"",
       s_clno:"",
       dialogVisible: false,
