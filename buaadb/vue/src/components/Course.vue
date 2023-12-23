@@ -101,19 +101,35 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
-    },saveFile(){
-      this.fileLoadVisible=false;
+    },handleSuccess(response, file, fileList){
+      if(file==null){
+        console.log(file)
+        this.$message.error("添加失败，请核对文件格式")
+      } else{
+        request.post("http://localhost:9090/course/import",file).then(res=>{
+          console.log(res)
+          if(res.status==="SUCCESS"){
+            this.$message.success("添加成功");
+            this.load();
+          }else{
+            this.$message.error("添加失败，请核对文件格式")
+          }
+        })
+        this.fileLoadVisible=false;
+      }
     },handleClose(){
       _ => {
         done();
       }
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
-    },exports(){
+    },exports(mood){
+
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        XLSX.writeFile(wb, '全部课程.xlsx');
+        if(mood==0)XLSX.writeFile(wb, '全部课程.xlsx');
+        else XLSX.writeFile(wb, '模板.xlsx');
       //window.open("http://localhost:9090/course/export");
     }
   },
@@ -140,6 +156,7 @@ export default {
       dialogFormVisible:false,
       fileLoadVisible:false,
       form:{},
+      file:null,
 
     }
   },
@@ -180,7 +197,7 @@ export default {
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
       <el-button type="primary" @click="handleAdd" v-if="loc==1||loc==2">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="handleLoad" v-if="loc==2">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="exports" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="exports(0)" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
       <el-table-column prop="cno" label="课程代码" width="100">
@@ -240,8 +257,8 @@ export default {
       <el-form-item label="课程类型">
         <el-input v-model="form.ctype" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="教师姓名">
-        <el-input v-model="form.tname" autocomplete="off"></el-input>
+      <el-form-item label="教师号">
+        <el-input v-model="form.tno" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="校区">
         <el-input v-model="form.cpos" autocomplete="off"></el-input>
@@ -264,16 +281,16 @@ export default {
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <el-form label-width="80px" size="small" >
-          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple accept=".xls, .xlsx">
+          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" accept=".xls, .xlsx"
+                     :on-success="handleSuccess">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb</div>
+            <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb，格式请参考新增</div>
           </el-upload>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveFile">确 定</el-button>
-        <el-button @click="fileLoadVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exports(1)">模板下载</el-button>
       </div>
     </el-dialog>
   </div>
