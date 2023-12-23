@@ -40,18 +40,6 @@ public class TeacherController {
         return Result.success(teacherMapper.find(tno, tname));
     }
 
-    @GetMapping("/findApprove")
-    public Result findApprove(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
-        return Result.success(PageDivision.getPage(teacherMapper.findApprove(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
-    }
-
-    @GetMapping("/findPend")
-    public Result findPend(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
-        return Result.success(PageDivision.getPage(teacherMapper.findPend(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
-    }
-
     @PostMapping("/add")
     public Result add(@RequestBody Teacher teacher) {
         if (userService.getById(teacher.getTno()) != null) {

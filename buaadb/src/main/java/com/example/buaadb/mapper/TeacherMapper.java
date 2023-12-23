@@ -12,6 +12,4 @@ import java.util.List;
 public interface TeacherMapper extends BaseMapper<Teacher> {
     List<Teacher> login(String name, String password);
     List<Teacher> find(@Param("tno") String tno, @Param("tname") String tname);
-    List<CourseInfo> findApprove(@Param("tno") String tno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
-    List<CourseInfo> findPend(@Param("tno") String tno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
 }

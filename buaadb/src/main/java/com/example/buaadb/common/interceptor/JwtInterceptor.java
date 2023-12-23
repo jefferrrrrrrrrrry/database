@@ -28,23 +28,23 @@
 //            return true;
 //        }
 //        if (StrUtil.isBlank(token)) {
-//            throw new ServiceException(Status.UNKNOWN_ERROR, "未获取到token信息");
+//            throw new ServiceException(Status.ERROR, "未获取到token信息");
 //        }
 //        String userId;
 //        try {
 //            userId = JWT.decode(token).getAudience().get(0);
 //        } catch (JWTDecodeException j) {
-//            throw new ServiceException(Status.UNKNOWN_ERROR, "token验证失败");
+//            throw new ServiceException(Status.ERROR, "token验证失败");
 //        }
 //        User user = userService.getById(userId);
 //        if (user == null) {
-//            throw new ServiceException(Status.UNKNOWN_ERROR, "用户不存在");
+//            throw new ServiceException(Status.ERROR, "用户不存在");
 //        }
 //        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getSys_password())).build();
 //        try {
 //            jwtVerifier.verify(token);
 //        } catch (JWTVerificationException e) {
-//            throw new ServiceException(Status.UNKNOWN_ERROR, "token验证失败，请重新登录");
+//            throw new ServiceException(Status.ERROR, "token验证失败，请重新登录");
 //        }
 //        return true;
 //    }

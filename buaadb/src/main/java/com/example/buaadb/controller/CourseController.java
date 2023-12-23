@@ -50,11 +50,22 @@ public class CourseController {
         return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
 
-    @GetMapping("/teacherfind")
-    public Result teacherfind(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(courseMapper.teacherfind(TokenUtils.getUsername(), cno, cname, ""),
-                pageNum, pageSize));
+    @GetMapping("/findApprove")
+    public Result findApprove(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
+        return Result.success(PageDivision.getPage(courseMapper.findApprove(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
+    }
+
+    @GetMapping("/managerfindPend")
+    public Result managerfindPend(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
+        return Result.success(PageDivision.getPage(courseMapper.managerfindPend(cno, cname, ""), pageNum, pageSize));
+    }
+
+    @GetMapping("/findPend")
+    public Result findPend(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
+        return Result.success(PageDivision.getPage(courseMapper.findPend(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
     }
 
     @PostMapping("/selectCourse")
