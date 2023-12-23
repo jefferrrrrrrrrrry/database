@@ -7,7 +7,7 @@ export default {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
       request.get("http://localhost:9090/course/").then(res=>{
-        console.log(res.data);
+        //console.log(res.data);
         this.tableData=res.data;
         this.total=res.length;
       });
@@ -27,26 +27,27 @@ export default {
           pageSize:this.pageSize
         }
       }).then(res=>{
-        console.log(res.data);
+        //console.log(res.data);
         this.tableData=res.data.page;
         this.total=res.data.total;
       });
     },
     del(id){
-      request.delete("http://localhost:9090/course/"+id).then(res=>{
+      var out_cno=id;
+      request.post("http://localhost:9090/course/withdraw",out_cno).then(res=>{
         if(res){
-          this.$message.success("退选成功")
-          this.dialogVisible=false;
+          this.$message.success("退选成功");
           this.load();
         }else{
-          this.$message.error("退选失败")
+          this.$message.error("退选失败");
         }
       })
     },
     choose(id){
-      request.post("http://localhost:9090/course/selectCourse",id).then(res=>{
+      var out_cno=id;
+      request.post("http://localhost:9090/course/selectCourse",out_cno).then(res=>{
         if(res){
-          this.$message.success("选课成功")
+          this.$message.success("选课成功");
           this.load();
         }else{
           this.$message.error("选课失败")
@@ -59,11 +60,11 @@ export default {
       return text.replace(/\n/g, "<br>");
     },
     handleSizeChange(pageSize){
-      console.log(pageSize);
+      //console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      console.log(currentPage);
+      //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },handleAdd() {
@@ -115,10 +116,11 @@ export default {
       dialogFormVisible:false,
       fileLoadVisible:false,
       form:{},
+
     }
   },
   created() {
-    console.log(this.$route);
+    //console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.find();
     if(this.$route.path.includes("teacher")){
