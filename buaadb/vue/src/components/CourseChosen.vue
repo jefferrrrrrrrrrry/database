@@ -15,6 +15,11 @@ export default {
           this.total = res.data.total;
         });
       }else if(this.loc==1){
+        request.get("http://localhost:9090/course/findApprove").then(res => {
+          console.log(res);
+          this.tableData = res.data.page;
+          this.total = res.data.total;
+        });
       }
     },reset(){
       this.s_cname="";
@@ -27,6 +32,23 @@ export default {
         request.get("http://localhost:9090/course/studentselect",{
           params:{
             cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log("teacher")
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });}
+      else if(this.loc==2){
+        request.get("http://localhost:9090/course/findApprove",{
+          params:{
+            cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
             pageNum:this.currentPage,
             pageSize:this.pageSize
           }
@@ -34,9 +56,7 @@ export default {
           console.log(res.data);
           this.tableData=res.data.page;
           this.total=res.data.total;
-        });}
-      else if(this.loc==2){
-
+        });
        }
     },
     del(id){
@@ -88,9 +108,7 @@ export default {
         }else{
           XLSX.writeFile(wb, '已选课程.xlsx');
         }
-
-        //window.open("http://localhost:9090/course/export");
-  }
+    }
   },
   data(){
     return{

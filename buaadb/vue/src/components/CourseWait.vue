@@ -6,10 +6,10 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/").then(res=>{
+      request.get("http://localhost:9090/course/findPend").then(res=>{
         console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.length;
+        this.tableData=res.data.page;
+        this.total=res.data.total;
       });
     },reset(){
       this.s_cname="";
@@ -18,7 +18,7 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/course/find",{
+      request.get("http://localhost:9090/course/findPend",{
         params:{
           cno:this.s_cno,
           cname:this.s_cname,
@@ -27,7 +27,6 @@ export default {
           pageSize:this.pageSize
         }
       }).then(res=>{
-        console.log(res.data);
         this.tableData=res.data.page;
         this.total=res.data.total;
       });
@@ -89,7 +88,7 @@ export default {
   created() {
     console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
-    this.find();
+    this.load();
     if(this.$route.path.includes("teacher")){
       this.id="teacher";
       this.loc=1;
