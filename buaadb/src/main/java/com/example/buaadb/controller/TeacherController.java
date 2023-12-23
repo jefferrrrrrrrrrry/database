@@ -1,5 +1,6 @@
 package com.example.buaadb.controller;
 
+import cn.hutool.db.Page;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.example.buaadb.common.Result;
@@ -8,6 +9,8 @@ import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.Teacher;
 import com.example.buaadb.entity.User;
 import com.example.buaadb.function.InExport;
+import com.example.buaadb.function.PageDivision;
+import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.TeacherMapper;
 import com.example.buaadb.service.TeacherService;
 import com.example.buaadb.service.UserService;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,13 +40,15 @@ public class TeacherController {
     }
 
     @GetMapping("/findApprove")
-    public Result findApprove(@RequestParam String tno){
-        return Result.success(teacherMapper.findApprove(tno));
+    public Result findApprove(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
+        return Result.success(PageDivision.getPage(teacherMapper.findApprove(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
     }
 
     @GetMapping("/findPend")
-    public Result findPend(@RequestParam String tno){
-        return Result.success(teacherMapper.findPend(tno));
+    public Result findPend(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize){
+        return Result.success(PageDivision.getPage(teacherMapper.findPend(TokenUtils.getUsername(), cno, cname, ""), pageNum, pageSize));
     }
 
     @PostMapping("/add")

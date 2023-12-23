@@ -10,7 +10,7 @@
     <select id="find" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
             FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE status = 1
-                     <if test="cno != null"> AND Cno LIKE concat('%', #{cno} ,'%') </if>
+                     AND Cno LIKE concat('%', #{cno} ,'%')
                      AND Cname LIKE concat('%', #{cname}, '%')
                      AND Tname LIKE concat('%', #{tname}, '%')
     </select>
@@ -18,12 +18,18 @@
     <select id="teacherfind" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
             FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE course.Tno = #{tno} AND Status = 1
+            AND Cno LIKE concat('%', #{cno} ,'%')
+            AND Cname LIKE concat('%', #{cname}, '%')
+            AND Tname LIKE concat('%', #{tname}, '%')
     </select>
 
     <select id="studentselect" resultType="com.example.buaadb.entity.output.CourseInfo">
         SELECT Cno, Cname, Cpos, course.Tno, Tname, Ctype, Ccredit, Ccapacity, Cremain
         FROM (course JOIN teacher ON course.Tno = teacher.Tno) WHERE status = 1 AND
             Cno IN (SELECT Cno FROM Sel WHERE Sno = #{sno})
+            AND Cno LIKE concat('%', #{cno} ,'%')
+            AND Cname LIKE concat('%', #{cname}, '%')
+            AND Tname LIKE concat('%', #{tname}, '%')
     </select>
 
     <update id="approve">

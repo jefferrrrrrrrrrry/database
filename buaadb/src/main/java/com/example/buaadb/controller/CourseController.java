@@ -45,20 +45,20 @@ public class CourseController {
 
     @GetMapping("/find")
     public Result find(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
-            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) { // 查询总课表
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) { // 查询总课表
         List<CourseInfo> list = courseMapper.find(cno, cname, tname);
         return Result.success(PageDivision.getPage(list, pageNum, pageSize));
     }
 
-    @PostMapping("/teacherfind")
-    public Result teacherfind(@RequestBody Teacher teacher // 教师查询其已开课程
-            , @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
-        return Result.success(PageDivision.getPage(courseMapper.teacherfind(teacher.getTno()),
+    @GetMapping("/teacherfind")
+    public Result teacherfind(@RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
+        return Result.success(PageDivision.getPage(courseMapper.teacherfind(TokenUtils.getUsername(), cno, cname, ""),
                 pageNum, pageSize));
     }
 
-    @GetMapping("/selectCourse")
-    public Result selectCourse(@RequestParam String cno) { // 学生选课
+    @PostMapping("/selectCourse")
+    public Result selectCourse(@RequestBody String cno) { // 学生选课
         boolean b = selService.save(new Sel(cno, TokenUtils.getUsername(), null));
         if (b) {
             return Result.success();
@@ -67,8 +67,8 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/withdraw")
-    public Result withdraw(@RequestParam String cno) {
+    @PostMapping("/withdraw")
+    public Result withdraw(@RequestBody String cno) {
         QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("cno", cno);
         boolean b = selService.remove(queryWrapper);
@@ -124,8 +124,9 @@ public class CourseController {
 
     @GetMapping("/studentselect")
     public Result studentselect(@RequestParam String sno // 学生查询已选课程
+            , @RequestParam(defaultValue = "") String cno, @RequestParam(defaultValue = "") String cname, @RequestParam(defaultValue = "") String tname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(courseMapper.studentselect(sno), pageNum, pageSize));
+        return Result.success(PageDivision.getPage(courseMapper.studentselect(sno, cno, cname, tname), pageNum, pageSize));
     }
 
     @DeleteMapping("/{cno}")

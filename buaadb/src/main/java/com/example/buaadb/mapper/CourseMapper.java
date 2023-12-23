@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
     List<CourseInfo> find(@Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
-    List<CourseInfo> teacherfind(@Param("tno") String tno);
-    List<CourseInfo> studentselect(@Param("sno") String sno);
+    List<CourseInfo> teacherfind(@Param("tno") String tno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
+    List<CourseInfo> studentselect(@Param("sno") String sno, @Param("cno") String cno, @Param("cname") String cname, @Param("tname") String tname);
     Integer approve(@Param("cno") String cno);
     List<CourseInfo> average();
 
