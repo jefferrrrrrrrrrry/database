@@ -58,9 +58,12 @@ public class SchoolController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam(defaultValue = "") String scname // 根据系名模糊查找系
+    public Result find(@RequestParam(defaultValue = "-1") Integer scno, @RequestParam(defaultValue = "") String scname // 根据系名模糊查找系
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         QueryWrapper<School> queryWrapper = new QueryWrapper<>();
+        if (scno > 0) {
+            queryWrapper.eq("scno", scno);
+        }
         queryWrapper.like("scname", scname);
         return Result.success(PageDivision.getPage(schoolService.list(queryWrapper), pageNum, pageSize));
     }
