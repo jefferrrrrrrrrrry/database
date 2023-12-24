@@ -6,7 +6,7 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open"/>
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse"/>
         </el-header>
         <router-view></router-view>
       </el-container>
@@ -48,10 +48,6 @@ export default {
       }else{
         this.collapseBtnClass='el-icon-s-fold'
       }
-    },open() {
-      this.$alert('这是一段内容', '标题名称', {
-        confirmButtonText: '确定'
-      });
     }
   }
 }
