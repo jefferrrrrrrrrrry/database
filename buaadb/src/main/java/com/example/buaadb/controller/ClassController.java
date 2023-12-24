@@ -9,6 +9,7 @@ import com.example.buaadb.entity.Class;
 import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.InExport;
 import com.example.buaadb.function.PageDivision;
+import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ClassMapper;
 import com.example.buaadb.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,9 @@ public class ClassController {
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
         try {
+            if (TokenUtils.getCurrentUser().getPermission() < 3) {
+                throw new ServiceException(Status.ERROR, "无权限");
+            }
             InputStream inputStream = file.getInputStream();
             ExcelReader reader = ExcelUtil.getReader(inputStream);
             List<Class> list = reader.readAll(Class.class);
