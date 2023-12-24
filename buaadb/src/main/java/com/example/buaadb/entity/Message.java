@@ -14,4 +14,5 @@ public class Message {
     private String dest;
     private String content;
     private Date date;
+    private Integer read;
 }

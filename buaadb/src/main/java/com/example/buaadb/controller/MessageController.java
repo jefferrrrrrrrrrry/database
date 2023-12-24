@@ -44,13 +44,17 @@ public class MessageController {
     ) {
         QueryWrapper<Message> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("dest", user);
+        queryWrapper.eq("read", 0);
         return Result.success(PageDivision.getPage(service.list(queryWrapper), pageNum, pageSize));
     }
 
     @PostMapping("/read")
     public Result read(@RequestBody Integer id) {
         try {
-            return Result.success(service.removeById(id));
+            Message message = new Message();
+            message.setId(id);
+            message.setRead(1);
+            return Result.success(service.updateById(message));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
