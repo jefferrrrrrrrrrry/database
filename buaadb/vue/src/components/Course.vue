@@ -1,5 +1,6 @@
 <script>
 import request from "@/utils/request";
+import * as echarts from 'echarts'
 import * as XLSX from "xlsx";
 
 export default {
@@ -130,16 +131,16 @@ export default {
         done();
       }
       this.fileLoadVisible=false;
+      this.dialogSelectVisible=false;
       this.dialogFormVisible = false;
     },exports(mood){
-
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
         if(mood==0)XLSX.writeFile(wb, '全部课程.xlsx');
         else XLSX.writeFile(wb, '模板.xlsx');
       //window.open("http://localhost:9090/course/export");
-    }
+    },
   },
   data(){
     return{
@@ -166,7 +167,11 @@ export default {
       dialogChangeVisible:false,
       form:{},
       file:null,
-
+      select_cno:"",
+      dialogSelectVisible:false,
+      option:"",
+      myChart:null,
+      chartDom:null
     }
   },
   created() {
@@ -183,7 +188,62 @@ export default {
       this.id="manager";
       this.loc=2;
     }
-  }
+  },mounted() {
+    this.option = {
+      title: {
+        text: '课程优良率',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '50%',
+          data: [],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+  },watch:{
+    select_cno(){
+      console.log("666")
+      this.$nextTick(() => {
+        this.chartDom = document.getElementById('main');
+        this.myChart = echarts.init(this.chartDom);
+        request.get("http://localhost:9090/echarts/getratecno",{
+          params:{
+            cno:this.select_cno
+          }
+        }).then(res => {
+              console.log(res)
+              this.option.series[0].data = res.data;
+              this.myChart.setOption(this.option);
+            }
+        )
+
+      });
+}
+    }
 }
 </script>
 
@@ -234,7 +294,11 @@ export default {
           <el-button v-if="loc==2"
               size="mini"
               type="primary"
-              @click="dialogChangeVisible = 'true'">更改信息</el-button>
+              @click="dialogChangeVisible = true">更改信息</el-button>
+          <el-button v-if="loc==2"
+             size="mini"
+             type="primary"
+             @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
           <el-button v-if="loc==2"
               size="mini"
               type="danger"
@@ -320,7 +384,7 @@ export default {
       </div>
     </el-dialog>
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
-      <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+      <div style="display: flex; justify-content: center; align-items: center;width: 100%;" >
         <el-form label-width="80px" size="small" >
           <el-upload class="upload-demo" drag action="http://localhost:9090/course/import" accept=".xls, .xlsx"
                      :on-success="handleFileUploadSuccess">
@@ -332,6 +396,15 @@ export default {
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="exports(1)">模板下载</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="课程信息" :visible.sync="dialogSelectVisible" width="30%"
+               :before-close="handleClose">
+      <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+        <div id="main" style="width: 500px; height: 400px"></div>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogSelectVisible = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>

@@ -1,6 +1,7 @@
 <script>
 import request from "@/utils/request";
 import * as XLSX from "xlsx";
+import * as echarts from "echarts";
 
 export default {
   name: "CourseChosen",
@@ -147,7 +148,12 @@ export default {
       dialogVisible: false,
       loc:0,
       page:1,
-      sel:{}
+      sel:{},
+      option:"",
+      myChart:null,
+      chartDom:null,
+      dialogSelectVisible:false,
+      select_cno:"",
     }
   },
   created() {
@@ -163,7 +169,62 @@ export default {
       this.loc=2;
     }
     this.load();
+  },mounted() {
+    this.option = {
+      title: {
+        text: '课程优良率',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '50%',
+          data: [],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+  },watch:{
+  select_cno(){
+    console.log("666")
+    this.$nextTick(() => {
+      this.chartDom = document.getElementById('main');
+      this.myChart = echarts.init(this.chartDom);
+      request.get("http://localhost:9090/echarts/getratecno",{
+        params:{
+          cno:this.select_cno
+        }
+      }).then(res => {
+            console.log(res)
+            this.option.series[0].data = res.data;
+            this.myChart.setOption(this.option);
+          }
+      )
+
+    });
   }
+}
 }
 </script>
 
@@ -217,6 +278,10 @@ export default {
             type="primary"
             @click="handleGrade(scope.row.cno)">成绩录入</el-button>
         <el-button
+                   size="mini"
+                   type="primary"
+                   @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
+        <el-button
             size="mini"
             type="danger"
             @click="cancel(scope.row.cno)">取消开课</el-button>
@@ -252,6 +317,15 @@ export default {
     <div slot="footer" class="dialog-footer">
       <el-button type="primary" @click="grade">确 定</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
+    </div>
+  </el-dialog>
+  <el-dialog title="课程信息" :visible.sync="dialogSelectVisible" width="30%"
+             :before-close="handleClose">
+    <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+      <div id="main" style="width: 500px; height: 400px"></div>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="dialogSelectVisible = false">关 闭</el-button>
     </div>
   </el-dialog>
 </div>
