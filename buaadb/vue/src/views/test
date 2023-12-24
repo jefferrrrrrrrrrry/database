@@ -1,3 +1,10 @@
+  <template>
+    <div>
+      <div id="main" style="width: 500px; height: 400px"></div>
+    </div>
+  </template>
+
+
   mounted() {
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
