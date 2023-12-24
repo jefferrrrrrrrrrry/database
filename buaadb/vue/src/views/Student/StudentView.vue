@@ -6,7 +6,7 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse"/>
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open"/>
         </el-header>
         <router-view></router-view>
       </el-container>
@@ -48,7 +48,15 @@ export default {
       }else{
         this.collapseBtnClass='el-icon-s-fold'
       }
-    }
+    },open() {
+      request.get("http://localhost:9090/student/profile").then(res=>{
+        console.log(res);
+      })
+      var info=""
+      this.$alert('这是一段内容', '个人信息', {
+        confirmButtonText: '关闭',
+      });
+  }
   }
 }
 </script>

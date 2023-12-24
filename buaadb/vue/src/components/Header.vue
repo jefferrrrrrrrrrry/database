@@ -4,6 +4,7 @@ export default {
   props:{
     collapseBtnClass:String,
     collapse:Function,
+    open:Function
   },
   created() {
     if(this.$route.path.includes("teacher")){
@@ -20,16 +21,11 @@ export default {
     }
   },methods:{
     outFile(){
-      window.open("http://localhost:9090/exportlog")
+      window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
     },
     out(){
       this.$router.push("/login");
-    },open() {
-      var info=""
-    this.$alert('这是一段内容', '个人信息', {
-      confirmButtonText: '关闭',
-    });
-  }
+    }
   }
 }
 </script>
