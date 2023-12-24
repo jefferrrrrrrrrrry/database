@@ -69,11 +69,15 @@ public class ClassController {
 
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
-        InputStream inputStream = file.getInputStream();
-        ExcelReader reader = ExcelUtil.getReader(inputStream);
-        List<Class> list = reader.readAll(Class.class);
-        classService.saveBatch(list);
-        return Result.success();
+        try {
+            InputStream inputStream = file.getInputStream();
+            ExcelReader reader = ExcelUtil.getReader(inputStream);
+            List<Class> list = reader.readAll(Class.class);
+            classService.saveBatch(list);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "导入失败");
+        }
     }
 
     @GetMapping("/export")
