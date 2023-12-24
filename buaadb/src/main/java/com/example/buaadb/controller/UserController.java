@@ -32,7 +32,7 @@ public class UserController {
     public Result changepassword(@RequestBody String password) { // 用户改自身的密码
         try {
             User user = TokenUtils.getCurrentUser();
-            user.setSys_password(password);
+            user.setSysPassword(password);
             userService.updateById(user);
             return Result.success();
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping("/user")
     public Result find(@RequestParam(defaultValue = "") String sys_username, @RequestParam(defaultValue = "-1") Integer permission,
-            @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+            @RequestParam(defaultValue = "20") Integer pageSize, @RequestParam(defaultValue = "1") Integer pageNum) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("sys_username", sys_username);
         if (permission > 0) {
