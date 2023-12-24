@@ -1,12 +1,18 @@
 <script>
 import request from "@/utils/request";
+import * as XLSX from "xlsx";
 
 export default {
   name: "Department",
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/school/").then(res=>{
+      request.get("http://localhost:9090/school/find",{
+        params:{
+          pageNum:this.currentPage,
+          pageSize:this.pageSize
+        }
+      }).then(res=>{
         console.log(res.data);
         this.tableData=res.data;
         this.total=res.length;
@@ -17,17 +23,16 @@ export default {
       this.find();
     },
     find(){
-      request.get("http://localhost:9090/class/",{
+      request.get("http://localhost:9090/school/find",{
         params:{
-          clno:this.s_clno,
-          scno:this.s_scno,
+          scname:this.s_scname,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
       }).then(res=>{
         console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.data.length;
+        this.tableData=res.data.page;
+        this.total=res.data.total;
       });
     },
     del(id){
@@ -60,15 +65,26 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
-    },
-    handleEdit(row) {
-      //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = true
     },save(){
-      //this.form = JSON.parse(JSON.stringify(row))
+      request.post("http://localhost:9090/school/add",this.form).then(res=>{
+        if(res.status=="SUCCESS"){
+          this.$message.success("添加成功")
+          this.dialogVisible=false;
+          this.load();
+        }else{
+          this.$message.error("添加失败")
+        }
+      })
       this.dialogFormVisible = false
-    },saveFile(){
-      this.fileLoadVisible=false;
+    },handleFileUploadSuccess(res) {
+      if(res.status==="SUCCESS"){
+        this.$message.success("添加成功")
+        this.load()
+      }else{
+        this.$message.success("添加失败，请重新检查格式")
+        this.load()
+      }
+
     },handleClose(){
       _ => {
         done();
@@ -76,7 +92,10 @@ export default {
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
     },exports(){
-      window.open("http://localhost:9090/course/export");
+      const ws = XLSX.utils.json_to_sheet(this.tableData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, '院系信息.xlsx');
     }
   },
   data(){
@@ -85,8 +104,8 @@ export default {
       total:0,
       currentPage:1,
       pageSize:5,
+      s_scname:"",
       s_scno:"",
-      s_clno:"",
       dialogVisible: false,
       path:"",
       id:"",
@@ -115,23 +134,23 @@ export default {
   <div>
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/manager" } ' >首页</el-breadcrumb-item>
-      <el-breadcrumb-item ><a href='/manager/class' >班级管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item ><a href='/manager/class' >院系管理</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
-      <el-input style="flex:1;width:200px"  placeholder="请输入班级代码" suffix-icon="el-icon-search" v-model="s_clno"
+      <el-input style="flex:1;width:200px"  placeholder="请输入院系代码" suffix-icon="el-icon-search" v-model="s_scno"
                 clearable></el-input>
-      <el-input style="flex:1; width:200px"  placeholder="请输入院系代码" suffix-icon="el-icon-search" v-model="s_scno"
+      <el-input style="flex:1; width:200px"  placeholder="请输入院系名称" suffix-icon="el-icon-search" v-model="s_scname"
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
       <el-button type="primary" @click="handleAdd" >新增 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="handleLoad" >文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="exports" >班级导出 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="exports" >院系信息导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="clno" label="班级代码" width="200">
+      <el-table-column prop="scname" label="院系名称" width="300">
       </el-table-column>
-      <el-table-column prop="scno" label="院系代码" width="200">
+      <el-table-column prop="scno" label="院系代码" width="300">
       </el-table-column>
       <el-table-column label="操作" >
         <template slot-scope="scope" >
@@ -139,10 +158,10 @@ export default {
               size="mini"
               type="primary"
               @click="del(scope.row.cno)">更改信息</el-button>
-          <el-button v-if="loc==2"
-                     size="mini"
-                     type="danger"
-                     @click="del(scope.row.cno)">删除课级</el-button>
+          <el-button v-if=""
+               size="mini"
+               type="danger"
+               @click="del(scope.row.cno)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -161,8 +180,8 @@ export default {
 
     <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
-        <el-form-item label="班级代码">
-          <el-input v-model="form.clno" autocomplete="off"></el-input>
+        <el-form-item label="院系名称">
+          <el-input v-model="form.scname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="院系代码">
           <el-input v-model="form.scno" autocomplete="off"></el-input>
@@ -176,7 +195,8 @@ export default {
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <el-form label-width="80px" size="small" >
-          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple accept=".xls, .xlsx">
+          <el-upload class="upload-demo" drag action="http://localhost:9090/school/import" multiple accept=".xls, .xlsx"
+                     :on-success="handleFileUploadSuccess">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb</div>
@@ -184,8 +204,6 @@ export default {
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveFile">确 定</el-button>
-        <el-button @click="fileLoadVisible = false">取 消</el-button>
       </div>
     </el-dialog>
 

@@ -1,6 +1,7 @@
 <script>
 import request from "@/utils/request";
 import teacherCourseOpenView from "@/views/Teacher/TeacherCourseOpenView.vue";
+import * as XLSX from "xlsx";
 
 export default {
   name: "Person",
@@ -59,7 +60,7 @@ export default {
           params:{
             tno:this.s_no,
             tname:this.s_name,
-            ttitle:this.s_title,
+            scname:this.s_scname,
             pageNum:this.currentPage,
             pageSize:this.pageSize
           }
@@ -189,10 +190,17 @@ export default {
       _ => {
         done();
       }
-      this.fileLoadVisible=false;
+      this.dialogUpadateVisible=false;
       this.dialogFormVisible = false;
     },exports(){
-      window.open("http://localhost:9090/course/export");
+      const ws = XLSX.utils.json_to_sheet(this.tableData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      if(this.search_mood==0)XLSX.writeFile(wb, '全部信息.xlsx');
+      else if(this.search_mood==1)XLSX.writeFile(wb, '管理员信息.xlsx');
+      else if(this.search_mood==2)XLSX.writeFile(wb, '老师信息.xlsx');
+      else if(this.search_mood==3)XLSX.writeFile(wb, '学生信息.xlsx');
+      //window.open("http://localhost:9090/course/export");
     }
   },
   data(){
@@ -204,7 +212,7 @@ export default {
       s_name:"",
       s_permission:"",
       s_no:"",
-      s_title:"",
+      s_scname:"",
       dialogVisible: false,
       path:"",
       id:"",
@@ -250,7 +258,11 @@ export default {
     console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.load();
-  }
+  },watch: {
+    search_mood(newValue, oldValue) {
+    this.find();
+  },
+},
 }
 </script>
 
@@ -269,9 +281,9 @@ export default {
       </el-select>
       <el-input style="flex:1;width:200px"  placeholder="请输入人员名" suffix-icon="el-icon-search" v-model="s_name"
                 clearable></el-input>
-      <el-input style="flex:1;width:200px"  placeholder="请输入人员学工号" suffix-icon="el-icon-search" v-model="s_no"
+      <el-input style="flex:1;width:200px"  placeholder="请输入人员学/工号" suffix-icon="el-icon-search" v-model="s_no"
                 clearable v-if="search_mood!=0"></el-input>
-      <el-input style="flex:1;width:200px"  placeholder="请输入人员职称" suffix-icon="el-icon-search" v-model="s_no"
+      <el-input style="flex:1;width:200px"  placeholder="请输入人员学院名" suffix-icon="el-icon-search" v-model="s_scname"
                 clearable v-if="search_mood==2"></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
@@ -281,10 +293,12 @@ export default {
     <el-table :data="tableData">
       <el-table-column prop="permission" label="身份" width="200"  v-if="search_mood==0">
       </el-table-column>
-      <el-table-column prop="sys_username" label="账号" width="300" v-if="search_mood==1">
+      <el-table-column prop="mname" label="管理员名" width="300" v-if="search_mood==1">
       </el-table-column>
-      <el-table-column prop="sys_password" label="密码" width="300" v-if="search_mood==1">
+      <el-table-column prop="mno" label="工号" width="300" v-if="search_mood==1">
       </el-table-column>
+<!--      <el-table-column prop="sys_password" label="密码" width="300" v-if="search_mood==1">-->
+<!--      </el-table-column>-->
       <el-table-column prop="tno" label="工号" width="150" v-if="search_mood==2">
       </el-table-column>
       <el-table-column prop="tname" label="名字" width="150" v-if="search_mood==2">
@@ -293,10 +307,12 @@ export default {
       </el-table-column>
       <el-table-column prop="ttitle" label="职称" width="150" v-if="search_mood==2">
       </el-table-column>
-      <el-table-column prop="scno" label="院系" width="150" v-if="search_mood==2">
+      <el-table-column prop="scno" label="院系代码" width="150" v-if="search_mood==2">
       </el-table-column>
-      <el-table-column prop="tpassword" label="密码" width="150" v-if="search_mood==2">
+      <el-table-column prop="scname" label="学院" width="150" v-if="search_mood==2">
       </el-table-column>
+<!--      <el-table-column prop="tpassword" label="密码" width="150" v-if="search_mood==2">-->
+<!--      </el-table-column>-->
       <el-table-column prop="sno" label="学号" width="120" v-if="search_mood==3">
       </el-table-column>
       <el-table-column prop="sname" label="名字" width="120" v-if="search_mood==3">
@@ -311,7 +327,7 @@ export default {
       </el-table-column>
       <el-table-column prop="clno" label="班级" width="120" v-if="search_mood==3">
       </el-table-column>
-      <el-table-column prop="spassword" label="密码" width="120" v-if="search_mood==3">
+      <el-table-column prop="scname" label="学院" width="120" v-if="search_mood==3">
       </el-table-column>
       <el-table-column label="操作" >
         <template slot-scope="scope" >
@@ -397,6 +413,7 @@ export default {
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="add">添加</el-button>
+          <el-button type="warning" @click="dialogFormVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -459,6 +476,7 @@ export default {
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="update">添加</el-button>
+          <el-button type="warning" @click="dialogUpadateVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
