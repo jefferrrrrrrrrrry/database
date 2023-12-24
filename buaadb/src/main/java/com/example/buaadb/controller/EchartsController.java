@@ -22,9 +22,9 @@ public class EchartsController {
     }
 
     @GetMapping("/getratesno")
-    public Result getRateSno(@RequestParam String Sno) {
+    public Result getRateSno(@RequestParam String sno) {
         try {
-            return Result.success(mapper.getRateSno(Sno));
+            return Result.success(mapper.getRateSno(sno));
         } catch (Exception e){
             throw new ServiceException(Status.ERROR, "数据访问失败");
         }
