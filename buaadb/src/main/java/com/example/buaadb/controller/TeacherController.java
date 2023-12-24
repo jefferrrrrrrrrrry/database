@@ -43,7 +43,7 @@ public class TeacherController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Teacher teacher) {
-        if (userService.getById(teacher.getTno()) != null) {
+        if (userService.getById(teacher.getTno().replace("\"", "")) != null) {
             throw new ServiceException(Status.ERROR, "添加失败，用户名已存在");
         } else {
             // userService.save(new User(teacher.getTno(), teacher.getTpassword(), 2));
@@ -58,7 +58,7 @@ public class TeacherController {
     @DeleteMapping("/{tno}")
     public Result del(@PathVariable String tno) {
         try {
-            teacherService.removeById(tno);
+            teacherService.removeById(tno.replace("\"", ""));
             return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
