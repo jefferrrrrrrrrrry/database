@@ -1,6 +1,7 @@
 package com.example.buaadb.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public class Teacher {
     private String tsex;
     private String ttitle;
     private Integer scno;
+    @JsonIgnore
     private String tpassword;
 }

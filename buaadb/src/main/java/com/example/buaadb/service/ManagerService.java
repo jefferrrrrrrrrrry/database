@@ -22,13 +22,6 @@ import java.util.List;
 public class ManagerService extends ServiceImpl<ManagerMapper, Manager> {
     @Autowired
     private ManagerMapper mapper;
-    public int login(LogInfo logInfo) {
-        // List<Manager> manager = mapper.login(logInfo.getUsername(), logInfo.getPassword());
-//        if (manager.isEmpty()) {
-//            return 1; // no such student
-//        }
-        return 0;
-    }
 
     public void export(HttpServletResponse response, List<Manager> list) throws IOException {
         ExcelWriter writer = ExcelUtil.getWriter(true);

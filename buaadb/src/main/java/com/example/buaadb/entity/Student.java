@@ -14,6 +14,7 @@ public class Student {
     private Integer sage;
     private String ssex;
     private Integer sgrade;
+    private Integer scredit;
     private String spassword;
     private Integer clno;
 
