@@ -30,12 +30,12 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     public void login(LogInfo logInfo) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sys_username", logInfo.getSys_username());
-        queryWrapper.eq("sys_password", logInfo.getSys_password());
+        queryWrapper.eq("sys_username", logInfo.getSys_username().replace("\"", ""));
+        queryWrapper.eq("sys_password", logInfo.getSys_password().replace("\"", ""));
         User user = null;
         Login login = new Login();
-        login.setUsername(logInfo.getSys_username());
-        login.setPassword(logInfo.getSys_password());
+        login.setUsername(logInfo.getSys_username().replace("\"", ""));
+        login.setPassword(logInfo.getSys_password().replace("\"", ""));
         login.setDate(new Date());
         login.setSuccess(0);
         try {

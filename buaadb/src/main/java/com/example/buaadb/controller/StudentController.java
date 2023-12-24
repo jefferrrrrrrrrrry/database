@@ -49,7 +49,7 @@ public class StudentController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Student student) {
-        if (userService.getById(student.getSno()) != null) {
+        if (userService.getById(student.getSno().replace("\"", "")) != null) {
             return Result.error(Status.ERROR, "添加失败，用户名已存在");
         } else {
             student.setScredit(0);
@@ -64,7 +64,7 @@ public class StudentController {
     @DeleteMapping("/{sno}")
     public Result del(@PathVariable String sno) {
         try {
-            studentService.removeById(sno);
+            studentService.removeById(sno.replace("\"", ""));
             return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");

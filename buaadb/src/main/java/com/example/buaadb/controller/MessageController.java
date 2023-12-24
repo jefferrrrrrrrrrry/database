@@ -43,7 +43,7 @@ public class MessageController {
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize
     ) {
         QueryWrapper<Message> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("dest", user);
+        queryWrapper.eq("dest", user.replace("\"", ""));
         queryWrapper.eq("read", 0);
         return Result.success(PageDivision.getPage(service.list(queryWrapper), pageNum, pageSize));
     }

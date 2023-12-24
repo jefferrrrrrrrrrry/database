@@ -14,7 +14,7 @@
 
     <select id="profile" resultType="com.example.buaadb.entity.output.TeacherInfo">
         SELECT tno, tname, tsex, ttitle, teacher.scno, scname FROM teacher JOIN school ON teacher.Scno = school.Scno
-        WHERE tno = ${tno}
+        WHERE tno = #{tno}
     </select>
 
 

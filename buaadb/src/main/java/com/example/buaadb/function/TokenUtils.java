@@ -66,7 +66,7 @@ public class TokenUtils {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
-                return JWT.decode(token).getAudience().get(0);
+                return JWT.decode(token).getAudience().get(0).replace("\"", "");
             } else {
                 throw new Exception();
             }

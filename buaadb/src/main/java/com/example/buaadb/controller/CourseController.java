@@ -73,12 +73,12 @@ public class CourseController {
     public Result selectCourse(@RequestBody String cno) { // 学生选课
         QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sno", TokenUtils.getUsername());
-        queryWrapper.eq("cno", cno);
+        queryWrapper.eq("cno", cno.replace("\"", ""));
         Sel sel = selService.getOne(queryWrapper);
         if (sel != null) {
             throw new ServiceException(Status.ERROR, "已选此课");
         }
-        Course course = courseService.getById(cno);
+        Course course = courseService.getById(cno.replace("\"", ""));
         if (course == null) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
@@ -99,14 +99,14 @@ public class CourseController {
     public Result withdraw(@RequestBody String cno) {
         QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sno", TokenUtils.getUsername());
-        queryWrapper.eq("cno", cno);
+        queryWrapper.eq("cno", cno.replace("\"", ""));
         Sel sel = selService.getOne(queryWrapper);
         if (sel.getSegrade() != null) {
             throw new ServiceException(Status.ERROR, "教师已打分，无法退课");
         }
         try {
             selService.remove(queryWrapper);
-            Course course = courseService.getById(cno);
+            Course course = courseService.getById(cno.replace("\"", ""));
             course.setCremain(course.getCremain() + 1);
             courseService.updateById(course);
             return Result.success();
@@ -143,7 +143,7 @@ public class CourseController {
     @PostMapping("/approve")
     public Result approve(@RequestBody String cno){ // 管理员同意加课
         try {
-            courseMapper.approve(cno);
+            courseMapper.approve(cno.replace("\"", ""));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
@@ -153,7 +153,7 @@ public class CourseController {
     @PostMapping("/disapprove")
     public Result disapprove(@RequestBody String cno){ // 管理员拒绝加课
         try {
-            courseService.removeById(cno);
+            courseService.removeById(cno.replace("\"", ""));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
@@ -170,7 +170,7 @@ public class CourseController {
     @DeleteMapping("/{cno}")
     public Result del(@PathVariable String cno) { // 删除课程
         try {
-            courseService.removeById(cno);
+            courseService.removeById(cno.replace("\"", ""));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
@@ -179,7 +179,7 @@ public class CourseController {
 
     @PostMapping("/recordgrade")
     public Result recordgrade(@RequestBody Sel sel) {
-        Course course = courseService.getById(sel.getCno());
+        Course course = courseService.getById(sel.getCno().replace("\"", ""));
         if (course == null) {
             throw new ServiceException(Status.ERROR, "课程不存在");
         }
@@ -189,8 +189,8 @@ public class CourseController {
         try {
             System.out.println(sel);
             QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("cno", sel.getCno());
-            queryWrapper.eq("sno", sel.getSno());
+            queryWrapper.eq("cno", sel.getCno().replace("\"", ""));
+            queryWrapper.eq("sno", sel.getSno().replace("\"", ""));
             selService.update(sel, queryWrapper);
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");

@@ -19,14 +19,14 @@
         SELECT sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
-        WHERE sno IN (SELECT sno FROM sel WHERE cno = ${cno})
+        WHERE sno IN (SELECT sno FROM sel WHERE cno = #{cno})
         ORDER BY sno
     </select>
 
     <select id="profile" resultType="com.example.buaadb.entity.output.StudentInfo">
         SELECT sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname
         FROM student JOIN class ON class.Clno = student.Clno
-                     JOIN school ON class.Scno = school.Scno WHERE sno = ${sno}
+                     JOIN school ON class.Scno = school.Scno WHERE sno = #{sno}
     </select>
 </mapper>
 

@@ -41,7 +41,7 @@ public class ManagerController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Manager manager) {
-        if (userService.getById(manager.getMno()) != null) {
+        if (userService.getById(manager.getMno().replace("\"", "")) != null) {
             return Result.error(Status.ERROR, "添加失败，用户名已存在");
         } else {
             // userService.save(new User(manager.getMno(), manager.getMpassword(), 3));
@@ -54,7 +54,7 @@ public class ManagerController {
         if (mno.equals(TokenUtils.getUsername())) {
             return Result.error(Status.ERROR, "不能删除当前用户！");
         }
-        managerService.removeById(mno);
+        managerService.removeById(mno.replace("\"", ""));
         return Result.success();
     }
 

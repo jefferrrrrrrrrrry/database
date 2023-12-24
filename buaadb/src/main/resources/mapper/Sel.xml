@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.buaadb.mapper.SelMapper">
     <insert id="insert">
-        INSERT INTO Sel VALUES (${cno}, ${sno}, null)
+        INSERT INTO Sel VALUES (#{cno}, #{sno}, null)
     </insert>
 
     <delete id="del">
-        DELETE FROM Sel WHERE cno = ${cno} AND sno = ${sno}
+        DELETE FROM Sel WHERE cno = #{cno} AND sno = #{sno}
     </delete>
 
     <update id="setScore">
-        UPDATE Sel SET segrade = ${segrade} WHERE cno = ${cno} AND sno = ${sno}
+        UPDATE Sel SET segrade = #{segrade} WHERE cno = #{cno} AND sno = #{sno}
     </update>
 
     <select id="getScore">
-        SELECT segrade FROM Sel WHERE Cno = ${cno} AND Sno = ${sno}
+        SELECT segrade FROM Sel WHERE Cno = #{cno} AND Sno = #{sno}
     </select>
 </mapper>
 
