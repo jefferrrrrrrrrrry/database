@@ -87,8 +87,10 @@ router.beforeEach((to, from, next) => {
     }else if(to.fullPath.includes("manager")) {
         new_loc = 3;
     }
+    loc=localStorage.getItem('loc');
     console.log(loc)
     console.log(new_loc)
+
     if (!to.fullPath.includes("login")&&!from.fullPath.includes("login")&&new_loc!=loc) {
 
             if(loc===1){
@@ -105,13 +107,13 @@ router.beforeEach((to, from, next) => {
     } else {
         if(to.fullPath.includes("student")){
             loc=1;
-            //localStorage.setItem("loc",loc )
+            localStorage.setItem("loc",new_loc )
         }else if(to.fullPath.includes("teacher")){
             loc=2;
-            //localStorage.setItem("loc",loc )
+            localStorage.setItem("loc",new_loc )
         }else if(to.fullPath.includes("manager")){
             loc=3;
-            //localStorage.setItem("loc",loc )
+            localStorage.setItem("loc",new_loc )
         }
         next();
     }
