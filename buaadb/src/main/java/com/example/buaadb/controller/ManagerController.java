@@ -28,9 +28,9 @@ public class ManagerController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam String tno, @RequestParam String tname
+    public Result find(@RequestParam String mno, @RequestParam String mname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(managerMapper.find(tno, tname), pageNum, pageSize));
+        return Result.success(PageDivision.getPage(managerMapper.find(mno, mname), pageNum, pageSize));
     }
 
     @PostMapping("/add")
