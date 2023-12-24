@@ -25,9 +25,9 @@ export default {
         for (let i = 0; i < this.tableData.length; i++) {
           if (this.tableData[i].permission === 1) {
             this.tableData[i].permission = '学生';
-          }else if (this.tableData[i].score === 2) {
+          }else if (this.tableData[i].permission === 2) {
             this.tableData[i].permission = '老师';
-          }else if (this.tableData[i].score === 3) {
+          }else if (this.tableData[i].permission === 3) {
             this.tableData[i].permission = '管理员';
           }
         }
