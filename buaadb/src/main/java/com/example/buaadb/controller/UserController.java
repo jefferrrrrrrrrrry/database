@@ -1,5 +1,7 @@
 package com.example.buaadb.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
@@ -50,7 +52,13 @@ public class UserController {
     }
 
     @GetMapping("/user/")
-    public Result find(@RequestParam Integer pageSize, @RequestParam Integer pageNum) {
-        return Result.success(PageDivision.getPage(userService.list(), pageNum, pageSize));
+    public Result find(@RequestParam String name, @RequestParam Integer permission,
+            @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("sys_username", name);
+        if(permission != null) {
+            queryWrapper.eq("permission", permission);
+        }
+        return Result.success(PageDivision.getPage(userService.list(queryWrapper), pageNum, pageSize));
     }
 }
