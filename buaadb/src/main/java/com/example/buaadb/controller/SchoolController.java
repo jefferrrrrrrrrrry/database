@@ -50,7 +50,8 @@ public class SchoolController {
     @DeleteMapping("/{scno}")
     public Result del(@PathVariable String scno) {
         try {
-            return Result.success(schoolService.removeById(scno));
+            schoolService.removeById(scno);
+            return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }

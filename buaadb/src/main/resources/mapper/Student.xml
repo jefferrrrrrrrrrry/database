@@ -8,14 +8,14 @@
     </select>
 
     <select id="findStudent" resultType="com.example.buaadb.entity.output.StudentInfo">
-        SELECT sno, sname, sage, ssex, sgrade, class.clno, class.scno, scname
+        SELECT sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
         WHERE sname like concat('%', #{sname}, '%') and sno like concat('%', #{sno}, '%')
     </select>
 
     <select id="coursechosen" resultType="com.example.buaadb.entity.output.StudentInfo">
-        SELECT sno, sname, sage, ssex, sgrade, class.clno, class.scno, scname
+        SELECT sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
         WHERE sno IN (SELECT sno FROM sel WHERE cno = ${cno})
