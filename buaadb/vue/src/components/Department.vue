@@ -191,7 +191,7 @@ export default {
       </el-pagination>
     </div>
 
-    <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="院系信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="院系名称">
           <el-input v-model="form.scname" autocomplete="off"></el-input>
@@ -205,7 +205,7 @@ export default {
         <el-button @click="dialogFormVisible = false">取 消</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="课程信息" :visible.sync="dialogUpdateVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="院系信息" :visible.sync="dialogUpdateVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="院系名称">
           <el-input v-model="form.scname" autocomplete="off"></el-input>
@@ -219,7 +219,7 @@ export default {
         <el-button @click="dialogUpdateVisible = false">取 消</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="院系信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <el-form label-width="80px" size="small" >
           <el-upload class="upload-demo" drag action="http://localhost:9090/school/import" multiple accept=".xls, .xlsx"
