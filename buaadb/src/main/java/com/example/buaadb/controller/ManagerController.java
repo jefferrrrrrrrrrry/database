@@ -6,6 +6,7 @@ import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.*;
 import com.example.buaadb.entity.Class;
+import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ManagerMapper;
@@ -60,6 +61,15 @@ public class ManagerController {
     @PostMapping("/update")
     public Result update(@RequestBody Manager manager) {
         return Result.success(managerService.updateById(manager));
+    }
+
+    @GetMapping("/profile")
+    public Result profile() {
+        try {
+            return Result.success(managerService.getById(TokenUtils.getUsername()));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
     }
 
     @GetMapping("/export")
