@@ -15,5 +15,5 @@ public interface StudentMapper extends BaseMapper<Student> {
     List<StudentInfo> findStudent(@Param("sno") String sno, @Param("sname") String sname);
     void insert(@Param("cno") String cno, @Param("sno") String sno);
     List<StudentInfo> coursechosen(@Param("cno") String cno);
-    List<StudentInfo> profile(@Param("cno") String sno);
+    List<StudentInfo> profile(@Param("sno") String sno);
 }
