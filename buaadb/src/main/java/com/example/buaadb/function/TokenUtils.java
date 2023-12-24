@@ -8,6 +8,7 @@ import com.example.buaadb.common.Status;
 import com.example.buaadb.entity.User;
 import com.example.buaadb.exception.ServiceException;
 import com.example.buaadb.service.UserService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+@Component
 public class TokenUtils {
     private static UserService staticuserService;
     @Resource
