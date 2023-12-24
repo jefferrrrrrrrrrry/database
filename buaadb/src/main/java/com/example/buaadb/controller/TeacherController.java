@@ -36,7 +36,7 @@ public class TeacherController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam String tno, @RequestParam String tname, @RequestParam String scname
+    public Result find(@RequestParam(defaultValue = "") String tno, @RequestParam(defaultValue = "") String tname, @RequestParam(defaultValue = "") String scname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         return Result.success(PageDivision.getPage(teacherMapper.find(tno, tname, scname), pageNum, pageSize));
     }

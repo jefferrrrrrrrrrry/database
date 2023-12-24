@@ -100,10 +100,13 @@ public class CourseController {
         if (sel.getSegrade() != null) {
             throw new ServiceException(Status.ERROR, "教师已打分，无法退课");
         }
-        boolean b = selService.remove(queryWrapper);
-        if (b) {
+        try {
+            selService.remove(queryWrapper);
+            Course course = courseService.getById(cno);
+            course.setCremain(course.getCremain() + 1);
+            courseService.updateById(course);
             return Result.success();
-        } else {
+        } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
     }

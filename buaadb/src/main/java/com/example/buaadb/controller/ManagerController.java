@@ -1,5 +1,6 @@
 package com.example.buaadb.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
@@ -28,9 +29,12 @@ public class ManagerController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam String mno, @RequestParam String mname
+    public Result find(@RequestParam(defaultValue = "") String mno, @RequestParam(defaultValue = "") String mname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(managerMapper.find(mno, mname), pageNum, pageSize));
+        QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("mno", mno);
+        queryWrapper.like("mname", mname);
+        return Result.success(PageDivision.getPage(managerService.list(queryWrapper), pageNum, pageSize));
     }
 
     @PostMapping("/add")
