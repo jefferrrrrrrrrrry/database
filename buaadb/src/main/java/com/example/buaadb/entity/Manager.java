@@ -9,6 +9,5 @@ public class Manager {
     @TableId
     private String mno;
     private String mname;
-    @JsonIgnore
     private String mpassword;
 }

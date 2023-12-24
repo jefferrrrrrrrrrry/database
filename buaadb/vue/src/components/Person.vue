@@ -491,10 +491,10 @@ export default {
           </el-select>
         </el-form-item>
         <el-form-item label="管理员名" v-if="mood==1">
-          <el-input v-model="manager.mname" placeholder="请输入密码"></el-input>
+          <el-input v-model="manager.mname" placeholder="请输入管理员名"></el-input>
         </el-form-item>
-        <el-form-item label="账号" v-if="mood==1">
-          <el-input v-model="manager.mno" placeholder="请输入账号"></el-input>
+        <el-form-item label="工号" v-if="mood==1">
+          <el-input v-model="manager.mno" placeholder="请输入工号"></el-input>
         </el-form-item>
         <el-form-item label="密码" v-if="mood==1">
           <el-input v-model="manager.mpassword" placeholder="请输入密码"></el-input>

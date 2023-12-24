@@ -19,7 +19,7 @@ export default {
       });
     },reset(){
       this.s_clno="";
-      this.s_scno="";
+      this.s_scname="";
       this.find();
     },
     find(){
