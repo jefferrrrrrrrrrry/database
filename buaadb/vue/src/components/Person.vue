@@ -22,6 +22,18 @@ export default {
       }).then(res=>{
         console.log(res.data);
         this.tableData=res.data.page;
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (this.tableData[i].permission === 1) {
+            this.tableData[i].permission = '学生';
+          }else if (this.tableData[i].score === 2) {
+            this.tableData[i].permission = '老师';
+          }else if (this.tableData[i].score === 3) {
+            this.tableData[i].permission = '管理员';
+          }
+        }
+        this.tableData.sort(function(a, b) {
+          return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
+        });
         this.total=res.data.total;
       });
     },reset(){
@@ -41,6 +53,18 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].permission === 1) {
+              this.tableData[i].permission = '学生';
+            }else if (this.tableData[i].permission === 2) {
+              this.tableData[i].permission = '老师';
+            }else if (this.tableData[i].permission === 3) {
+              this.tableData[i].permission = '管理员';
+            }
+          }
+          this.tableData.sort(function(a, b) {
+            return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==1){
@@ -54,6 +78,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.mno-b.mno;
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==2){
@@ -68,6 +95,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.tno-b.tno;
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==3){
@@ -81,6 +111,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.sno-b.sno;
+          });
           this.total=res.data.total;
         });
       }
