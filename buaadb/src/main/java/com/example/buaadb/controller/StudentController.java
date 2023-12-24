@@ -79,6 +79,14 @@ public class StudentController {
         }
     }
 
+    @GetMapping("/profile")
+    public Result profile() {
+        try {
+            return Result.success(studentMapper.profile(TokenUtils.getUsername()).get(0));
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
+    }
 
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {

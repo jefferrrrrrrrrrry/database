@@ -17,16 +17,4 @@ public class Student {
     private Integer scredit;
     private String spassword;
     private Integer clno;
-
-    public static void sortBySno(List<Student> list, int up) {
-        list.sort(((o1, o2) -> {
-            if (o1.sno.compareTo(o2.sno) > 0) {
-                return up;
-            } else if (o1.sno.compareTo(o2.sno) == 0) {
-                return 0;
-            } else {
-                return -up;
-            }
-        }));
-    }
 }
