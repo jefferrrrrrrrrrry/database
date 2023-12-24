@@ -1,28 +1,19 @@
 <script>
 import request from "@/utils/request";
+import teacherCourseOpenView from "@/views/Teacher/TeacherCourseOpenView.vue";
 
 export default {
   name: "Person",
+  computed: {
+    teacherCourseOpenView() {
+      return teacherCourseOpenView
+    }
+  },
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      request.get("http://localhost:9090/course/").then(res=>{
-        console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.length;
-      });
-    },reset(){
-      this.s_cname="";
-      this.s_cno="";
-      this.s_tname;
-      this.find();
-    },
-    find(){
-      request.get("http://localhost:9090/course/find",{
+      request.get("http://localhost:9090/user",{
         params:{
-          cno:this.s_cno,
-          cname:this.s_cname,
-          tname:this.s_tname,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
@@ -31,15 +22,142 @@ export default {
         this.tableData=res.data.page;
         this.total=res.data.total;
       });
+    },reset(){
+      this.s_name="";
+      this.s_permission="";
+      this.load();
+    },
+    find(){
+      if(this.search_mood==0){
+        request.get("http://localhost:9090/user",{
+          params:{
+            name:this.s_name,
+            permission:this.s_permission,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }else if(this.search_mood==1){
+        request.get("http://localhost:9090/manager/find",{
+          params:{
+            mno:this.s_no,
+            mname:this.s_name,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }else if(this.search_mood==2){
+        request.get("http://localhost:9090/teacher/find",{
+          params:{
+            tno:this.s_no,
+            tname:this.s_name,
+            ttitle:this.s_title,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }else if(this.search_mood==3){
+        request.get("http://localhost:9090/student/find",{
+          params:{
+            sno:this.s_no,
+            sname:this.s_name,
+            pageNum:this.currentPage,
+            pageSize:this.pageSize
+          }
+        }).then(res=>{
+          console.log(res.data);
+          this.tableData=res.data.page;
+          this.total=res.data.total;
+        });
+      }
+
+    },
+    add(){
+      if(this.mood==1){
+        request.post("http://localhost:9090/manager/add",this.manager).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("添加成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("添加失败")
+          }
+        })
+      }else if(this.mood==2){
+        request.post("http://localhost:9090/teacher/add",this.teacher).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("添加成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("添加失败")
+          }
+        })
+      }else if(this.mood==3){
+        request.post("http://localhost:9090/student/add",this.student).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("添加成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("添加失败")
+          }
+        })
+      }
+    },
+    update(){
+      if(this.mood==1){
+        request.post("http://localhost:9090/manager/update",this.manager).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("更新成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("更新失败")
+          }
+        })
+      }else if(this.mood==2){
+        request.post("http://localhost:9090/teacher/update",this.teacher).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("更新成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("更新失败")
+          }
+        })
+      }else if(this.mood==3){
+        request.post("http://localhost:9090/student/update",this.student).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("更新成功")
+            this.dialogVisible=false;
+            this.load();
+          }else{
+            this.$message.error("更新失败")
+          }
+        })
+      }
     },
     del(id){
       request.delete("http://localhost:9090/course/"+id).then(res=>{
         if(res){
-          this.$message.success("退选成功")
+          this.$message.success("删除成功")
           this.dialogVisible=false;
           this.load();
         }else{
-          this.$message.error("退选失败")
+          this.$message.error("删除失败")
         }
       })
     },
@@ -62,10 +180,6 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
-    },
-    handleEdit(row) {
-      //this.form = JSON.parse(JSON.stringify(row))
-      this.dialogFormVisible = true
     },save(){
       //this.form = JSON.parse(JSON.stringify(row))
       this.dialogFormVisible = false
@@ -87,9 +201,10 @@ export default {
       total:0,
       currentPage:1,
       pageSize:5,
-      s_cname:"",
-      s_cno:"",
-      s_tname:"",
+      s_name:"",
+      s_permission:"",
+      s_no:"",
+      s_title:"",
       dialogVisible: false,
       path:"",
       id:"",
@@ -103,17 +218,38 @@ export default {
       dialogFormVisible:false,
       fileLoadVisible:false,
       form:{},
-      user:{
-        id:"",
-        name:"",
-        pwd:"",
+      user:{},
+      manager:{
+        mno:"",
+        mname:"",
+        mpassword:"",
       },
+      student:{
+        sno:"",
+        sname:"",
+        sage:"",
+        ssex:"",
+        sgrade:"",
+        spassword:"",
+        clno:"",
+      },
+      teacher:{
+        tno:"",
+        tname:"",
+        ttitle:"",
+        tsex:"",
+        scno:"",
+        tpassword:"",
+      },
+      mood:"",
+      dialogUpadateVisible:false,
+      search_mood:"0"
     }
   },
   created() {
     console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
-    this.find();
+    this.load();
   }
 }
 </script>
@@ -122,38 +258,71 @@ export default {
   <div>
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href='/${id}/manageall' >管理人员</a></el-breadcrumb-item>
+      <el-breadcrumb-item><a href='/${id}/manageall' >人员管理</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
-      <el-input style="flex:1;width:200px"  placeholder="请输入教师名" suffix-icon="el-icon-search" v-model="s_cname"
+      <el-select style="flex:1;width:200px" v-model="search_mood" placeholder="请选择身份" suffix-icon="el-icon-search">
+        <el-option label="所有" value="0"></el-option>
+        <el-option label="管理员" value="1"></el-option>
+        <el-option label="老师" value="2"></el-option>
+        <el-option label="学生" value="3"></el-option>
+      </el-select>
+      <el-input style="flex:1;width:200px"  placeholder="请输入人员名" suffix-icon="el-icon-search" v-model="s_name"
                 clearable></el-input>
-      <el-input style="flex:1; width:200px"  placeholder="请输入学生名" suffix-icon="el-icon-search" v-model="s_cno"
-                clearable></el-input>
-      <el-input style="flex:1 ;width:200px"  placeholder="请输入管理者名" suffix-icon="el-icon-search" v-model="s_tname"
-                clearable></el-input>
+      <el-input style="flex:1;width:200px"  placeholder="请输入人员学工号" suffix-icon="el-icon-search" v-model="s_no"
+                clearable v-if="search_mood!=0"></el-input>
+      <el-input style="flex:1;width:200px"  placeholder="请输入人员职称" suffix-icon="el-icon-search" v-model="s_no"
+                clearable v-if="search_mood==2"></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
       <el-button type="primary" @click="handleAdd" >新增 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="handleLoad" >文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="exports" >信息导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="cno" label="身份" width="300">
+      <el-table-column prop="permission" label="身份" width="200"  v-if="search_mood==0">
       </el-table-column>
-      <el-table-column prop="cname" label="账号" width="300">
+      <el-table-column prop="sys_username" label="账号" width="300" v-if="search_mood==1">
       </el-table-column>
-      <el-table-column prop="cpos" label="密码" width="300">
+      <el-table-column prop="sys_password" label="密码" width="300" v-if="search_mood==1">
+      </el-table-column>
+      <el-table-column prop="tno" label="工号" width="150" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="tname" label="名字" width="150" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="tsex" label="性别" width="100" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="ttitle" label="职称" width="150" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="scno" label="院系" width="150" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="tpassword" label="密码" width="150" v-if="search_mood==2">
+      </el-table-column>
+      <el-table-column prop="sno" label="学号" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="sname" label="名字" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="sage" label="年龄" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="ssex" label="性别" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="sgrade" label="年级" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="scredit" label="总学分" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="clno" label="班级" width="120" v-if="search_mood==3">
+      </el-table-column>
+      <el-table-column prop="spassword" label="密码" width="120" v-if="search_mood==3">
       </el-table-column>
       <el-table-column label="操作" >
         <template slot-scope="scope" >
           <el-button
                      size="mini"
                      type="primary"
-                     @click="del(scope.row.cno)">更改信息</el-button>
+                     @click="dialogUpadateVisible=true">更改信息</el-button>
           <el-button
                      size="mini"
                      type="danger"
-                     @click="del(scope.row.cno)">删除</el-button>
+                     @click="del(scope.row.permission,scope.row.sys_username)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -172,23 +341,124 @@ export default {
     <el-dialog title="人员信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
       <el-form  :model="user" class="demo-form-inline">
         <el-form-item label="身份">
-          <el-select v-model="user.id" placeholder="请选择身份">
-            <el-option label="管理员" value="manager"></el-option>
-            <el-option label="老师" value="teacher"></el-option>
-            <el-option label="学生" value="student"></el-option>
+          <el-select v-model="mood" placeholder="请选择身份">
+            <el-option label="管理员" value="1"></el-option>
+            <el-option label="老师" value="2"></el-option>
+            <el-option label="学生" value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账号">
-          <el-input v-model="user.name" placeholder="请输入账号"></el-input>
+        <el-form-item label="管理员名" v-if="mood==1">
+          <el-input v-model="manager.mname" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="user.name" placeholder="请输入密码"></el-input>
+        <el-form-item label="账号" v-if="mood==1">
+          <el-input v-model="manager.mno" placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码">
-          <el-input v-model="user.name" placeholder="请再次输入密码"></el-input>
+        <el-form-item label="密码" v-if="mood==1">
+          <el-input v-model="manager.mpassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="工号" v-if="mood==2">
+          <el-input v-model="teacher.tno" placeholder="请输入工号"></el-input>
+        </el-form-item>
+        <el-form-item label="名字" v-if="mood==2">
+          <el-input v-model="teacher.tname" placeholder="请输入名字"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" v-if="mood==2">
+          <el-input v-model="teacher.tsex" placeholder="请输入性别"></el-input>
+        </el-form-item>
+        <el-form-item label="职称" v-if="mood==2">
+          <el-input v-model="teacher.ttitle" placeholder="请输入职称"></el-input>
+        </el-form-item>
+        <el-form-item label="院系" v-if="mood==2">
+          <el-input v-model="teacher.scno" placeholder="请输入所属院系"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" v-if="mood==2">
+          <el-input v-model="teacher.tpassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="学号" v-if="mood==3">
+          <el-input v-model="student.sno" placeholder="请输入学号"></el-input>
+        </el-form-item>
+        <el-form-item label="名字" v-if="mood==3">
+          <el-input v-model="student.sname" placeholder="请输入名字"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" v-if="mood==3">
+          <el-input v-model="student.ssex" placeholder="请输入性别"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" v-if="mood==3">
+          <el-input v-model="student.sage" placeholder="请输入年龄"></el-input>
+        </el-form-item>
+        <el-form-item label="年级" v-if="mood==3">
+          <el-input v-model="student.sgrade" placeholder="请输入年级"></el-input>
+        </el-form-item>
+        <el-form-item label="班级" v-if="mood==3">
+          <el-input v-model="student.clno" placeholder="请输入班级"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" v-if="mood==3">
+          <el-input v-model="student.spassword" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">添加</el-button>
+          <el-button type="primary" @click="add">添加</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <el-dialog title="人员信息" :visible.sync="dialogUpadateVisible" width="30%" :before-close="handleClose">
+      <el-form  :model="user" class="demo-form-inline">
+        <el-form-item label="身份">
+          <el-select v-model="mood" placeholder="请选择身份">
+            <el-option label="管理员" value="1"></el-option>
+            <el-option label="老师" value="2"></el-option>
+            <el-option label="学生" value="3"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="管理员名" v-if="mood==1">
+          <el-input v-model="manager.mname" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="账号" v-if="mood==1">
+          <el-input v-model="manager.mno" placeholder="请输入账号"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" v-if="mood==1">
+          <el-input v-model="manager.mpassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="工号" v-if="mood==2">
+          <el-input v-model="teacher.tno" placeholder="请输入工号"></el-input>
+        </el-form-item>
+        <el-form-item label="名字" v-if="mood==2">
+          <el-input v-model="teacher.tname" placeholder="请输入名字"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" v-if="mood==2">
+          <el-input v-model="teacher.tsex" placeholder="请输入性别"></el-input>
+        </el-form-item>
+        <el-form-item label="职称" v-if="mood==2">
+          <el-input v-model="teacher.ttitle" placeholder="请输入职称"></el-input>
+        </el-form-item>
+        <el-form-item label="院系" v-if="mood==2">
+          <el-input v-model="teacher.scno" placeholder="请输入所属院系"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" v-if="mood==2">
+          <el-input v-model="teacher.tpassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="学号" v-if="mood==3">
+          <el-input v-model="student.sno" placeholder="请输入学号"></el-input>
+        </el-form-item>
+        <el-form-item label="名字" v-if="mood==3">
+          <el-input v-model="student.sname" placeholder="请输入名字"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" v-if="mood==3">
+          <el-input v-model="student.ssex" placeholder="请输入性别"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" v-if="mood==3">
+          <el-input v-model="student.sage" placeholder="请输入年龄"></el-input>
+        </el-form-item>
+        <el-form-item label="年级" v-if="mood==3">
+          <el-input v-model="student.sgrade" placeholder="请输入年级"></el-input>
+        </el-form-item>
+        <el-form-item label="班级" v-if="mood==3">
+          <el-input v-model="student.clno" placeholder="请输入班级"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" v-if="mood==3">
+          <el-input v-model="student.spassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="update">添加</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>

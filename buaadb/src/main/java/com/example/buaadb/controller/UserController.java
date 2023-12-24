@@ -50,7 +50,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/")
+    @GetMapping("/user")
     public Result find(@RequestParam String name, @RequestParam Integer permission,
             @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

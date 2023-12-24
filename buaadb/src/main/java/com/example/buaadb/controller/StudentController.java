@@ -34,7 +34,7 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private UserService userService;
-    @GetMapping("/findstudent") // 找学生
+    @GetMapping("/find") // 找学生
     public Result findStudent(@RequestParam(defaultValue = "") String sno,
                               @RequestParam(defaultValue = "") String sname
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {

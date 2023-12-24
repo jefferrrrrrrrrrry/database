@@ -22,7 +22,6 @@ export default {
 
   },
   components:{
-    CourseChosen,
     Aside,
     Header,
     Person
