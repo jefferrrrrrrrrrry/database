@@ -57,7 +57,7 @@ public class SchoolController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam String scname // 根据系名模糊查找系
+    public Result find(@RequestParam(defaultValue = "") String scname // 根据系名模糊查找系
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         QueryWrapper<School> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("scname", scname);

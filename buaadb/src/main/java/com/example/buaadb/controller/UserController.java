@@ -51,11 +51,11 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public Result find(@RequestParam String name, @RequestParam Integer permission,
+    public Result find(@RequestParam(defaultValue = "") String sys_username, @RequestParam(defaultValue = "-1") Integer permission,
             @RequestParam Integer pageSize, @RequestParam Integer pageNum) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("sys_username", name);
-        if(permission != null) {
+        queryWrapper.like("sys_username", sys_username);
+        if (permission > 0) {
             queryWrapper.eq("permission", permission);
         }
         return Result.success(PageDivision.getPage(userService.list(queryWrapper), pageNum, pageSize));
