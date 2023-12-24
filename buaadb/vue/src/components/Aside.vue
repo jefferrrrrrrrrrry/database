@@ -42,7 +42,7 @@ export default {
 <el-menu :default-openeds="['1', '3']" style="height:100%" background-color="rgb(135,206,235)"
            text-color="#000080" active-text-color="#fff" :collapse-transition="false" :collapse="isCollapse" @select="handleSelect">
     <div style="height:60px; line-height:60px; text-align:center" >
-      <img src="../assets/buaa.png" alt="" style="width:30px; vertical-align:middle;"v-show="true">
+      <img src="../assets/logo.png" alt="" style="width:30px; vertical-align:middle;" v-show="true">
       <b style="color:rgb(0,0,128); vertical-align:middle; "v-show="!isCollapse"> BUAA选课系统</b>
     </div>
     <el-submenu index="1">

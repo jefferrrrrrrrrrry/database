@@ -52,7 +52,7 @@ public class StudentController {
         if (userService.getById(student.getSno()) != null) {
             return Result.error(Status.ERROR, "添加失败，用户名已存在");
         } else {
-            // userService.save(new User(student.getSno(), student.getSpassword(), 1));
+            student.setScredit(0);
             try {
                 return Result.success(studentService.save(student));
             } catch (Exception e) {
