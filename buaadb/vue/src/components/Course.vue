@@ -38,14 +38,29 @@ export default {
       });
     },
     del(id){
-      var out_cno=id;
-      request.post("http://localhost:9090/course/withdraw",out_cno).then(res=>{
+      request.delete("http://localhost:9090/course/"+id, {
+        params:{
+          cno:id
+        }
+      }).then(res=>{
         console.log(res)
         if(res.status==="SUCCESS"){
-          this.$message.success("退选成功");
+          this.$message.success("删除成功");
           this.load();
         }else{
-          this.$message.error("退选失败");
+          this.$message.error("删除失败");
+        }
+      })
+    },
+    update(){
+      this.form.status="1";
+      request.post("http://localhost:9090/course/update",this.form).then(res=>{
+        console.log(res)
+        if(res.status==="SUCCESS"){
+          this.$message.success("更新成功");
+          this.load();
+        }else{
+          this.$message.error("更新失败，请检查格式")
         }
       })
     },
@@ -75,10 +90,10 @@ export default {
         request.post("http://localhost:9090/course/manageradd",this.form).then(res=>{
           console.log(res)
           if(res.status==="SUCCESS"){
-            this.$message.success("申请已递交教务审核");
+            this.$message.success("添加成功");
             this.load();
           }else{
-            this.$message.error("申请失败，请核对信息")
+            this.$message.error("添加失败，请检查格式")
           }
         })
       }
@@ -148,6 +163,7 @@ export default {
       },
       dialogFormVisible:false,
       fileLoadVisible:false,
+      dialogChangeVisible:false,
       form:{},
       file:null,
 
@@ -218,7 +234,7 @@ export default {
           <el-button v-if="loc==2"
               size="mini"
               type="primary"
-              @click="del(scope.row.cno)">更改信息</el-button>
+              @click="dialogChangeVisible = 'true'">更改信息</el-button>
           <el-button v-if="loc==2"
               size="mini"
               type="danger"
@@ -271,6 +287,38 @@ export default {
       <el-button @click="dialogFormVisible = false">取 消</el-button>
     </div>
   </el-dialog>
+    <el-dialog title="课程信息" :visible.sync="dialogChangeVisible" width="30%" :before-close="handleClose">
+      <el-form label-width="80px" size="small">
+        <el-form-item label="课程代码">
+          <el-input v-model="form.cno" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="课程名称">
+          <el-input v-model="form.cname" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="课程类型">
+          <el-input v-model="form.ctype" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="教师号">
+          <el-input v-model="form.tno" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="校区">
+          <el-input v-model="form.cpos" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="学分">
+          <el-input v-model="form.ccredit" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="剩余人数">
+          <el-input v-model="form.cremain" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="容量">
+          <el-input v-model="form.ccapacity" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="update">确 定</el-button>
+        <el-button @click="dialogChangeVisible = false">取 消</el-button>
+      </div>
+    </el-dialog>
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <el-form label-width="80px" size="small" >
