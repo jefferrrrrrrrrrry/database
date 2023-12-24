@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class EchartsController {
     @Autowired
     private EchartsMapper mapper;
-    @GetMapping("/getrate")
+    @GetMapping("/getratecno")
     public Result getRateCno(@RequestParam String cno) {
         try {
             return Result.success(mapper.getRateCno(cno));
@@ -21,7 +21,7 @@ public class EchartsController {
         }
     }
 
-    @GetMapping("/getrate")
+    @GetMapping("/getratesno")
     public Result getRateSno(@RequestParam String Sno) {
         try {
             return Result.success(mapper.getRateSno(Sno));
