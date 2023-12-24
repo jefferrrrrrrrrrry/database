@@ -6,13 +6,14 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" />
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open" :name="this.name" />
         </el-header>
         <router-view></router-view>
       </el-container>
 
     </el-container>
   </div>
+
 </template>
 
 <script>
@@ -28,6 +29,7 @@ export default {
       sideWidth:200,
       isCollapse:false,
       collapseBtnClass:'el-icon-s-fold',
+      name:"",
     }
   },
   created(){
@@ -48,6 +50,21 @@ export default {
       }else{
         this.collapseBtnClass='el-icon-s-fold'
       }
+    },open() {
+      var info
+      request.get("http://localhost:9090/manager/profile").then(res=>{
+        console.log(res);
+        if(res.status==="SUCCESS"){
+          info="身份：管理员\n"+"姓名："+res.data.mname+"\n工号："+res.data.mno+"\n密码："+res.data.mpassword;
+          this.name=res.data.mname;
+          console.log(info)
+          this.$alert(info.replace(/\n/g, '<br>'), '个人信息', {
+            confirmButtonText: '关闭',
+            dangerouslyUseHTMLString: true,
+            showClose: false,
+          });
+        }
+      })
     }
   }
 }

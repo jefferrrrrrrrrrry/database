@@ -49,14 +49,21 @@ export default {
         this.collapseBtnClass='el-icon-s-fold'
       }
     },open() {
-      request.get("http://localhost:9090/student/profile").then(res=>{
-        console.log(res);
-      })
-      var info=""
-      this.$alert('这是一段内容', '个人信息', {
-        confirmButtonText: '关闭',
-      });
-  }
+        var info
+        request.get("http://localhost:9090/student/profile").then(res=>{
+          console.log(res);
+          if(res.status==="SUCCESS"){
+            //info="身份：学生\n"+"名字："+res.data.mname+"\n学号："+res.data.mno+"\n密码："+res.data.mpassword;
+            //this.name=res.data.mname;
+            console.log(info)
+            this.$alert(info.replace(/\n/g, '<br>'), '个人信息', {
+              confirmButtonText: '关闭',
+              dangerouslyUseHTMLString: true,
+              showClose: false,
+            });
+          }
+        })
+      }
   }
 }
 </script>

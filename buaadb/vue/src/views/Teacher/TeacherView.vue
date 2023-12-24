@@ -6,7 +6,7 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open"/>
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open" :name="name"/>
         </el-header>
         <router-view></router-view>
       </el-container>
@@ -49,9 +49,20 @@ export default {
         this.collapseBtnClass='el-icon-s-fold'
       }
     },open() {
-      this.$alert('这是一段内容', '标题名称', {
-        confirmButtonText: '确定'
-      });
+      var info
+      request.get("http://localhost:9090/teacher/profile").then(res=>{
+        console.log(res);
+        if(res.status==="SUCCESS"){
+          info="身份：老师\n"+"姓名："+res.data.tname+"\n    院系："+res.data.scname+"\n    院系代码："+res.data.scno+"\n    工号："+res.data.tno;
+          this.name=res.data.tname;
+          console.log(info)
+          this.$alert(info.replace(/\n/g, '<br>'), '个人信息', {
+            confirmButtonText: '关闭',
+            dangerouslyUseHTMLString: true,
+            showClose: false,
+          });
+        }
+      })
     }
   }
 }

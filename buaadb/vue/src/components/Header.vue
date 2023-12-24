@@ -3,6 +3,7 @@ export default {
   name: "Header",
   props:{
     collapseBtnClass:String,
+    name:String,
     collapse:Function,
     open:Function
   },
@@ -38,7 +39,7 @@ export default {
     </div>
 
     <el-dropdown style="width:70px;cursor:pointer">
-      <span class="el-dropdown-link">刘瑞
+      <span class="el-dropdown-link">{{ name }}
       <i class="el-icon-arrow-down" style="margin-left:5px"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
