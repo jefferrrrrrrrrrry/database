@@ -1,6 +1,7 @@
 <script>
 import request from "@/utils/request";
 import * as XLSX from "xlsx";
+import * as echarts from "echarts";
 
 export default {
   name: "CourseChosen",
@@ -163,7 +164,26 @@ export default {
       this.loc=2;
     }
     this.load();
+  },watch:{
+  select_cno(){
+    console.log("666")
+    this.$nextTick(() => {
+      this.chartDom = document.getElementById('main');
+      this.myChart = echarts.init(this.chartDom);
+      request.get("http://localhost:9090/echarts/getratecno",{
+        params:{
+          cno:this.select_cno
+        }
+      }).then(res => {
+            console.log(res)
+            this.option.series[0].data = res.data;
+            this.myChart.setOption(this.option);
+          }
+      )
+
+    });
   }
+}
 }
 </script>
 
