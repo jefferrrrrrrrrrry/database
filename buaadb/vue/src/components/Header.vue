@@ -9,7 +9,7 @@ export default {
   },
   created() {
     if(this.$route.path.includes("teacher")){
-      this.id="老师事务"
+      this.id="教师事务"
     }else if(this.$route.path.includes("student")){
       this.id="学生事务"
     }else{

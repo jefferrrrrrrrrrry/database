@@ -6,7 +6,7 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open"/>
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open" :name="name"/>
         </el-header>
         <router-view></router-view>
       </el-container>
@@ -51,11 +51,12 @@ export default {
     },open() {
         var info
         request.get("http://localhost:9090/student/profile").then(res=>{
-          console.log(res);
+          //console.log(res);
           if(res.status==="SUCCESS"){
-            //info="身份：学生\n"+"名字："+res.data.mname+"\n学号："+res.data.mno+"\n密码："+res.data.mpassword;
-            //this.name=res.data.mname;
-            console.log(info)
+            info="身份：学生\n"+"姓名："+res.data.sname+"\n学号："+res.data.sno+"\n年龄："+res.data.sage+"\n性别："+res.data.ssex+"\n年级："+res.data.sgrade
+                +"\n学院："+res.data.scname+"\n学院代码："+res.data.scno+"\n已获得学分："+res.data.scredit;
+            this.name=res.data.sname;
+            //console.log(info)
             this.$alert(info.replace(/\n/g, '<br>'), '个人信息', {
               confirmButtonText: '关闭',
               dangerouslyUseHTMLString: true,

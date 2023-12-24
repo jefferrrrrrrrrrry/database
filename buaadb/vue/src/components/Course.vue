@@ -36,7 +36,7 @@ export default {
           pageSize:this.pageSize
         }
       }).then(res=>{
-        //console.log(res.data);
+        ////console.log(res.data);
         this.tableData=res.data.page;
         this.tableData.sort(function(a, b) {
           return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -50,7 +50,7 @@ export default {
           cno:id
         }
       }).then(res=>{
-        console.log(res)
+        //console.log(res)
         if(res.status==="SUCCESS"){
           this.$message.success("删除成功");
           this.load();
@@ -62,7 +62,7 @@ export default {
     update(){
       this.form.status="1";
       request.post("http://localhost:9090/course/update",this.form).then(res=>{
-        console.log(res)
+        //console.log(res)
         if(res.status==="SUCCESS"){
           this.$message.success("更新成功");
           this.load();
@@ -85,7 +85,7 @@ export default {
       this.form.status="1";
       if(this.loc==1){
         request.post("http://localhost:9090/course/add",this.form).then(res=>{
-          console.log(res)
+          //console.log(res)
           if(res.status==="SUCCESS"){
             this.$message.success("申请已递交教务审核");
             this.load();
@@ -95,7 +95,7 @@ export default {
         })
       }else{
         request.post("http://localhost:9090/course/manageradd",this.form).then(res=>{
-          console.log(res)
+          //console.log(res)
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功");
             this.load();
@@ -109,11 +109,11 @@ export default {
       // 将换行符 \n 替换为 <br>
       return text.replace(/\n/g, "<br>");
     }, handleSizeChange(pageSize){
-      //console.log(pageSize);
+      ////console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      //console.log(currentPage);
+      ////console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },handleAdd() {
@@ -181,7 +181,7 @@ export default {
     }
   },
   created() {
-    //console.log(this.$route);
+    ////console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.load();
     if(this.$route.path.includes("teacher")){
@@ -232,7 +232,7 @@ export default {
     };
   },watch:{
     select_cno(){
-      console.log("666")
+      //console.log("666")
       this.$nextTick(() => {
         this.chartDom = document.getElementById('main');
         this.myChart = echarts.init(this.chartDom);
@@ -241,7 +241,7 @@ export default {
             cno:this.select_cno
           }
         }).then(res => {
-              console.log(res)
+              //console.log(res)
               this.option.series[0].data = res.data;
               this.myChart.setOption(this.option);
             }
@@ -281,7 +281,7 @@ export default {
       </el-table-column>
       <el-table-column prop="ctype" label="课程类型" width="150">
       </el-table-column>
-      <el-table-column prop="tname" label="开课老师" width="150">
+      <el-table-column prop="tname" label="开课教师" width="150">
       </el-table-column>
       <el-table-column prop="cpos" label="校区" width="150">
       </el-table-column>

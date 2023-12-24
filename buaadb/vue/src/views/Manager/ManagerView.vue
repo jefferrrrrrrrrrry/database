@@ -53,11 +53,11 @@ export default {
     },open() {
       var info
       request.get("http://localhost:9090/manager/profile").then(res=>{
-        console.log(res);
+        //console.log(res);
         if(res.status==="SUCCESS"){
           info="身份：管理员\n"+"姓名："+res.data.mname+"\n工号："+res.data.mno+"\n密码："+res.data.mpassword;
           this.name=res.data.mname;
-          console.log(info)
+          //console.log(info)
           this.$alert(info.replace(/\n/g, '<br>'), '个人信息', {
             confirmButtonText: '关闭',
             dangerouslyUseHTMLString: true,

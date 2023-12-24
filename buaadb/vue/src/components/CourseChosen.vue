@@ -8,7 +8,7 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      console.log(this.loc);
+      //console.log(this.loc);
       if(this.loc==0){
         request.get("http://localhost:9090/course/studentselect",{
           params:{
@@ -16,7 +16,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res => {
-          console.log(res);
+          //console.log(res);
           this.tableData = res.data.page;
           this.tableData.sort(function(a, b) {
             return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -36,7 +36,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res => {
-          console.log(res);
+          //console.log(res);
           this.tableData = res.data.page;
           this.tableData.sort(function(a, b) {
             return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -66,8 +66,8 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log("teacher")
-          console.log(res.data);
+          //console.log("teacher")
+          //console.log(res.data);
           this.tableData=res.data.page;
         this.tableData.sort(function(a, b) {
           return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -89,7 +89,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log(res.data);
+          //console.log(res.data);
           this.tableData=res.data.page;
         this.tableData.sort(function(a, b) {
           return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -142,11 +142,11 @@ export default {
       return text.replace(/\n/g, "<br>");
     },
     handleSizeChange(pageSize){
-      console.log(pageSize);
+      //console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      console.log(currentPage);
+      //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },handleGrade(){
@@ -190,7 +190,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$route);
+    //console.log(this.$route);
     if(this.$route.path.includes("teacher")){
       this.id="teacher";
       this.loc=1;
@@ -240,7 +240,7 @@ export default {
     };
   },watch:{
   select_cno(){
-    console.log("666")
+    //console.log("666")
     this.$nextTick(() => {
       this.chartDom = document.getElementById('main');
       this.myChart = echarts.init(this.chartDom);
@@ -249,7 +249,7 @@ export default {
           cno:this.select_cno
         }
       }).then(res => {
-            console.log(res)
+            //console.log(res)
             this.option.series[0].data = res.data;
             this.myChart.setOption(this.option);
           }
@@ -286,7 +286,7 @@ export default {
     </el-table-column>
     <el-table-column prop="ctype" label="课程类型" width="130">
     </el-table-column>
-    <el-table-column prop="tname" label="开课老师" width="130">
+    <el-table-column prop="tname" label="开课教师" width="130">
     </el-table-column>
     <el-table-column prop="cpos" label="校区" width="130">
     </el-table-column>

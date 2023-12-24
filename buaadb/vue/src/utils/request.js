@@ -12,7 +12,7 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
     config.headers['token'] = localStorage.getItem("token");  // 设置请求头
-    console.log(config.data)
+    //console.log(config.data)
     return config
 }, error => {
     return Promise.reject(error)
@@ -22,7 +22,7 @@ request.interceptors.request.use(config => {
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(
     response => {
-        console.log(response)
+        //console.log(response)
         let res = response.data;
         // 如果是返回的文件
         if (response.config.responseType === 'blob') {
@@ -35,7 +35,7 @@ request.interceptors.response.use(
         return res;
     },
     error => {
-        console.log('err' + error) // for debug
+        //console.log('err' + error) // for debug
         return Promise.reject(error)
     }
 )

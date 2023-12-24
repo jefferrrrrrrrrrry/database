@@ -28,14 +28,14 @@ export default {
           pageSize:this.pageSize
         }
       }).then(res=>{
-        console.log(res.data);
+        //console.log(res.data);
         this.tableData=res.data.page;
         this.total=res.data.total;
       });
     },
     del(id){
       request.delete("http://localhost:9090/class/"+id).then(res=>{
-        console.log(res)
+        //console.log(res)
         if(res.status==="SUCCESS"){
           this.$message.success("删除成功")
           this.load();
@@ -49,11 +49,11 @@ export default {
       return text.replace(/\n/g, "<br>");
     },
     handleSizeChange(pageSize){
-      console.log(pageSize);
+      //console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      console.log(currentPage);
+      //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },handleAdd() {
@@ -137,7 +137,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$route);
+    //console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.find();
   }

@@ -20,13 +20,13 @@ export default {
           pageSize:this.pageSize
         }
       }).then(res=>{
-        console.log(res.data);
+        //console.log(res.data);
         this.tableData=res.data.page;
         for (let i = 0; i < this.tableData.length; i++) {
           if (this.tableData[i].permission === 1) {
             this.tableData[i].permission = '学生';
           }else if (this.tableData[i].permission === 2) {
-            this.tableData[i].permission = '老师';
+            this.tableData[i].permission = '教师';
           }else if (this.tableData[i].permission === 3) {
             this.tableData[i].permission = '管理员';
           }
@@ -51,13 +51,13 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log(res.data);
+          //console.log(res.data);
           this.tableData=res.data.page;
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].permission === 1) {
               this.tableData[i].permission = '学生';
             }else if (this.tableData[i].permission === 2) {
-              this.tableData[i].permission = '老师';
+              this.tableData[i].permission = '教师';
             }else if (this.tableData[i].permission === 3) {
               this.tableData[i].permission = '管理员';
             }
@@ -76,7 +76,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log(res.data);
+          //console.log(res.data);
           this.tableData=res.data.page;
           this.tableData.sort(function(a, b) {
             return a.mno-b.mno;
@@ -93,7 +93,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log(res.data);
+          //console.log(res.data);
           this.tableData=res.data.page;
           this.tableData.sort(function(a, b) {
             return a.tno-b.tno;
@@ -109,7 +109,7 @@ export default {
             pageSize:this.pageSize
           }
         }).then(res=>{
-          console.log(res.data);
+          //console.log(res.data);
           this.tableData=res.data.page;
           this.tableData.sort(function(a, b) {
             return a.sno-b.sno;
@@ -220,11 +220,11 @@ export default {
       return text.replace(/\n/g, "<br>");
     },
     handleSizeChange(pageSize){
-      console.log(pageSize);
+      //console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      console.log(currentPage);
+      //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },handleAdd() {
@@ -252,7 +252,7 @@ export default {
       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
       if(this.search_mood==0)XLSX.writeFile(wb, '全部信息.xlsx');
       else if(this.search_mood==1)XLSX.writeFile(wb, '管理员信息.xlsx');
-      else if(this.search_mood==2)XLSX.writeFile(wb, '老师信息.xlsx');
+      else if(this.search_mood==2)XLSX.writeFile(wb, '教师信息.xlsx');
       else if(this.search_mood==3)XLSX.writeFile(wb, '学生信息.xlsx');
       //window.open("http://localhost:9090/course/export");
     }
@@ -313,7 +313,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$route);
+    //console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.load();
   },mounted() {
@@ -356,7 +356,7 @@ export default {
     search_mood(newValue, oldValue) {
     this.find();
   },select_sno(){
-      console.log("666")
+      //console.log("666")
       this.$nextTick(() => {
         this.chartDom = document.getElementById('main');
         this.myChart = echarts.init(this.chartDom);
@@ -365,7 +365,7 @@ export default {
             sno:this.select_sno
           }
         }).then(res => {
-              console.log(res)
+              //console.log(res)
               this.option.series[0].data = res.data;
               this.myChart.setOption(this.option);
             }
@@ -387,7 +387,7 @@ export default {
       <el-select style="flex:1;width:200px" v-model="search_mood" placeholder="请选择身份" suffix-icon="el-icon-search">
         <el-option label="全部" value="0"></el-option>
         <el-option label="管理员" value="1"></el-option>
-        <el-option label="老师" value="2"></el-option>
+        <el-option label="教师" value="2"></el-option>
         <el-option label="学生" value="3"></el-option>
       </el-select>
       <el-input style="flex:1;width:200px"  placeholder="请输入人员名" suffix-icon="el-icon-search" v-model="s_name"
@@ -416,7 +416,7 @@ export default {
 <!--      </el-table-column>-->
       <el-table-column prop="tno" label="工号" width="150" v-if="search_mood==2">
       </el-table-column>
-      <el-table-column prop="tname" label="名字" width="150" v-if="search_mood==2">
+      <el-table-column prop="tname" label="姓名" width="150" v-if="search_mood==2">
       </el-table-column>
       <el-table-column prop="tsex" label="性别" width="100" v-if="search_mood==2">
       </el-table-column>
@@ -430,7 +430,7 @@ export default {
 <!--      </el-table-column>-->
       <el-table-column prop="sno" label="学号" width="120" v-if="search_mood==3">
       </el-table-column>
-      <el-table-column prop="sname" label="名字" width="120" v-if="search_mood==3">
+      <el-table-column prop="sname" label="姓名" width="120" v-if="search_mood==3">
       </el-table-column>
       <el-table-column prop="sage" label="年龄" width="120" v-if="search_mood==3">
       </el-table-column>
@@ -486,7 +486,7 @@ export default {
         <el-form-item label="身份">
           <el-select v-model="mood" placeholder="请选择身份">
             <el-option label="管理员" value="1"></el-option>
-            <el-option label="老师" value="2"></el-option>
+            <el-option label="教师" value="2"></el-option>
             <el-option label="学生" value="3"></el-option>
           </el-select>
         </el-form-item>
@@ -502,8 +502,8 @@ export default {
         <el-form-item label="工号" v-if="mood==2">
           <el-input v-model="teacher.tno" placeholder="请输入工号"></el-input>
         </el-form-item>
-        <el-form-item label="名字" v-if="mood==2">
-          <el-input v-model="teacher.tname" placeholder="请输入名字"></el-input>
+        <el-form-item label="姓名" v-if="mood==2">
+          <el-input v-model="teacher.tname" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="性别" v-if="mood==2">
           <el-input v-model="teacher.tsex" placeholder="请输入性别"></el-input>
@@ -520,8 +520,8 @@ export default {
         <el-form-item label="学号" v-if="mood==3">
           <el-input v-model="student.sno" placeholder="请输入学号"></el-input>
         </el-form-item>
-        <el-form-item label="名字" v-if="mood==3">
-          <el-input v-model="student.sname" placeholder="请输入名字"></el-input>
+        <el-form-item label="姓名" v-if="mood==3">
+          <el-input v-model="student.sname" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="性别" v-if="mood==3">
           <el-input v-model="student.ssex" placeholder="请输入性别"></el-input>
@@ -549,7 +549,7 @@ export default {
         <el-form-item label="身份">
           <el-select v-model="mood" placeholder="请选择身份">
             <el-option label="管理员" value="1"></el-option>
-            <el-option label="老师" value="2"></el-option>
+            <el-option label="教师" value="2"></el-option>
             <el-option label="学生" value="3"></el-option>
           </el-select>
         </el-form-item>
@@ -565,8 +565,8 @@ export default {
         <el-form-item label="工号" v-if="mood==2">
           <el-input v-model="teacher.tno" placeholder="请输入工号"></el-input>
         </el-form-item>
-        <el-form-item label="名字" v-if="mood==2">
-          <el-input v-model="teacher.tname" placeholder="请输入名字"></el-input>
+        <el-form-item label="姓名" v-if="mood==2">
+          <el-input v-model="teacher.tname" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="性别" v-if="mood==2">
           <el-input v-model="teacher.tsex" placeholder="请输入性别"></el-input>
@@ -583,8 +583,8 @@ export default {
         <el-form-item label="学号" v-if="mood==3">
           <el-input v-model="student.sno" placeholder="请输入学号"></el-input>
         </el-form-item>
-        <el-form-item label="名字" v-if="mood==3">
-          <el-input v-model="student.sname" placeholder="请输入名字"></el-input>
+        <el-form-item label="姓名" v-if="mood==3">
+          <el-input v-model="student.sname" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="性别" v-if="mood==3">
           <el-input v-model="student.ssex" placeholder="请输入性别"></el-input>

@@ -88,8 +88,8 @@ router.beforeEach((to, from, next) => {
         new_loc = 3;
     }
     loc=localStorage.getItem('loc');
-    console.log(loc)
-    console.log(new_loc)
+    //console.log(loc)
+    //console.log(new_loc)
 
     if (!to.fullPath.includes("login")&&!from.fullPath.includes("login")&&new_loc!=loc) {
 

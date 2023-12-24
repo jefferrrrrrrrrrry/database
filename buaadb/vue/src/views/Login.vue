@@ -42,10 +42,9 @@ export default {
   },
   methods: {
     login() {
-      //console.log(this.$refs)
       this.$refs.userForm.validate((valid) => {
         if (valid) {  // 表单校验合法
-          console.log(this.user)
+          ////console.log(this.user)
 
           request.post("http://localhost:9090/login", this.user).then(res => {
             if (res.status=="SUCCESS") {
@@ -54,7 +53,7 @@ export default {
               // setRoutes()
               this.$message.success("登录成功")
               //this.$router.push("/student")
-              console.log(res.data)
+              ////console.log(res.data)
               if (res.data.permission ===1) {
                 this.$router.push("/student")
               } else if (res.data.permission ===2) {

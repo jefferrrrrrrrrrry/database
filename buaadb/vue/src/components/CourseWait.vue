@@ -130,11 +130,11 @@ export default {
       return text.replace(/\n/g, "<br>");
     },
     handleSizeChange(pageSize){
-      console.log(pageSize);
+      ////console.log(pageSize);
       this.pageSize=pageSize;
       this.find();
     },handleCurrentChange(currentPage){
-      console.log(currentPage);
+      //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
     },exports(){
@@ -205,7 +205,7 @@ export default {
       </el-table-column>
       <el-table-column prop="ctype" label="课程类型" width="150">
       </el-table-column>
-      <el-table-column prop="tname" label="开课老师" width="150">
+      <el-table-column prop="tname" label="开课教师" width="150">
       </el-table-column>
       <el-table-column prop="cpos" label="校区" width="150">
       </el-table-column>

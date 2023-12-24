@@ -8,11 +8,11 @@ export default {
     handleSelect(index){
       var now=this.$route.path.toLowerCase();
       var to=this.$router.options.routes[this.loc].path+"/"+this.$router.options.routes[this.loc].children[index-1].path.toLowerCase();
-      console.log(now);
-      console.log(to);
+      //console.log(now);
+      //console.log(to);
       if(now!==to){
-        //console.log(now);
-        //console.log(to);
+        ////console.log(now);
+        ////console.log(to);
         this.$router.push(to);
       }
 
@@ -25,7 +25,7 @@ export default {
     }
   },created() {
     if(this.$route.path.includes("teacher")){
-      this.id="老师事务"
+      this.id="教师事务"
       this.loc=1;
     }else if(this.$route.path.includes("student")){
       this.id="学生事务";
