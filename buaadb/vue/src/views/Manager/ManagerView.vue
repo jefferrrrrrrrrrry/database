@@ -6,7 +6,7 @@
       </el-aside>
       <el-container style="height: 100%;">
         <el-header style="font-size: 12px;">
-          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open" :name="this.name" />
+          <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse" :open="open" :name="this.name" :idd="'3'"/>
         </el-header>
         <router-view></router-view>
       </el-container>

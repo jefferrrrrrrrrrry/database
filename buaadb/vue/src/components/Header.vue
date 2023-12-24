@@ -1,11 +1,13 @@
 <script>
+import request from "@/utils/request";
 export default {
   name: "Header",
   props:{
     collapseBtnClass:String,
     name:String,
     collapse:Function,
-    open:Function
+    open:Function,
+    idd:String,
   },
   created() {
     if(this.$route.path.includes("teacher")){
@@ -22,7 +24,14 @@ export default {
     }
   },methods:{
     outFile(){
-      window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
+      console.log(this.idd)
+      if(this.idd==="3"){
+        window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
+        this.$message.success("导出成功");
+      }else{
+        this.$message.error("无权限");
+      }
+
     },
     out(){
       this.$router.push("/login");
