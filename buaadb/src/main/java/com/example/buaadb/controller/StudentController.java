@@ -65,7 +65,6 @@ public class StudentController {
     public Result del(@PathVariable String sno) {
         try {
             studentService.removeById(sno);
-            // userService.removeById(sno);
             return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");

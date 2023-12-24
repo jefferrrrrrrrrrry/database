@@ -59,10 +59,10 @@ public class TeacherController {
     public Result del(@PathVariable String tno) {
         try {
             teacherService.removeById(tno);
+            return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
-        return Result.success();
     }
 
     @PostMapping("/update")

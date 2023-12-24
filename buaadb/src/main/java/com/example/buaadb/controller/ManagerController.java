@@ -34,6 +34,7 @@ public class ManagerController {
         QueryWrapper<Manager> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("mno", mno);
         queryWrapper.like("mname", mname);
+        queryWrapper.orderBy(true, true, "mno");
         return Result.success(PageDivision.getPage(managerService.list(queryWrapper), pageNum, pageSize));
     }
 

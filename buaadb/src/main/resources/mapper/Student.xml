@@ -12,6 +12,7 @@
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
         WHERE sname like concat('%', #{sname}, '%') and sno like concat('%', #{sno}, '%')
+        ORDER BY sno
     </select>
 
     <select id="coursechosen" resultType="com.example.buaadb.entity.output.StudentInfo">
@@ -19,6 +20,7 @@
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
         WHERE sno IN (SELECT sno FROM sel WHERE cno = ${cno})
+        ORDER BY sno
     </select>
 </mapper>
 
