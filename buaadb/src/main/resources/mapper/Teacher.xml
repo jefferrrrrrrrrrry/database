@@ -9,6 +9,7 @@
         WHERE tname like concat('%', #{tname}, '%')
           and tno like concat('%', #{tno}, '%')
           and scname like concat('%', #{scname}, '%')
+        ORDER BY tno
     </select>
 
 

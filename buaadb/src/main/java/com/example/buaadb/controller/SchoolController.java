@@ -65,6 +65,7 @@ public class SchoolController {
             queryWrapper.eq("scno", scno);
         }
         queryWrapper.like("scname", scname);
+        queryWrapper.orderBy(true, true, "scno");
         return Result.success(PageDivision.getPage(schoolService.list(queryWrapper), pageNum, pageSize));
     }
 
