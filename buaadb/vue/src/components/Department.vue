@@ -14,8 +14,8 @@ export default {
         }
       }).then(res=>{
         console.log(res.data);
-        this.tableData=res.data;
-        this.total=res.length;
+        this.tableData=res.data.page;
+        this.total=res.data.total;
       });
     },reset(){
       this.s_clno="";
@@ -26,6 +26,7 @@ export default {
       request.get("http://localhost:9090/school/find",{
         params:{
           scname:this.s_scname,
+          scno:this.s_scno,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
@@ -36,13 +37,12 @@ export default {
       });
     },
     del(id){
-      request.delete("http://localhost:9090/course/"+id).then(res=>{
-        if(res){
-          this.$message.success("退选成功")
-          this.dialogVisible=false;
+      request.delete("http://localhost:9090/school/"+id).then(res=>{
+        if(res.status==="SUCCESS"){
+          this.$message.success("删除成功")
           this.load();
         }else{
-          this.$message.error("退选失败")
+          this.$message.error("删除失败")
         }
       })
     },
@@ -65,11 +65,22 @@ export default {
     handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
+    },update(){
+      request.post("http://localhost:9090/school/update",this.form).then(res=>{
+        if(res.status=="SUCCESS"){
+          this.$message.success("更新成功")
+          this.dialogUpdateVisible=false;
+          this.load();
+        }else{
+          this.$message.error("更新失败")
+        }
+      })
+      this.dialogFormVisible = false
     },save(){
       request.post("http://localhost:9090/school/add",this.form).then(res=>{
         if(res.status=="SUCCESS"){
           this.$message.success("添加成功")
-          this.dialogVisible=false;
+          this.dialogFormVisible=false;
           this.load();
         }else{
           this.$message.error("添加失败")
@@ -79,9 +90,10 @@ export default {
     },handleFileUploadSuccess(res) {
       if(res.status==="SUCCESS"){
         this.$message.success("添加成功")
+        this.fileLoadVisible=false
         this.load()
       }else{
-        this.$message.success("添加失败，请重新检查格式")
+        this.$message.error("添加失败，请重新检查格式")
         this.load()
       }
 
@@ -119,6 +131,7 @@ export default {
       },
       dialogFormVisible:false,
       fileLoadVisible:false,
+      dialogUpdateVisible:false,
       form:{},
     }
   },
@@ -157,11 +170,11 @@ export default {
           <el-button
               size="mini"
               type="primary"
-              @click="del(scope.row.cno)">更改信息</el-button>
+              @click="dialogUpdateVisible=true">更改信息</el-button>
           <el-button v-if=""
                size="mini"
                type="danger"
-               @click="del(scope.row.cno)">删除</el-button>
+               @click="del(scope.row.scno)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -190,6 +203,20 @@ export default {
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="save">确 定</el-button>
         <el-button @click="dialogFormVisible = false">取 消</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="课程信息" :visible.sync="dialogUpdateVisible" width="30%" :before-close="handleClose">
+      <el-form label-width="80px" size="small">
+        <el-form-item label="院系名称">
+          <el-input v-model="form.scname" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="院系代码">
+          <el-input v-model="form.scno" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="update">确 定</el-button>
+        <el-button @click="dialogUpdateVisible = false">取 消</el-button>
       </div>
     </el-dialog>
     <el-dialog title="课程信息" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">

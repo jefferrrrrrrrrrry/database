@@ -91,7 +91,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("添加失败")
           }
@@ -101,7 +101,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("添加失败")
           }
@@ -111,7 +111,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("添加失败")
           }
@@ -124,7 +124,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("更新成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("更新失败")
           }
@@ -134,7 +134,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("更新成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("更新失败")
           }
@@ -144,7 +144,7 @@ export default {
           if(res.status==="SUCCESS"){
             this.$message.success("更新成功")
             this.dialogVisible=false;
-            this.load();
+            this.find();
           }else{
             this.$message.error("更新失败")
           }
@@ -152,15 +152,34 @@ export default {
       }
     },
     del(id){
-      request.delete("http://localhost:9090/course/"+id).then(res=>{
-        if(res){
-          this.$message.success("删除成功")
-          this.dialogVisible=false;
-          this.load();
-        }else{
-          this.$message.error("删除失败")
-        }
-      })
+      if(this.search_mood==1){
+        request.delete("http://localhost:9090/manager/"+id).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("删除成功")
+            this.find();
+          }else{
+            this.$message.error("删除失败")
+          }
+        })
+      }else if(this.search_mood==2){
+        request.delete("http://localhost:9090/teacher/"+id).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("删除成功")
+            this.find();
+          }else{
+            this.$message.error("删除失败")
+          }
+        })
+      }else if(this.search_mood==3){
+        request.delete("http://localhost:9090/student/"+id).then(res=>{
+          if(res.status==="SUCCESS"){
+            this.$message.success("删除成功")
+            this.find();
+          }else{
+            this.$message.error("删除失败")
+          }
+        })
+      }
     },
     formatText(text) {
       // 将换行符 \n 替换为 <br>
@@ -293,6 +312,10 @@ export default {
     <el-table :data="tableData">
       <el-table-column prop="permission" label="身份" width="200"  v-if="search_mood==0">
       </el-table-column>
+      <el-table-column prop="sysUsername" label="学工号" width="200"  v-if="search_mood==0">
+      </el-table-column>
+      <el-table-column prop="sysPassword" label="密码" width="200"  v-if="search_mood==0">
+      </el-table-column>
       <el-table-column prop="mname" label="管理员名" width="300" v-if="search_mood==1">
       </el-table-column>
       <el-table-column prop="mno" label="工号" width="300" v-if="search_mood==1">
@@ -336,9 +359,17 @@ export default {
                      type="primary"
                      @click="dialogUpadateVisible=true">更改信息</el-button>
           <el-button
+              size="mini"
+              type="danger"
+              @click="del(scope.row.mno)" v-if="search_mood==1">删除</el-button>
+          <el-button
+              size="mini"
+              type="danger"
+              @click="del(scope.row.tno)" v-if="search_mood==2">删除</el-button>
+          <el-button
                      size="mini"
                      type="danger"
-                     @click="del(scope.row.permission,scope.row.sys_username)">删除</el-button>
+                     @click="del(scope.row.sno)" v-if="search_mood==3">删除</el-button>
         </template>
       </el-table-column>
 
