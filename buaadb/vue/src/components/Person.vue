@@ -385,7 +385,7 @@ export default {
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-select style="flex:1;width:200px" v-model="search_mood" placeholder="请选择身份" suffix-icon="el-icon-search">
-        <el-option label="所有" value="0"></el-option>
+        <el-option label="全部" value="0"></el-option>
         <el-option label="管理员" value="1"></el-option>
         <el-option label="老师" value="2"></el-option>
         <el-option label="学生" value="3"></el-option>

@@ -19,6 +19,9 @@ export default {
       id:""
     }
   },methods:{
+    outFile(){
+      window.open("http://localhost:9090/exportlog")
+    },
     out(){
       this.$router.push("/login");
     },open() {
@@ -45,6 +48,9 @@ export default {
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>
           <el-button type="text" @click="open">个人信息</el-button>
+        </el-dropdown-item>
+        <el-dropdown-item>
+          <el-button type="text" @click="outFile">导出日志</el-button>
         </el-dropdown-item>
         <el-dropdown-item>
           <el-button type="text" @click="out">退出登录</el-button>
