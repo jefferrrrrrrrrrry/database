@@ -85,9 +85,13 @@ public class CourseController {
         if (course.getCremain() <= 0) {
             throw new ServiceException(Status.ERROR, "此课已满");
         }
-        selService.save(new Sel(cno, TokenUtils.getUsername(), null));
-        course.setCremain(course.getCremain() - 1);
-        courseService.updateById(course);
+        try {
+            selService.save(new Sel(cno, TokenUtils.getUsername(), null));
+            course.setCremain(course.getCremain() - 1);
+            courseService.updateById(course);
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
         return Result.success();
     }
 
