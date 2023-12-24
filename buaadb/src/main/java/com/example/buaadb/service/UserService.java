@@ -34,8 +34,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         queryWrapper.eq("sys_password", logInfo.getSys_password());
         User user = null;
         Login login = new Login();
-        login.setUsername(user.getSysUsername());
-        login.setPassword(user.getSysPassword());
+        login.setUsername(logInfo.getSys_username());
+        login.setPassword(logInfo.getSys_password());
         login.setDate(new Date());
         login.setSuccess(0);
         try {
@@ -51,14 +51,14 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             loginService.save(login);
             throw new ServiceException(Status.ERROR, "用户名或密码错误");
         }
-        login.setSuccess(0);
+        login.setSuccess(1);
         loginService.save(login);
     }
 
 
     public void export(HttpServletResponse response) throws IOException {
         List<Login> list = loginService.list();
-        InExport.export(response, list, "教师信息");
+        InExport.export(response, list, "登录日志");
     }
 
 }
