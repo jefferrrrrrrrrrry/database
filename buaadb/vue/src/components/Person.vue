@@ -2,6 +2,7 @@
 import request from "@/utils/request";
 import teacherCourseOpenView from "@/views/Teacher/TeacherCourseOpenView.vue";
 import * as XLSX from "xlsx";
+import * as echarts from "echarts";
 
 export default {
   name: "Person",
@@ -21,6 +22,18 @@ export default {
       }).then(res=>{
         console.log(res.data);
         this.tableData=res.data.page;
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (this.tableData[i].permission === 1) {
+            this.tableData[i].permission = '学生';
+          }else if (this.tableData[i].score === 2) {
+            this.tableData[i].permission = '老师';
+          }else if (this.tableData[i].score === 3) {
+            this.tableData[i].permission = '管理员';
+          }
+        }
+        this.tableData.sort(function(a, b) {
+          return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
+        });
         this.total=res.data.total;
       });
     },reset(){
@@ -40,6 +53,18 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].permission === 1) {
+              this.tableData[i].permission = '学生';
+            }else if (this.tableData[i].permission === 2) {
+              this.tableData[i].permission = '老师';
+            }else if (this.tableData[i].permission === 3) {
+              this.tableData[i].permission = '管理员';
+            }
+          }
+          this.tableData.sort(function(a, b) {
+            return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==1){
@@ -53,6 +78,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.mno-b.mno;
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==2){
@@ -67,6 +95,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.tno-b.tno;
+          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==3){
@@ -80,6 +111,9 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.sno-b.sno;
+          });
           this.total=res.data.total;
         });
       }
@@ -211,6 +245,7 @@ export default {
       }
       this.dialogUpadateVisible=false;
       this.dialogFormVisible = false;
+      this.dialogSelectVisible = false;
     },exports(){
       const ws = XLSX.utils.json_to_sheet(this.tableData);
       const wb = XLSX.utils.book_new();
@@ -270,17 +305,74 @@ export default {
       },
       mood:"",
       dialogUpadateVisible:false,
-      search_mood:"0"
+      search_mood:"0",
+      select_sno:"",
+      myChart:null,
+      chartDom:null,
+      dialogSelectVisible:false,
     }
   },
   created() {
     console.log(this.$route);
     //this.path=this.$router.options.routes[0].path+"/"+this.$router.options.routes[0].children[index-1].path;
     this.load();
+  },mounted() {
+    this.option = {
+      title: {
+        text: '课程优良率',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '50%',
+          data: [],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
   },watch: {
     search_mood(newValue, oldValue) {
     this.find();
-  },
+  },select_sno(){
+      console.log("666")
+      this.$nextTick(() => {
+        this.chartDom = document.getElementById('main');
+        this.myChart = echarts.init(this.chartDom);
+        request.get("http://localhost:9090/echarts/getratesno",{
+          params:{
+            sno:this.select_sno
+          }
+        }).then(res => {
+              console.log(res)
+              this.option.series[0].data = res.data;
+              this.myChart.setOption(this.option);
+            }
+        )
+
+      });
+    }
 },
 }
 </script>
@@ -368,8 +460,12 @@ export default {
               @click="del(scope.row.tno)" v-if="search_mood==2">删除</el-button>
           <el-button
                      size="mini"
-                     type="danger"
-                     @click="del(scope.row.sno)" v-if="search_mood==3">删除</el-button>
+                     type="primary"
+                     @click="select_sno=scope.row.sno;dialogSelectVisible=true;" v-if="search_mood==3">查看学生学习情况</el-button>
+          <el-button
+              size="mini"
+              type="danger"
+              @click="del(scope.row.sno)" v-if="search_mood==3">删除</el-button>
         </template>
       </el-table-column>
 
@@ -510,6 +606,15 @@ export default {
           <el-button type="warning" @click="dialogUpadateVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
+    </el-dialog>
+    <el-dialog title="课程信息" :visible.sync="dialogSelectVisible" width="30%"
+               :before-close="handleClose">
+      <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+        <div id="main" style="width: 500px; height: 400px"></div>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogSelectVisible = false">关 闭</el-button>
+      </div>
     </el-dialog>
   </div>
 

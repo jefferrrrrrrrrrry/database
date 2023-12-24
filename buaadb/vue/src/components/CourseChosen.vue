@@ -18,7 +18,16 @@ export default {
         }).then(res => {
           console.log(res);
           this.tableData = res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+          });
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
           this.total = res.data.total;
+
         });
       }else if(this.loc==1){
         request.get("http://localhost:9090/course/findApprove",{
@@ -29,7 +38,15 @@ export default {
         }).then(res => {
           console.log(res);
           this.tableData = res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+          });
           this.total = res.data.total;
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
         });
       }
     },reset(){
@@ -52,6 +69,14 @@ export default {
           console.log("teacher")
           console.log(res.data);
           this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
           this.total=res.data.total;
         });}
       else if(this.loc==1){
@@ -66,6 +91,14 @@ export default {
         }).then(res=>{
           console.log(res.data);
           this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
           this.total=res.data.total;
         });
        }
@@ -249,15 +282,17 @@ export default {
   <el-table :data="tableData">
     <el-table-column prop="cno" label="课程代码" width="100">
     </el-table-column>
-    <el-table-column prop="cname" label="课程名称" width="150">
+    <el-table-column prop="cname" label="课程名称" width="130">
     </el-table-column>
-    <el-table-column prop="ctype" label="课程类型" width="150">
+    <el-table-column prop="ctype" label="课程类型" width="130">
     </el-table-column>
-    <el-table-column prop="tname" label="开课老师" width="150">
+    <el-table-column prop="tname" label="开课老师" width="130">
     </el-table-column>
-    <el-table-column prop="cpos" label="校区" width="150">
+    <el-table-column prop="cpos" label="校区" width="130">
     </el-table-column>
-    <el-table-column prop="ccredit" label="学分" width="120">
+    <el-table-column prop="ccredit" label="学分" width="70">
+    </el-table-column>
+    <el-table-column prop="score" label="成绩" width="100">
     </el-table-column>
     <el-table-column prop="cremain" label="剩余人数" width="80">
     </el-table-column>

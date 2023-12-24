@@ -15,6 +15,9 @@ export default {
         }
       }).then(res=>{
         this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
         this.total=res.data.total;
       });
     },reset(){
@@ -35,6 +38,9 @@ export default {
       }).then(res=>{
         //console.log(res.data);
         this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
         this.total=res.data.total;
       });
     },
@@ -298,7 +304,7 @@ export default {
           <el-button v-if="loc==2"
              size="mini"
              type="primary"
-             @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
+             @click="dialogSelectVisible = true;select_cno=scope.row.cno;">课程信息</el-button>
           <el-button v-if="loc==2"
               size="mini"
               type="danger"
