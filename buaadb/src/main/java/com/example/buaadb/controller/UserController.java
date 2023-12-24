@@ -62,8 +62,8 @@ public class UserController {
     }
 
     @GetMapping("/exportlog")
-    public void export(HttpServletResponse response) throws IOException {
-        if (TokenUtils.getCurrentUser().getPermission() < 3) {
+    public void export(HttpServletResponse response, @RequestParam String token) throws IOException {
+        if (TokenUtils.getCurrentUser(token).getPermission() < 3) {
             throw new ServiceException(Status.ERROR, "无权限");
         }
         userService.export(response);

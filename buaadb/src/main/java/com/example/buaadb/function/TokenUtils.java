@@ -39,7 +39,20 @@ public class TokenUtils {
                 String userid = JWT.decode(token).getAudience().get(0);
                 return staticuserService.getById(userid);
             } else {
-                throw new Exception();
+                throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
+            }
+        } catch (Exception e){
+            throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
+        }
+    }
+
+    public static User getCurrentUser(String token) {
+        try {
+            if (StrUtil.isNotBlank(token)) {
+                String userid = JWT.decode(token).getAudience().get(0);
+                return staticuserService.getById(userid);
+            } else {
+                throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
             }
         } catch (Exception e){
             throw new ServiceException(Status.ERROR, "未获取到用户，请尝试重新登录");
