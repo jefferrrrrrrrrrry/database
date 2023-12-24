@@ -85,9 +85,13 @@ public class CourseController {
         if (course.getCremain() <= 0) {
             throw new ServiceException(Status.ERROR, "此课已满");
         }
-        selService.save(new Sel(cno, TokenUtils.getUsername(), null));
-        course.setCremain(course.getCremain() - 1);
-        courseService.updateById(course);
+        try {
+            selService.save(new Sel(cno, TokenUtils.getUsername(), null));
+            course.setCremain(course.getCremain() - 1);
+            courseService.updateById(course);
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "操作失败");
+        }
         return Result.success();
     }
 
@@ -216,11 +220,15 @@ public class CourseController {
 
     @PostMapping("/import")
     public Result imp(@RequestBody MultipartFile file) throws IOException {
-        InputStream inputStream = file.getInputStream();
-        ExcelReader reader = ExcelUtil.getReader(inputStream);
-        List<Course> list = reader.readAll(Course.class);
-        courseService.saveBatch(list);
-        return Result.success();
+        try {
+            InputStream inputStream = file.getInputStream();
+            ExcelReader reader = ExcelUtil.getReader(inputStream);
+            List<Course> list = reader.readAll(Course.class);
+            courseService.saveBatch(list);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "导入失败");
+        }
     }
 
     @GetMapping("/export")

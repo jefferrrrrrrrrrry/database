@@ -66,11 +66,15 @@ public class SchoolController {
 
     @PostMapping("/import")
     public Result imp(MultipartFile file) throws IOException {
-        InputStream inputStream = file.getInputStream();
-        ExcelReader reader = ExcelUtil.getReader(inputStream);
-        List<School> list = reader.readAll(School.class);
-        schoolService.saveBatch(list);
-        return Result.success();
+        try {
+            InputStream inputStream = file.getInputStream();
+            ExcelReader reader = ExcelUtil.getReader(inputStream);
+            List<School> list = reader.readAll(School.class);
+            schoolService.saveBatch(list);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "导入失败");
+        }
     }
 
     @GetMapping("/export")
