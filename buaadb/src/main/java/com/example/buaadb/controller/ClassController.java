@@ -62,9 +62,10 @@ public class ClassController {
     }
 
     @GetMapping("/find")
-    public Result find(@RequestParam(defaultValue = "") String scno
+    public Result find(@RequestParam(defaultValue = "") String scname, @RequestParam(defaultValue = "-1") Integer scno,
+            @RequestParam(defaultValue = "-1") Integer clno
             , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
-        return Result.success(PageDivision.getPage(classMapper.find(scno), pageNum, pageSize));
+        return Result.success(PageDivision.getPage(classMapper.find(scno, scname, clno), pageNum, pageSize));
     }
 
     @PostMapping("/import")

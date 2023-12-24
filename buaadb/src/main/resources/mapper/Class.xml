@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.buaadb.mapper.ClassMapper">
+    <select id="find" resultType="com.example.buaadb.entity.output.ClassInfo">
+        SELECT clno, class.scno, Scname FROM (class JOIN school on class.Scno = school.Scno)
+            WHERE Scname LIKE CONCAT('%', #{scname}, '%')
+            <if test="scno > 0"> AND scno = ${scno} </if>
+            <if test="clno > 0"> AND clno = ${clno} </if>
+    </select>
+</mapper>
+
