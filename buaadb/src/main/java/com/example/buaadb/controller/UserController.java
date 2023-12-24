@@ -22,7 +22,6 @@ public class UserController {
     private UserMapper userMapper;
     @Autowired
     private UserService userService;
-
     @PostMapping("/login")
     public Result login(@RequestBody LogInfo logInfo) {
         userService.login(logInfo);

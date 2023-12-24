@@ -5,6 +5,7 @@ import com.example.buaadb.common.Status;
 import com.example.buaadb.controller.logInfo.LogInfo;
 import com.example.buaadb.entity.*;
 import com.example.buaadb.entity.Class;
+import com.example.buaadb.function.PageDivision;
 import com.example.buaadb.function.TokenUtils;
 import com.example.buaadb.mapper.ManagerMapper;
 import com.example.buaadb.service.ManagerService;
@@ -27,8 +28,9 @@ public class ManagerController {
     private UserService userService;
 
     @GetMapping("/find")
-    public Result find(@RequestParam String tno, @RequestParam String tname) {
-        return Result.success(managerMapper.find(tno, tname));
+    public Result find(@RequestParam String tno, @RequestParam String tname
+            , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
+        return Result.success(PageDivision.getPage(managerMapper.find(tno, tname), pageNum, pageSize));
     }
 
     @PostMapping("/add")
