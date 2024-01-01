@@ -149,6 +149,9 @@ export default {
         if(mood==0)XLSX.writeFile(wb, '全部课程.xlsx');
         else XLSX.writeFile(wb, '模板.xlsx');
       //window.open("http://localhost:9090/course/export");
+    },insertInfo(row) {
+      this.dialogChangeVisible = true;
+      this.form = row;
     },
   },
   data(){
@@ -306,7 +309,7 @@ export default {
           <el-button v-if="loc==2"
               size="mini"
               type="primary"
-              @click="dialogChangeVisible = true">更改信息</el-button>
+              @click="insertInfo(scope.row)">更改信息</el-button>
           <el-button v-if="loc==2"
              size="mini"
              type="primary"
@@ -366,7 +369,7 @@ export default {
     <el-dialog title="课程信息" :visible.sync="dialogChangeVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="课程代码">
-          <el-input v-model="form.cno" autocomplete="off"></el-input>
+          <el-input v-model="form.cno" autocomplete="off" disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="课程名称">
           <el-input v-model="form.cname" autocomplete="off"></el-input>
