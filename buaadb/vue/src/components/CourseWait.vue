@@ -86,7 +86,7 @@ export default {
           this.dialogVisible=false;
           this.load();
         }else{
-          this.$message.error("退选失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -96,7 +96,7 @@ export default {
           this.$message.success("同意开课成功")
           this.load()
         }else{
-          this.$message.error("同意开课失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -106,7 +106,7 @@ export default {
           this.$message.success("拒绝开课成功")
           this.load()
         }else{
-          this.$message.error("拒绝开课失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -121,7 +121,7 @@ export default {
           this.dialogVisible=false;
           this.load();
         }else{
-          this.$message.error("取消开课失败")
+          this.$message.error(res.msg)
         }
       })
     },

@@ -127,7 +127,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("添加失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.mood==2){
@@ -137,7 +137,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("添加失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.mood==3){
@@ -147,7 +147,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("添加失败")
+            this.$message.error(res.msg)
           }
         })
       }
@@ -160,7 +160,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("更新失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.mood==2){
@@ -170,7 +170,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("更新失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.mood==3){
@@ -180,7 +180,7 @@ export default {
             this.dialogVisible=false;
             this.find();
           }else{
-            this.$message.error("更新失败")
+            this.$message.error(res.msg)
           }
         })
       }
@@ -192,7 +192,7 @@ export default {
             this.$message.success("删除成功")
             this.find();
           }else{
-            this.$message.error("删除失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.search_mood==2){
@@ -201,7 +201,7 @@ export default {
             this.$message.success("删除成功")
             this.find();
           }else{
-            this.$message.error("删除失败")
+            this.$message.error(res.msg)
           }
         })
       }else if(this.search_mood==3){
@@ -210,7 +210,7 @@ export default {
             this.$message.success("删除成功")
             this.find();
           }else{
-            this.$message.error("删除失败")
+            this.$message.error(res.msg)
           }
         })
       }

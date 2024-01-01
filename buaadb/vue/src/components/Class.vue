@@ -40,7 +40,7 @@ export default {
           this.$message.success("删除成功")
           this.load();
         }else{
-          this.$message.error("删除失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -70,7 +70,7 @@ export default {
           this.dialogUpdateVisible=false;
           this.load();
         }else{
-          this.$message.error("更新失败")
+          this.$message.error(res.msg)
         }
       })
       this.dialogFormVisible = false
@@ -81,7 +81,7 @@ export default {
           this.dialogFormVisible=false;
           this.load();
         }else{
-          this.$message.error("添加失败")
+          this.$message.error(res.msg)
         }
       })
       this.dialogFormVisible = false
@@ -99,7 +99,7 @@ export default {
         this.fileLoadVisible=false
         this.load()
       }else{
-        this.$message.error("添加失败，请重新检查格式")
+        this.$message.error(res.msg)
         this.load()
       }
 

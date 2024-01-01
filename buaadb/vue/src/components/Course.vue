@@ -8,12 +8,14 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
+
       request.get("http://localhost:9090/course/find",{
         params:{
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }
       }).then(res=>{
+        console.log(res)
         this.tableData=res.data.page;
         this.tableData.sort(function(a, b) {
           return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
@@ -55,7 +57,7 @@ export default {
           this.$message.success("删除成功");
           this.load();
         }else{
-          this.$message.error("删除失败");
+          this.$message.error(res.msg);
         }
       })
     },
@@ -67,7 +69,7 @@ export default {
           this.$message.success("更新成功");
           this.load();
         }else{
-          this.$message.error("更新失败，请检查格式")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -77,7 +79,7 @@ export default {
           this.$message.success("选课成功");
           this.load();
         }else{
-          this.$message.error("选课失败，你已选")
+          this.$message.error(res.msg)
         }
       })
     },save(){
@@ -90,7 +92,7 @@ export default {
             this.$message.success("申请已递交教务审核");
             this.load();
           }else{
-            this.$message.error("申请失败，请核对信息")
+            this.$message.error(res.msg)
           }
         })
       }else{
@@ -100,7 +102,7 @@ export default {
             this.$message.success("添加成功");
             this.load();
           }else{
-            this.$message.error("添加失败，请检查格式")
+            this.$message.error(res.msg)
           }
         })
       }
@@ -128,7 +130,7 @@ export default {
         this.$message.success("添加成功")
         this.load()
       }else{
-        this.$message.success("添加失败，请重新检查格式")
+        this.$message.error(res.msg)
         this.load()
       }
 

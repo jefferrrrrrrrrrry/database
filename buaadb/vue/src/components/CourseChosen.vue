@@ -109,7 +109,7 @@ export default {
           this.$message.success("退选成功")
           this.load();
         }else{
-          this.$message.error("退选失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -123,7 +123,7 @@ export default {
           this.$message.success("取消开课成功")
           this.load();
         }else{
-          this.$message.error("取消开课失败")
+          this.$message.error(res.msg)
         }
       })
     },
@@ -133,7 +133,7 @@ export default {
           this.$message.success("录入成功")
           this.load();
         }else{
-          this.$message.error("录入失败")
+          this.$message.error(res.msg)
         }
       })
     },

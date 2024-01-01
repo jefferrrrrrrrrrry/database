@@ -29,7 +29,7 @@ export default {
         window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
         this.$message.success("导出成功");
       }else{
-        this.$message.error("无权限");
+        this.$message.error(res.msg);
       }
 
     },
