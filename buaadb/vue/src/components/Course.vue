@@ -151,7 +151,7 @@ export default {
       //window.open("http://localhost:9090/course/export");
     },insertInfo(row) {
       this.dialogChangeVisible = true;
-      this.form.cno = row.cno;
+      this.form = row;
     },
   },
   data(){
