@@ -103,6 +103,7 @@ export default {
       }
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
+      this.dialogUpdateVisible=false;
     },exports(){
       const ws = XLSX.utils.json_to_sheet(this.tableData);
       const wb = XLSX.utils.book_new();
@@ -171,7 +172,7 @@ export default {
               size="mini"
               type="primary"
               @click="dialogUpdateVisible=true">更改信息</el-button>
-          <el-button v-if=""
+          <el-button 
                size="mini"
                type="danger"
                @click="del(scope.row.scno)">删除</el-button>

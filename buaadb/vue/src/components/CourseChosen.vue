@@ -156,6 +156,7 @@ export default {
         done();
       }
       this.dialogVisible = false;
+      this.dialogSelectVisible=false;
     },exports(){
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();

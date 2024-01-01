@@ -93,6 +93,7 @@ export default {
       }
       this.fileLoadVisible=false;
       this.dialogFormVisible = false;
+      this.dialogUpdateVisible=false;
     },handleFileUploadSuccess(res) {
       if(res.status==="SUCCESS"){
         this.$message.success("添加成功")

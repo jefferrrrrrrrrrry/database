@@ -141,6 +141,7 @@ export default {
       this.fileLoadVisible=false;
       this.dialogSelectVisible=false;
       this.dialogFormVisible = false;
+      this.dialogChangeVisible=false;
     },exports(mood){
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();

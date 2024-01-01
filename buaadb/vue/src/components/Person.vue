@@ -380,8 +380,8 @@ export default {
 <template>
   <div>
     <el-breadcrumb separator="/" >
-      <el-breadcrumb-item :to='{ path: "/manager" } '>首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href='/manager/manageall' >人员管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
+      <el-breadcrumb-item><a href='/${id}/manageall' >人员管理</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-select style="flex:1;width:200px" v-model="search_mood" placeholder="请选择身份" suffix-icon="el-icon-search">
