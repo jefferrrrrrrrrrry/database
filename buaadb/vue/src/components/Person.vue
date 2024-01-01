@@ -246,6 +246,27 @@ export default {
       this.dialogUpadateVisible=false;
       this.dialogFormVisible = false;
       this.dialogSelectVisible = false;
+    },pre(moods,item){
+      if(moods==1){
+        this.mood="管理员";
+        this.manager.mname=item.mname;
+        this.manager.mno=item.mno;
+      }else if(moods==2){
+        this.mood="教师";
+        this.teacher.scno=item.scno;
+        this.teacher.tname=item.tname;
+        this.teacher.tno=item.tno;
+        this.teacher.tsex=item.tsex;
+        this.teacher.ttitle=item.ttitle;
+      }else if(moods==3){
+        this.mood="学生";
+        this.student.clno=item.clno;
+        this.student.sage=item.sage;
+        this.student.sgrade=item.sgrade;
+        this.student.sname=item.sname;
+        this.student.sno=item.sno;
+        this.student.ssex=item.ssex;
+      }
     },exports(){
       const ws = XLSX.utils.json_to_sheet(this.tableData);
       const wb = XLSX.utils.book_new();
@@ -402,11 +423,11 @@ export default {
       <el-button type="primary" @click="exports" >信息导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="permission" label="身份" width="200"  v-if="search_mood==0">
+      <el-table-column prop="permission" label="身份" width="400"  v-if="search_mood==0">
       </el-table-column>
-      <el-table-column prop="sysUsername" label="学工号" width="200"  v-if="search_mood==0">
+      <el-table-column prop="sysUsername" label="学工号" width="400"  v-if="search_mood==0">
       </el-table-column>
-      <el-table-column prop="sysPassword" label="密码" width="200"  v-if="search_mood==0">
+      <el-table-column prop="sysPassword" label="密码" width="300"  v-if="search_mood==0">
       </el-table-column>
       <el-table-column prop="mname" label="管理员名" width="300" v-if="search_mood==1">
       </el-table-column>
@@ -445,11 +466,11 @@ export default {
       <el-table-column prop="scname" label="学院" width="120" v-if="search_mood==3">
       </el-table-column>
       <el-table-column label="操作" >
-        <template slot-scope="scope" >
+        <template slot-scope="scope" v-if="search_mood!=0">
           <el-button
                      size="mini"
                      type="primary"
-                     @click="dialogUpadateVisible=true">更改信息</el-button>
+                     @click="pre(search_mood,scope.row);dialogUpadateVisible=true;" >更改信息</el-button>
           <el-button
               size="mini"
               type="danger"
@@ -461,7 +482,7 @@ export default {
           <el-button
                      size="mini"
                      type="primary"
-                     @click="select_sno=scope.row.sno;dialogSelectVisible=true;" v-if="search_mood==3">查看学生学习情况</el-button>
+                     @click="select_sno=scope.row.sno;dialogSelectVisible=true;" v-if="search_mood==3">学生学习情况</el-button>
           <el-button
               size="mini"
               type="danger"
@@ -602,7 +623,7 @@ export default {
           <el-input v-model="student.spassword" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="update">添加</el-button>
+          <el-button type="primary" @click="update">更改</el-button>
           <el-button type="warning" @click="dialogUpadateVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
