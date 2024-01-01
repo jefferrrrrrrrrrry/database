@@ -24,40 +24,41 @@ const routes = [
         path: '/student',
         name: 'student',
         component: StudentView,
-        meta: { requiresAuth: true}, // 添加 meta 信息
+        meta: { title:"学生主页"},
         children: [
-            {path: "course", name: "studentCourse", component: StudentCourseView},
-            {path: "courseChosen", name: "studentCourseChosen", component: StudentCourseChosenView},
+            {path: "course", name: "studentCourse",meta: { title:"全部课程"}, component: StudentCourseView},
+            {path: "courseChosen", name: "studentCourseChosen",meta: { title:"学生选课"}, component: StudentCourseChosenView},
         ]
     },
     {
         path: '/teacher',
         name: 'teacher',
         component: TeacherView,
-        meta: { requiresAuth: true}, // 添加 meta 信息
+        meta: { title:"教师主页"},
         children: [
-            {path: "course", name: "teacherCourse", component: TeacherCourseView},
-            {path: "courseWait", name: "teacherCourseWait", component: TeacherCourseWaitView},
-            {path: "courseOpen", name: "teacherCourseOpen", component: TeacherCourseOpenView},
+            {path: "course", name: "teacherCourse",meta: { title:"全部课程"}, component: TeacherCourseView},
+            {path: "courseWait", name: "teacherCourseWait",meta: { title:"待审核课程"}, component: TeacherCourseWaitView},
+            {path: "courseOpen", name: "teacherCourseOpen",meta: { title:"已开课程"}, component: TeacherCourseOpenView},
         ]
     },
     {
         path: '/manager',
         name: 'manager',
         component: ManagerView,
-        meta: { requiresAuth: true}, // 添加 meta 信息
+        meta: { title:"管理员主页"},
         children: [
-            {path: "course", name: "ManagerCourse", component: ManagerCourseView},
-            {path: "work", name: "ManagerWork", component: ManagerWorkView},
-            {path: "manageAll", name: "ManagerManageAll", component: ManagerManageAllView},
-            {path: "department", name: "ManagerDepartment", component: ManagerDepartmentView},
-            {path: "class", name: "ManagerClass", component: ManagerClassView},
+            {path: "course", name: "ManagerCourse",meta: { title:"课程管理"}, component: ManagerCourseView},
+            {path: "work", name: "ManagerWork",meta: { title:"审核开课"}, component: ManagerWorkView},
+            {path: "manageAll", name: "ManagerManageAll",meta: { title:"人员管理"}, component: ManagerManageAllView},
+            {path: "department", name: "ManagerDepartment",meta: { title:"院系管理"}, component: ManagerDepartmentView},
+            {path: "class", name: "ManagerClass",meta: { title:"班级管理"}, component: ManagerClassView},
         ]
     },
     {
         path: '/login',
         name: 'login',
-        component: login
+        component: login,
+        meta: { title:"1！5！这是BUAA选课系统"},
     },
     {
         path: '/',
@@ -67,6 +68,7 @@ const routes = [
     {
         path: '*',
         name: '404',
+        meta: { title:"1！5！想干嘛？"},
         component: NotFoundView,
     }
 ]
