@@ -264,9 +264,11 @@ export default {
 <template>
 <div>
   <el-breadcrumb separator="/" >
-    <el-breadcrumb-item :to='{ path: "/${id}" } ' >首页</el-breadcrumb-item>
-    <el-breadcrumb-item v-if="this.loc==0"><a href='/${id}/courseChosen' >已选课程</a></el-breadcrumb-item>
-    <el-breadcrumb-item v-if="this.loc==1"><a href='/${id}/courseOpen' >已开课程</a></el-breadcrumb-item>
+    <el-breadcrumb-item :to='{ path: "/student" } ' v-if="this.loc==0">首页</el-breadcrumb-item>
+    <el-breadcrumb-item :to='{ path: "/teacher" } ' v-if="this.loc==1">首页</el-breadcrumb-item>
+    <el-breadcrumb-item :to='{ path: "/manager" } ' v-if="this.loc==2">首页</el-breadcrumb-item>
+    <el-breadcrumb-item v-if="this.loc==0"><a href='/student/courseChosen' >已选课程</a></el-breadcrumb-item>
+    <el-breadcrumb-item v-if="this.loc==1"><a href='/teacher/courseOpen' >已开课程</a></el-breadcrumb-item>
   </el-breadcrumb>
   <div style="padding:10px 0;display:flex">
     <el-input style="flex:1;width:200px"  placeholder="请输入课程名" suffix-icon="el-icon-search" v-model="s_cname"

@@ -147,7 +147,7 @@ export default {
   <div>
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/manager" } ' >首页</el-breadcrumb-item>
-      <el-breadcrumb-item ><a href='/manager/class' >院系管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item ><a href='/manager/department' >院系管理</a></el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-input style="flex:1;width:200px"  placeholder="请输入院系代码" suffix-icon="el-icon-search" v-model="s_scno"
