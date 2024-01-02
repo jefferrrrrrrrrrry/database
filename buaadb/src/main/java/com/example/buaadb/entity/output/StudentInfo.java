@@ -16,4 +16,5 @@ public class StudentInfo {
     private Integer clno;
     private Integer scno;
     private String scname;
+    private Integer score;
 }

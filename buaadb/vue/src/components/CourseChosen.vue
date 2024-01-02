@@ -170,8 +170,10 @@ export default {
           XLSX.writeFile(wb, '已选课程.xlsx');
         }
     }, searchStudent(row) {
+      // this.$router.push("/teacher/search")
       this.$router.push({
-        name: "/teacher/search",
+        //path: "/teacher/search",
+        name: 'teacherCourseSelect',
         params: {
           cno: row.cno
         }

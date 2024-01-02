@@ -16,10 +16,11 @@
     </select>
 
     <select id="coursechosen" resultType="com.example.buaadb.entity.output.StudentInfo">
-        SELECT sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname
+        SELECT student.sno, sname, sage, ssex, sgrade, scredit, class.clno, class.scno, scname, segrade as score
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
-        WHERE sno IN (SELECT sno FROM sel WHERE cno = #{cno})
+                     JOIN sel ON sel.sno = student.sno
+        WHERE student.sno IN (SELECT sno FROM sel WHERE cno = #{cno})
         ORDER BY sno
     </select>
 

@@ -14,7 +14,7 @@ export default {
   methods: {
     // 将字符串中的换行符替换为 HTML 换行标签
     load(){
-      // this.cno = this.$route.query.cno;
+      this.cno = this.$route.params.cno;
       request.get("http://localhost:9090/student/coursechosen",{
         params:{
           cno:this.cno,
@@ -49,13 +49,13 @@ export default {
     },handleAdd() {
       this.dialogFormVisible = true
       this.form = {}
-    },
-    handleLoad() {
+    },handleLoad() {
       this.fileLoadVisible = true
       this.form = {}
     },handleGrade(row) {
       this.dialogVisible = true;
-      this.sel.cno = row.cno;
+      this.sel.sno = row.sno;
+      this.sel.cno = this.cno;
     },save(){
       //this.form = JSON.parse(JSON.stringify(row))
       this.dialogFormVisible = false
@@ -124,7 +124,11 @@ export default {
       },
       search_mood:"0",
       select_sno:"",
-      sel:{},
+      sel:{
+        sno:"",
+        cno:"",
+        segrade:""
+      },
       myChart:null,
       chartDom:null,
     }
@@ -168,7 +172,7 @@ export default {
           <el-button
               size="mini"
               type="primary"
-              @click="" >成绩录入</el-button>
+              @click="handleGrade(scope.row)" >成绩录入</el-button>
         </template>
       </el-table-column>
 
@@ -193,10 +197,10 @@ export default {
                     <el-input v-model="sel.cno" autocomplete="off" disabled="true"></el-input>
                   </el-form-item>
           <el-form-item label="学号">
-            <el-input v-model="sel.sno" autocomplete="off" placeholder="请输入学生学号"></el-input>
+            <el-input v-model="sel.sno" autocomplete="off" disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="分数">
-            <el-input v-model="sel.sgrade" autocomplete="off" placeholder="请输入0-100的整数"></el-input>
+            <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入0-100的整数"></el-input>
           </el-form-item>
         </el-form>
       </div>
