@@ -86,7 +86,7 @@ public class CourseController {
             throw new ServiceException(Status.ERROR, "此课已满");
         }
         try {
-            selService.save(new Sel(cno, TokenUtils.getUsername(), null));
+            selService.save(new Sel(cno.replace("\"", ""), TokenUtils.getUsername(), null));
             course.setCremain(course.getCremain() - 1);
             courseService.updateById(course);
         } catch (Exception e) {
