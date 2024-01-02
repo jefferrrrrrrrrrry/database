@@ -166,7 +166,15 @@ export default {
     },insertInfo(row) {
       this.dialogChangeVisible = true;
       this.form = JSON.parse(JSON.stringify(row));
-    },
+    }, searchStudent(row) {
+      this.$router.push({
+        //path: "/teacher/search",
+        name: 'ManagerCourseSelect',
+        params: {
+          cno: row.cno
+        }
+      })
+    }
   },
   data(){
     return{
@@ -303,15 +311,15 @@ export default {
     <el-table :data="tableData">
       <el-table-column prop="cno" label="课程代码" width="100">
       </el-table-column>
-      <el-table-column prop="cname" label="课程名称" width="150">
+      <el-table-column prop="cname" label="课程名称" width="120">
       </el-table-column>
-      <el-table-column prop="ctype" label="课程类型" width="150">
+      <el-table-column prop="ctype" label="课程类型" width="120">
       </el-table-column>
-      <el-table-column prop="tname" label="开课教师" width="150">
+      <el-table-column prop="tname" label="开课教师" width="120">
       </el-table-column>
-      <el-table-column prop="cpos" label="校区" width="150">
+      <el-table-column prop="cpos" label="校区" width="120">
       </el-table-column>
-      <el-table-column prop="ccredit" label="学分" width="120">
+      <el-table-column prop="ccredit" label="学分" width="80">
       </el-table-column>
       <el-table-column prop="cremain" label="剩余人数" width="80">
       </el-table-column>
@@ -324,13 +332,17 @@ export default {
               type="danger"
               @click="choose(scope.row.cno)">选课</el-button>
           <el-button v-if="loc==2"
+                     size="mini"
+                     type="primary"
+                     @click="searchStudent(scope.row)">学生信息</el-button>
+          <el-button v-if="loc==2"
               size="mini"
               type="primary"
               @click="insertInfo(scope.row)">更改信息</el-button>
           <el-button v-if="loc==2"
              size="mini"
              type="primary"
-             @click="dialogSelectVisible = true;select_cno=scope.row.cno;">课程信息</el-button>
+             @click="dialogSelectVisible = true;select_cno=scope.row.cno;">课程优良率</el-button>
           <el-button v-if="loc==2"
               size="mini"
               type="danger"

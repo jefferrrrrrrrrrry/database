@@ -186,7 +186,7 @@ public class CourseController {
         if (course == null) {
             throw new ServiceException(Status.ERROR, "课程不存在");
         }
-        if (!Objects.equals(course.getTno(), TokenUtils.getUsername())) {
+        if (TokenUtils.getCurrentUser().getPermission() < 3 && !Objects.equals(course.getTno(), TokenUtils.getUsername())) {
             throw new ServiceException(Status.ERROR, "你没有权限更改此成绩");
         }
         try {
