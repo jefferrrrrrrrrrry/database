@@ -24,13 +24,8 @@ export default {
     }
   },methods:{
     outFile(){
-      console.log(this.idd)
-      if(this.idd==="3"){
-        window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
-        this.$message.success("导出成功");
-      }else{
-        this.$message.error(res.msg);
-      }
+      window.open("http://localhost:9090/exportlog?token="+localStorage.getItem("token"))
+      this.$message.success("导出成功");
 
     },
     out(){
@@ -56,7 +51,7 @@ export default {
           <el-button type="text" @click="open">个人信息</el-button>
         </el-dropdown-item>
         <el-dropdown-item>
-          <el-button type="text" @click="outFile">导出日志</el-button>
+          <el-button type="text" @click="outFile" v-if="idd==3">导出日志</el-button>
         </el-dropdown-item>
         <el-dropdown-item>
           <el-button type="text" @click="out">退出登录</el-button>
