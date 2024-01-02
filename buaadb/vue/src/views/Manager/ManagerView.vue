@@ -33,7 +33,11 @@ export default {
     }
   },
   created(){
-
+    request.get("http://localhost:9090/manager/profile").then(res=>{
+        if(res.status==="SUCCESS"){
+          this.name=res.data.mname;
+        }
+      })
   },
   components:{
     Aside,

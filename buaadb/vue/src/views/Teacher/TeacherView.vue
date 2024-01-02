@@ -32,7 +32,11 @@ export default {
     }
   },
   created(){
-
+    request.get("http://localhost:9090/teacher/profile").then(res=>{
+        if(res.status==="SUCCESS"){
+          this.name=res.data.tname;
+        }
+      })
   },
   components:{
     Aside,
