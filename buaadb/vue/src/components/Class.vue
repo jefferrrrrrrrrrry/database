@@ -105,10 +105,15 @@ export default {
       }
 
     },exports(){
-      const ws = XLSX.utils.json_to_sheet(this.tableData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      XLSX.writeFile(wb, '班级信息.xlsx');
+      request.get("http://localhost:9090/class/find").then(res=>{
+        this.tableData=res.data.page;
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '班级信息.xlsx');
+        this.find();
+      });
+      
     },insert(row) {
       this.dialogUpdateVisible=true;
       this.form = JSON.parse(JSON.stringify(row));

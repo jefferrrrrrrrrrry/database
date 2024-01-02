@@ -105,10 +105,21 @@ export default {
       this.dialogFormVisible = false;
       this.dialogUpdateVisible=false;
     },exports(){
-      const ws = XLSX.utils.json_to_sheet(this.tableData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      XLSX.writeFile(wb, '院系信息.xlsx');
+      request.get("http://localhost:9090/school/find",{
+        params:{
+          pageNum:1,
+          pageSize:10000
+        }
+      }).then(res=>{
+        //console.log(res.data);
+        this.tableData=res.data.page;
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '院系信息.xlsx');
+        this.find();
+      });
+      
     }, insert(row) {
       this.dialogUpdateVisible=true;
       this.form = JSON.parse(JSON.stringify(row))
