@@ -18,6 +18,7 @@ public class CourseInfo {
     private Integer ccapacity;
     private Integer cremain;
     private Integer score;
+    private Integer status;
 
     public static void sortByCno(List<CourseInfo> list, int up) {
         list.sort(((o1, o2) -> {

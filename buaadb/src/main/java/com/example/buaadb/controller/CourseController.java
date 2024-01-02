@@ -101,6 +101,9 @@ public class CourseController {
         queryWrapper.eq("sno", TokenUtils.getUsername());
         queryWrapper.eq("cno", cno.replace("\"", ""));
         Sel sel = selService.getOne(queryWrapper);
+        if (sel == null) {
+            throw new ServiceException(Status.ERROR, "未选此课");
+        }
         if (sel.getSegrade() != null) {
             throw new ServiceException(Status.ERROR, "教师已打分，无法退课");
         }
@@ -109,10 +112,10 @@ public class CourseController {
             Course course = courseService.getById(cno.replace("\"", ""));
             course.setCremain(course.getCremain() + 1);
             courseService.updateById(course);
-            return Result.success();
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        return Result.success();
     }
 
     @PostMapping("/add")
