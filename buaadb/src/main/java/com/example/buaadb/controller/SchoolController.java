@@ -72,10 +72,10 @@ public class SchoolController {
 
     @PostMapping("/import")
     public Result imp(MultipartFile file) throws IOException {
+        if (TokenUtils.getCurrentUser().getPermission() < 3) {
+            throw new ServiceException(Status.ERROR, "无权限");
+        }
         try {
-            if (TokenUtils.getCurrentUser().getPermission() < 3) {
-                throw new ServiceException(Status.ERROR, "无权限");
-            }
             InputStream inputStream = file.getInputStream();
             ExcelReader reader = ExcelUtil.getReader(inputStream);
             List<School> list = reader.readAll(School.class);

@@ -149,8 +149,9 @@ export default {
       //console.log(currentPage);
       this.currentPage=currentPage;
       this.find();
-    },handleGrade(){
+    },handleGrade(row){
       this.dialogVisible = true;
+      this.sel.cno = row.cno;
     },handleClose(){
       _ => {
         done();
@@ -314,11 +315,11 @@ export default {
         <el-button
             size="mini"
             type="primary"
-            @click="handleGrade(scope.row.cno)">成绩录入</el-button>
+            @click="handleGrade(scope.row)">成绩录入</el-button>
         <el-button
-                   size="mini"
-                   type="primary"
-                   @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
+            size="mini"
+            type="primary"
+            @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
         <el-button
             size="mini"
             type="danger"
@@ -342,13 +343,13 @@ export default {
     <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
       <el-form label-width="80px" size="small" >
         <el-form-item label="课程代码">
-          <el-input v-model="sel.cno" autocomplete="off" placeholder="请再次确认课程代码"></el-input>
+          <el-input v-model="sel.cno" autocomplete="off" disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="学号">
-          <el-input v-model="sel.sno" autocomplete="off" placeholder="请输入正确的学号"></el-input>
+          <el-input v-model="sel.sno" autocomplete="off" placeholder="请输入学生学号"></el-input>
         </el-form-item>
         <el-form-item label="分数">
-          <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入1-100的整数"></el-input>
+          <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入0-100的整数"></el-input>
         </el-form-item>
       </el-form>
     </div>

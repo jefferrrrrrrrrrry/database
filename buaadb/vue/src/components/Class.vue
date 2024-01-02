@@ -109,6 +109,9 @@ export default {
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
       XLSX.writeFile(wb, '班级信息.xlsx');
+    },insert(row) {
+      this.dialogUpdateVisible=true;
+      this.form = JSON.parse(JSON.stringify(row));
     }
   },
   data(){
@@ -176,7 +179,7 @@ export default {
           <el-button
               size="mini"
               type="primary"
-              @click="dialogUpdateVisible=true">更改信息</el-button>
+              @click="insert(scope.row)">更改信息</el-button>
           <el-button v-if=""
                      size="mini"
                      type="danger"
@@ -200,13 +203,10 @@ export default {
     <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="班级">
-          <el-input v-model="form.clno" autocomplete="off"></el-input>
+          <el-input v-model="form.clno" autocomplete="off" ></el-input>
         </el-form-item>
         <el-form-item label="院系代码">
           <el-input v-model="form.scno" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="院系名称">
-          <el-input v-model="form.scname" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -217,13 +217,10 @@ export default {
     <el-dialog title="课程信息" :visible.sync="dialogUpdateVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="班级">
-          <el-input v-model="form.clno" autocomplete="off"></el-input>
+          <el-input v-model="form.clno" autocomplete="off" disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="院系代码">
-          <el-input v-model="form.scno" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="院系名称">
-          <el-input v-model="form.scname" autocomplete="off"></el-input>
+          <el-input v-model="form.scno" autocomplete="off" ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

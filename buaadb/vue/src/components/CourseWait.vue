@@ -146,6 +146,9 @@ export default {
       }else if(this.loc==2){
         XLSX.writeFile(wb, '待审核课程.xlsx');
       }
+    },insertInfo(row) {
+      this.dialogChangeVisible = true;
+      this.form = JSON.parse(JSON.stringify(row));
     }
   },
   data(){

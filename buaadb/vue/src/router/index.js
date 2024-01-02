@@ -58,7 +58,7 @@ const routes = [
         path: '/login',
         name: 'login',
         component: login,
-        meta: { title:"1！5！这是BUAA选课系统"},
+        meta: { title:"这是BUAA选课系统"},
     },
     {
         path: '/',
@@ -68,7 +68,7 @@ const routes = [
     {
         path: '*',
         name: '404',
-        meta: { title:"1！5！想干嘛？"},
+        meta: { title:"想干嘛？"},
         component: NotFoundView,
     }
 ]
