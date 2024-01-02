@@ -374,7 +374,7 @@ export default {
       <el-form-item label="课程类型">
         <el-input v-model="form.ctype" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="教师号">
+      <el-form-item v-if="loc==3" label="教师号">
         <el-input v-model="form.tno" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="校区">
