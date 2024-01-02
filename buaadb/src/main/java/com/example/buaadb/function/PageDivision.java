@@ -10,6 +10,9 @@ import java.util.List;
 public class PageDivision {
     public static <T> HashMap<String, Object> getPage(List<T> list, Integer pageNum, Integer pageSize) {
         // , @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize
+        if (pageNum == -1) {
+            pageSize = 999999999;
+        }
         int total = list.size();
         int totalPage = (total / pageSize) + ((total % pageSize > 0) ? 1 : 0);
         List<T> page;

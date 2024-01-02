@@ -15,6 +15,7 @@ import ManagerManageAllView from "@/views/Manager/ManagerManageAllView.vue";
 import ManagerDepartmentView from "@/views/Manager/ManagerDepartmentView.vue";
 import ManagerClassView from "@/views/Manager/ManagerClassView.vue";
 import NotFoundView from "@/views/404View.vue";
+import TeacherCourseSelectView from "@/views/Teacher/TeacherCourseSelectView.vue";
 Vue.use(VueRouter)
 // 在父级路由上添加 meta 信息
 var loc=0//localStorage.getItem("loc")
@@ -39,6 +40,7 @@ const routes = [
             {path: "course", name: "teacherCourse",meta: { title:"全部课程"}, component: TeacherCourseView},
             {path: "courseWait", name: "teacherCourseWait",meta: { title:"待审核课程"}, component: TeacherCourseWaitView},
             {path: "courseOpen", name: "teacherCourseOpen",meta: { title:"已开课程"}, component: TeacherCourseOpenView},
+            {path: "search", name: "teacherCourseSelect",meta: { title:"选课学生"}, component: TeacherCourseSelectView},
         ]
     },
     {

@@ -169,6 +169,13 @@ export default {
         }else{
           XLSX.writeFile(wb, '已选课程.xlsx');
         }
+    }, searchStudent(row) {
+      this.$router.push({
+        name: "/teacher/search",
+        params: {
+          cno: row.cno
+        }
+      })
     }
   },
   data(){
@@ -288,19 +295,19 @@ export default {
     </el-table-column>
     <el-table-column prop="cname" label="课程名称" width="130">
     </el-table-column>
-    <el-table-column prop="ctype" label="课程类型" width="130">
+    <el-table-column prop="ctype" label="课程类型" width="100">
     </el-table-column>
     <el-table-column prop="tname" label="开课教师" width="130">
     </el-table-column>
     <el-table-column prop="cpos" label="校区" width="130">
     </el-table-column>
-    <el-table-column prop="ccredit" label="学分" width="70">
+    <el-table-column prop="ccredit" label="学分" width="60">
     </el-table-column>
-    <el-table-column prop="score" label="成绩" width="100">
+    <el-table-column prop="score" label="成绩" width="80">
     </el-table-column>
     <el-table-column prop="cremain" label="剩余人数" width="80">
     </el-table-column>
-    <el-table-column prop="ccapacity" label="容量" width="80">
+    <el-table-column prop="ccapacity" label="容量" width="60">
     </el-table-column>
     <el-table-column label="操作" v-if="this.loc==0">
       <template slot-scope="scope">
@@ -315,11 +322,15 @@ export default {
         <el-button
             size="mini"
             type="primary"
+            @click="searchStudent(scope.row)">查看学生</el-button>
+        <el-button
+            size="mini"
+            type="primary"
             @click="handleGrade(scope.row)">成绩录入</el-button>
         <el-button
             size="mini"
             type="primary"
-            @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看课程信息</el-button>
+            @click="dialogSelectVisible = true;select_cno=scope.row.cno;">查看优良率</el-button>
         <el-button
             size="mini"
             type="danger"
