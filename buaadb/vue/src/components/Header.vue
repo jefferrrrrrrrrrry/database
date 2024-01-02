@@ -69,7 +69,7 @@ export default {
 <style scoped>
 .el-dropdown-link {
   cursor: pointer;
-  //color: #409EFF;
+  color: #409EFF;
 }
 .el-icon-arrow-down {
   font-size: 12px;

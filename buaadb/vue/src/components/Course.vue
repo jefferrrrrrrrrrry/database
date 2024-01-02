@@ -143,12 +143,25 @@ export default {
       this.dialogFormVisible = false;
       this.dialogChangeVisible=false;
     },exports(mood){
+      request.get("http://localhost:9090/course/find",{
+        params:{
+          pageNum:1,
+          pageSize:10000
+        }
+      }).then(res=>{
+        console.log(res)
+        this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
         if(mood==0)XLSX.writeFile(wb, '全部课程.xlsx');
         else XLSX.writeFile(wb, '模板.xlsx');
-      //window.open("http://localhost:9090/course/export");
+        this.find();
+      });
+      
     },insertInfo(row) {
       this.dialogChangeVisible = true;
       this.form = JSON.parse(JSON.stringify(row));

@@ -159,16 +159,67 @@ export default {
       this.dialogVisible = false;
       this.dialogSelectVisible=false;
     },exports(){
-        const ws = XLSX.utils.json_to_sheet(this.tableData);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        if(this.loc==0){
-          XLSX.writeFile(wb, '已选课程.xlsx');
-        }else if(this.loc==1){
-          XLSX.writeFile(wb, '已开课程.xlsx');
-        }else{
-          XLSX.writeFile(wb, '已选课程.xlsx');
-        }
+      if(this.loc==0){
+        request.get("http://localhost:9090/course/studentselect",{
+          params:{
+            pageNum:1,
+            pageSize:10000
+          }
+        }).then(res => {
+          //console.log(res);
+          this.tableData = res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+          });
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
+          const ws = XLSX.utils.json_to_sheet(this.tableData);
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          if(this.loc==0){
+            XLSX.writeFile(wb, '已选课程.xlsx');
+          }else if(this.loc==1){
+            XLSX.writeFile(wb, '已开课程.xlsx');
+          }else{
+            XLSX.writeFile(wb, '已选课程.xlsx');
+          }
+          this.find()
+
+        });
+      }else if(this.loc==1){
+        request.get("http://localhost:9090/course/findApprove",{
+          params:{
+            pageNum:1,
+            pageSize:10000
+          }
+        }).then(res => {
+          //console.log(res);
+          this.tableData = res.data.page;
+          this.tableData.sort(function(a, b) {
+            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+          });
+          for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].score === null) {
+              this.tableData[i].score = '暂无';
+            }
+          }
+          const ws = XLSX.utils.json_to_sheet(this.tableData);
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          if(this.loc==0){
+            XLSX.writeFile(wb, '已选课程.xlsx');
+          }else if(this.loc==1){
+            XLSX.writeFile(wb, '已开课程.xlsx');
+          }else{
+            XLSX.writeFile(wb, '已选课程.xlsx');
+          }
+          this.find()
+        });
+      }
+        
     }, searchStudent(row) {
       // this.$router.push("/teacher/search")
       this.$router.push({

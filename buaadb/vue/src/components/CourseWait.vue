@@ -138,7 +138,42 @@ export default {
       this.currentPage=currentPage;
       this.find();
     },exports(){
-      const ws = XLSX.utils.json_to_sheet(this.tableData);
+      if(this.loc==1){
+        request.get("http://localhost:9090/course/findPend",{
+          params:{
+            pageNum:1,
+            pageSize:10000
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        if(this.loc==1){
+          XLSX.writeFile(wb, '待审核课程.xlsx');
+        }else if(this.loc==2){
+          XLSX.writeFile(wb, '待审核课程.xlsx');
+        }
+        this.find();
+        });
+      }else if(this.loc==2){
+        request.get("http://localhost:9090/course/managerfindPend",{
+          params:{
+            cno:this.s_cno,
+            cname:this.s_cname,
+            tname:this.s_tname,
+            pageNum:1,
+            pageSize:10000
+          }
+        }).then(res=>{
+          this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
+        });
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
       if(this.loc==1){
@@ -146,6 +181,10 @@ export default {
       }else if(this.loc==2){
         XLSX.writeFile(wb, '待审核课程.xlsx');
       }
+      this.find();
+        });
+      }
+      
     },insertInfo(row) {
       this.dialogChangeVisible = true;
       this.form = JSON.parse(JSON.stringify(row));

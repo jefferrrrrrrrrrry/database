@@ -74,9 +74,24 @@ export default {
         this.student.sno=item.sno;
         this.student.ssex=item.ssex;
     },exports(){
-      const ws = XLSX.utils.json_to_sheet(this.tableData);
-      const wb = XLSX.utils.book_new();
-      XLSX.writeFile(wb, '学生信息.xlsx');
+      request.get("http://localhost:9090/student/coursechosen",{
+        params:{
+          cno:this.cno,
+          pageNum:1,
+          pageSize:10000
+        }
+      }).then(res=>{
+        //console.log(res.data);
+        this.tableData=res.data.page;
+        this.tableData.sort(function(a, b) {
+          return a.sno-b.sno;
+        });
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.writeFile(wb, '学生信息.xlsx');
+        this.find();
+      });
+      
       //window.open("http://localhost:9090/course/export");
     },
     grade(){

@@ -268,14 +268,35 @@ export default {
         this.student.ssex=item.ssex;
       }
     },exports(){
-      const ws = XLSX.utils.json_to_sheet(this.tableData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      if(this.search_mood==0)XLSX.writeFile(wb, '全部信息.xlsx');
-      else if(this.search_mood==1)XLSX.writeFile(wb, '管理员信息.xlsx');
-      else if(this.search_mood==2)XLSX.writeFile(wb, '教师信息.xlsx');
-      else if(this.search_mood==3)XLSX.writeFile(wb, '学生信息.xlsx');
-      //window.open("http://localhost:9090/course/export");
+      request.get("http://localhost:9090/user",{
+        params:{
+          pageNum:1,
+          pageSize:10000,
+        }
+      }).then(res=>{
+        this.tableData=res.data.page;
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (this.tableData[i].permission === 1) {
+            this.tableData[i].permission = '学生';
+          }else if (this.tableData[i].permission === 2) {
+            this.tableData[i].permission = '教师';
+          }else if (this.tableData[i].permission === 3) {
+            this.tableData[i].permission = '管理员';
+          }
+        }
+        this.tableData.sort(function(a, b) {
+          return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
+        });
+        const ws = XLSX.utils.json_to_sheet(this.tableData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        if(this.search_mood==0)XLSX.writeFile(wb, '全部信息.xlsx');
+        else if(this.search_mood==1)XLSX.writeFile(wb, '管理员信息.xlsx');
+        else if(this.search_mood==2)XLSX.writeFile(wb, '教师信息.xlsx');
+        else if(this.search_mood==3)XLSX.writeFile(wb, '学生信息.xlsx');
+        this.find();
+      });
+      
     }
   },
   data(){
