@@ -105,7 +105,8 @@ export default {
     },
     del(id){
       request.post("http://localhost:9090/course/withdraw",id).then(res=>{
-        if(res.data.status==="SUCCESS"){
+        console.log(res)
+        if(res.status==="SUCCESS"){
           this.$message.success("退选成功")
           this.load();
         }else{

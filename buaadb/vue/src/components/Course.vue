@@ -126,6 +126,7 @@ export default {
       this.fileLoadVisible = true
       this.form = {}
     },handleFileUploadSuccess(res) {
+      //console.log(res)
       if(res.status==="SUCCESS"){
         this.$message.success("添加成功")
         this.load()
@@ -196,7 +197,10 @@ export default {
       dialogSelectVisible:false,
       option:"",
       myChart:null,
-      chartDom:null
+      chartDom:null,
+      header:{
+        token:localStorage.getItem("token"),
+      }
     }
   },
   created() {
@@ -415,7 +419,7 @@ export default {
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;" >
         <el-form label-width="80px" size="small" >
           <el-upload class="upload-demo" drag action="http://localhost:9090/course/import" accept=".xls, .xlsx"
-                     :on-success="handleFileUploadSuccess">
+                     :on-success="handleFileUploadSuccess" :headers="header">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb，格式请参考新增</div>

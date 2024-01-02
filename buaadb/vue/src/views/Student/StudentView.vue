@@ -28,6 +28,7 @@ export default {
       sideWidth:200,
       isCollapse:false,
       collapseBtnClass:'el-icon-s-fold',
+      name:""
     }
   },
   created(){
