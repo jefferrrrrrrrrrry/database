@@ -49,7 +49,7 @@ export default {
         this.collapseBtnClass='el-icon-s-fold'
       }
     },open() {
-        var info
+        var info;
         request.get("http://localhost:9090/student/profile").then(res=>{
           //console.log(res);
           if(res.status==="SUCCESS"){

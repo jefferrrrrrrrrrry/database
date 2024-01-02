@@ -65,6 +65,7 @@ export default {
       _ => {
         done();
       }
+      this.dialogVisible=false;
     },pre(item){
         this.mood="学生";
         this.student.clno=item.clno;
@@ -161,7 +162,7 @@ export default {
     <el-breadcrumb separator="/" >
       <el-breadcrumb-item :to='{ path: "/teacher" } ' >首页</el-breadcrumb-item>
       <el-breadcrumb-item :to='{ path: "/teacher/courseopen" } ' >已开课程</el-breadcrumb-item>
-      <el-breadcrumb-item><a href='/teacher/search' >查看选课学生</a></el-breadcrumb-item>
+      <el-breadcrumb-item>选课学生</el-breadcrumb-item>
     </el-breadcrumb>
     <el-table :data="tableData">
       <el-table-column prop="sno" label="学号" width="120">
