@@ -15,9 +15,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           this.total=res.data.total;
         });
       }else if(this.loc==2){
@@ -31,9 +28,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           this.total=res.data.total;
         });
       }
@@ -55,9 +49,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           this.total=res.data.total;
         });
       }else if(this.loc==2){
@@ -71,9 +62,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           this.total=res.data.total;
         });
       }
@@ -146,9 +134,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
@@ -170,9 +155,6 @@ export default {
           }
         }).then(res=>{
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');

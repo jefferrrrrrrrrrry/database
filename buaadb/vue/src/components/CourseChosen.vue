@@ -18,9 +18,6 @@ export default {
         }).then(res => {
           //console.log(res);
           this.tableData = res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-          });
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
               this.tableData[i].score = '暂无';
@@ -38,9 +35,6 @@ export default {
         }).then(res => {
           //console.log(res);
           this.tableData = res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-          });
           this.total = res.data.total;
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
@@ -69,9 +63,6 @@ export default {
           //console.log("teacher")
           //console.log(res.data);
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
               this.tableData[i].score = '暂无';
@@ -91,9 +82,6 @@ export default {
         }).then(res=>{
           //console.log(res.data);
           this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
               this.tableData[i].score = '暂无';
@@ -169,9 +157,6 @@ export default {
         }).then(res => {
           //console.log(res);
           this.tableData = res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-          });
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
               this.tableData[i].score = '暂无';
@@ -199,9 +184,6 @@ export default {
         }).then(res => {
           //console.log(res);
           this.tableData = res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-          });
           for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].score === null) {
               this.tableData[i].score = '暂无';

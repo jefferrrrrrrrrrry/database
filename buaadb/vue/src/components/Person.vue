@@ -31,9 +31,6 @@ export default {
             this.tableData[i].permission = '管理员';
           }
         }
-        this.tableData.sort(function(a, b) {
-          return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
-        });
         this.total=res.data.total;
       });
     },reset(){
@@ -62,9 +59,6 @@ export default {
               this.tableData[i].permission = '管理员';
             }
           }
-          this.tableData.sort(function(a, b) {
-            return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
-          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==1){
@@ -78,9 +72,6 @@ export default {
         }).then(res=>{
           //console.log(res.data);
           this.tableData=res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.mno-b.mno;
-          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==2){
@@ -95,9 +86,6 @@ export default {
         }).then(res=>{
           //console.log(res.data);
           this.tableData=res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.tno-b.tno;
-          });
           this.total=res.data.total;
         });
       }else if(this.search_mood==3){
@@ -111,9 +99,6 @@ export default {
         }).then(res=>{
           //console.log(res.data);
           this.tableData=res.data.page;
-          this.tableData.sort(function(a, b) {
-            return a.sno-b.sno;
-          });
           this.total=res.data.total;
         });
       }
@@ -284,9 +269,6 @@ export default {
             this.tableData[i].permission = '管理员';
           }
         }
-        this.tableData.sort(function(a, b) {
-          return a.sysUsername.toLowerCase().localeCompare(b.sysUsername.toLowerCase());
-        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');

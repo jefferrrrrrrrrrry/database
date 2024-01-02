@@ -24,9 +24,6 @@ export default {
       }).then(res=>{
         //console.log(res.data);
         this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.sno-b.sno;
-        });
         this.total=res.data.total;
       });
     },reset(){
@@ -84,9 +81,6 @@ export default {
       }).then(res=>{
         //console.log(res.data);
         this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.sno-b.sno;
-        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.writeFile(wb, '学生信息.xlsx');

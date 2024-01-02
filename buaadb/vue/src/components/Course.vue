@@ -17,9 +17,6 @@ export default {
       }).then(res=>{
         console.log(res)
         this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
         this.total=res.data.total;
       });
     },reset(){
@@ -40,9 +37,6 @@ export default {
       }).then(res=>{
         ////console.log(res.data);
         this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
         this.total=res.data.total;
       });
     },
@@ -152,9 +146,6 @@ export default {
       }).then(res=>{
         console.log(res)
         this.tableData=res.data.page;
-        this.tableData.sort(function(a, b) {
-          return a.cname.toLowerCase().localeCompare(b.cname.toLowerCase());
-        });
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
@@ -374,7 +365,7 @@ export default {
       <el-form-item label="课程类型">
         <el-input v-model="form.ctype" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item v-if="loc==3" label="教师号">
+      <el-form-item v-if="loc==2" label="教师号">
         <el-input v-model="form.tno" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="校区">
