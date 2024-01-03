@@ -81,11 +81,11 @@ export default {
       request.post("http://localhost:9090/school/add",this.form).then(res=>{
         if(res.status=="SUCCESS"){
           this.$message.success("添加成功")
-          this.dialogFormVisible=false;
           this.load();
         }else{
           this.$message.error(res.msg)
         }
+        this.dialogFormVisible=false;
         
       })
       

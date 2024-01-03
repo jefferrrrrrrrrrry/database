@@ -113,7 +113,6 @@ export default {
         request.post("http://localhost:9090/manager/add",this.manager).then(res=>{
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
-            
             this.find();
           }else{
             this.$message.error(res.msg)
@@ -129,16 +128,17 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
+          this.dialogVisible=false;
         })
       }else if(this.mood==3){
         request.post("http://localhost:9090/student/add",this.student).then(res=>{
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
-            this.dialogVisible=false;
             this.find();
           }else{
             this.$message.error(res.msg)
           }
+          this.dialogVisible=false;
         })
       }
     },
