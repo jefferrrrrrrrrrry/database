@@ -90,6 +90,12 @@ export default {
       //window.open("http://localhost:9090/course/export");
     },
     grade(){
+      if(this.sel.segrade>100000){
+        this.sel.segrade=100000;
+      }
+      if(this.sel.segrade<-100000){
+        this.sel.segrade=-100000;
+      }
       request.post("http://localhost:9090/course/recordgrade",this.sel).then(res=>{
         if(res.status==="SUCCESS"){
           this.$message.success("录入成功")

@@ -117,6 +117,12 @@ export default {
       })
     },
     grade(){
+      if(this.sel.segrade>100000){
+        this.sel.segrade=100000;
+      }
+      if(this.sel.segrade<-100000){
+        this.sel.segrade=-100000;
+      }
       request.post("http://localhost:9090/course/recordgrade",this.sel).then(res=>{
         if(res.status==="SUCCESS"){
           this.$message.success("录入成功")
@@ -397,7 +403,7 @@ export default {
           <el-input v-model="sel.sno" autocomplete="off" placeholder="请输入学生学号"></el-input>
         </el-form-item>
         <el-form-item label="分数">
-          <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入0-100的整数"></el-input>
+          <el-input v-model="sel.segrade" autocomplete="off" placeholder="请输入0-100的整数" type="number" max=200></el-input>
         </el-form-item>
       </el-form>
     </div>
