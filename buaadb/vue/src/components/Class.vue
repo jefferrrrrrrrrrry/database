@@ -117,6 +117,25 @@ export default {
     },insert(row) {
       this.dialogUpdateVisible=true;
       this.form = JSON.parse(JSON.stringify(row));
+    },template(){
+      var Data=[
+        {
+          clno:"210611",
+          scno:"6"
+        },
+        {
+          clno:"210612",
+          scno:"6"
+        },
+        {
+          clno:"210613",
+          scno:"6"
+        }
+      ]
+      const ws = XLSX.utils.json_to_sheet(Data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, '班级模板.xlsx');
     }
   },
   data(){
@@ -188,7 +207,7 @@ export default {
               size="mini"
               type="primary"
               @click="insert(scope.row)">更改信息</el-button>
-          <el-button v-if=""
+          <el-button 
                      size="mini"
                      type="danger"
                      @click="del(scope.row.clno)">删除</el-button>
@@ -246,6 +265,9 @@ export default {
             <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb</div>
           </el-upload>
         </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="template()">模板下载</el-button>
       </div>
     </el-dialog>
 

@@ -122,6 +122,19 @@ export default {
     }, insert(row) {
       this.dialogUpdateVisible=true;
       this.form = JSON.parse(JSON.stringify(row))
+    },template(){
+      var Data=[{
+          scno:"6",
+          scname:"计算机学院"
+        },{
+          scno:"21",
+          scname:"软件学院"
+        }
+      ]
+        const ws = XLSX.utils.json_to_sheet(Data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '院系模板.xlsx');
     }
   },
   data(){
@@ -248,6 +261,7 @@ export default {
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="template()">模板下载</el-button>
       </div>
     </el-dialog>
 

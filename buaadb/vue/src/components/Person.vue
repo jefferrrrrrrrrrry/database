@@ -300,7 +300,16 @@ export default {
       }
     },template(){
       if(this.search_mood==1){
-        var Data=[]
+        var Data=[{
+          mno:"admin",
+          mname:"admin",
+          mpassword:"123456"
+        },{
+          mno:"admin2",
+          mname:"admin2",
+          mpassword:"123456"
+        }
+      ]
         const ws = XLSX.utils.json_to_sheet(Data);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
