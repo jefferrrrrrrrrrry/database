@@ -410,16 +410,16 @@ export default {
         <el-input v-model="form.tno" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="校区">
-        <el-input v-model="form.cpos" autocomplete="off"></el-input>
+        <el-input v-model="form.cpos" autocomplete="off" ></el-input>
       </el-form-item>
       <el-form-item label="学分">
-        <el-input v-model="form.ccredit" autocomplete="off"></el-input>
+        <el-input v-model="form.ccredit" autocomplete="off" type="number"></el-input>
       </el-form-item>
 <!--      <el-form-item label="剩余人数">-->
 <!--        <el-input v-model="form.cremain" autocomplete="off"></el-input>-->
 <!--      </el-form-item>-->
       <el-form-item label="容量">
-        <el-input v-model="form.ccapacity" autocomplete="off"></el-input>
+        <el-input v-model="form.ccapacity" autocomplete="off" type="number"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

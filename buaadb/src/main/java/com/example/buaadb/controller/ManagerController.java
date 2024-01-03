@@ -68,7 +68,11 @@ public class ManagerController {
         if (StrUtil.isBlank(manager.getMpassword())) {
             manager.setMpassword(null);
         }
-        return Result.success(managerService.updateById(manager));
+        boolean b = managerService.updateById(manager);
+        if (!b) {
+            throw new ServiceException(Status.ERROR, "更新失败，学工号不存在");
+        }
+        return Result.success();
     }
 
     @GetMapping("/profile")

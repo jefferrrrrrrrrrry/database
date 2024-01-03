@@ -72,10 +72,14 @@ public class TeacherController {
             if (StrUtil.isBlank(teacher.getTpassword())) {
                 teacher.setTpassword(null);
             }
-            return Result.success(teacherService.updateById(teacher));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        boolean b = teacherService.updateById(teacher);
+        if (!b) {
+            throw new ServiceException(Status.ERROR, "更新失败，学工号不存在");
+        }
+        return Result.success();
     }
 
     @GetMapping("/profile")

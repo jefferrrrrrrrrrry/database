@@ -77,10 +77,14 @@ public class StudentController {
             if (StrUtil.isBlank(student.getSpassword())) {
                 student.setSpassword(null);
             }
-            return Result.success(studentService.updateById(student));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+        boolean b = studentService.updateById(student);
+        if (!b) {
+            throw new ServiceException(Status.ERROR, "更新失败，学工号不存在");
+        }
+        return Result.success();
     }
 
     @GetMapping("/profile")
