@@ -1,5 +1,6 @@
 package com.example.buaadb.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Page;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
@@ -68,6 +69,9 @@ public class TeacherController {
     @PostMapping("/update")
     public Result update(@RequestBody Teacher teacher) {
         try {
+            if (StrUtil.isBlank(teacher.getTpassword())) {
+                teacher.setTpassword(null);
+            }
             return Result.success(teacherService.updateById(teacher));
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");

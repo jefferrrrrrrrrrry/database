@@ -1,5 +1,6 @@
 package com.example.buaadb.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -64,6 +65,9 @@ public class ManagerController {
 
     @PostMapping("/update")
     public Result update(@RequestBody Manager manager) {
+        if (StrUtil.isBlank(manager.getMpassword())) {
+            manager.setMpassword(null);
+        }
         return Result.success(managerService.updateById(manager));
     }
 
