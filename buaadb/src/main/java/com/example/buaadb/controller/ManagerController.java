@@ -1,5 +1,7 @@
 package com.example.buaadb.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.buaadb.common.Result;
 import com.example.buaadb.common.Status;
@@ -14,9 +16,11 @@ import com.example.buaadb.service.ManagerService;
 import com.example.buaadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -70,6 +74,23 @@ public class ManagerController {
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
         }
+    }
+
+    @PostMapping("/import")
+    public Result imp(@RequestBody MultipartFile file) throws IOException {
+        try {
+            if (TokenUtils.getCurrentUser().getPermission() < 3) {
+                throw new ServiceException(Status.ERROR, "无权限");
+            }
+            InputStream inputStream = file.getInputStream();
+            ExcelReader reader = ExcelUtil.getReader(inputStream);
+            List<Manager> list = reader.readAll(Manager.class);
+            managerService.saveBatch(list);
+            return Result.success();
+        } catch (Exception e) {
+            throw new ServiceException(Status.ERROR, "导入失败");
+        }
+
     }
 
     @GetMapping("/export")
