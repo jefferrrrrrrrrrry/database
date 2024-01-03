@@ -12,6 +12,6 @@ public interface EchartsMapper {
     @Select("SELECT rate AS name, COUNT(rate) AS value FROM (SELECT *, rate(Segrade) AS rate FROM Sel WHERE cno = #{cno}) AS board GROUP BY rate")
     List<RateInfo> getRateCno(@Param("cno") String cno);
     @Select("SELECT rate AS name, COUNT(rate) AS value FROM (SELECT *, rate(Segrade) AS rate FROM Sel WHERE sno = #{sno}) AS board GROUP BY rate")
-    List<RateInfo> getRateSno(@Param("cno") String sno);
+    List<RateInfo> getRateSno(@Param("sno") String sno);
 
 }
