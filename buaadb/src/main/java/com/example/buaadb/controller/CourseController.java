@@ -230,6 +230,10 @@ public class CourseController {
             InputStream inputStream = file.getInputStream();
             ExcelReader reader = ExcelUtil.getReader(inputStream);
             List<Course> list = reader.readAll(Course.class);
+            for (Course course: list) {
+                course.setCremain(course.getCcapacity());
+                course.setStatus(1);
+            }
             courseService.saveBatch(list);
             return Result.success();
         } catch (Exception e) {
