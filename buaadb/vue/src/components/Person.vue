@@ -40,6 +40,7 @@ export default {
     },
     find(){
       if(this.search_mood==0){
+        this.importUrl = "";
         request.get("http://localhost:9090/user",{
           params:{
             name:this.s_name,
@@ -62,6 +63,7 @@ export default {
           this.total=res.data.total;
         });
       }else if(this.search_mood==1){
+        this.importUrl = "http://localhost:9090/student/import";
         request.get("http://localhost:9090/manager/find",{
           params:{
             mno:this.s_no,
@@ -75,6 +77,7 @@ export default {
           this.total=res.data.total;
         });
       }else if(this.search_mood==2){
+        this.importUrl = "http://localhost:9090/teacher/import";
         request.get("http://localhost:9090/teacher/find",{
           params:{
             tno:this.s_no,
@@ -89,6 +92,7 @@ export default {
           this.total=res.data.total;
         });
       }else if(this.search_mood==3){
+        this.importUrl = "http://localhost:9090/manager/import";
         request.get("http://localhost:9090/student/find",{
           params:{
             sno:this.s_no,
@@ -228,6 +232,7 @@ export default {
       _ => {
         done();
       }
+      this.fileLoadVisible=false;
       this.dialogUpadateVisible=false;
       this.dialogFormVisible = false;
       this.dialogSelectVisible = false;
@@ -283,8 +288,17 @@ export default {
         else if(this.search_mood==3)XLSX.writeFile(wb, '学生信息.xlsx');
         this.find();
       });
-      
-    }
+    }, handleFileUploadSuccess(res) {
+      console.log(this.importUrl);
+      if(res.status==="SUCCESS"){
+        this.$message.success("添加成功")
+        this.fileLoadVisible=false
+        this.load()
+      }else{
+        this.$message.error(res.msg)
+        this.load()
+      }
+    },
   },
   data(){
     return{
@@ -308,6 +322,7 @@ export default {
       },
       dialogFormVisible:false,
       fileLoadVisible:false,
+      importUrl:"",
       form:{},
       user:{},
       manager:{
@@ -339,6 +354,9 @@ export default {
       myChart:null,
       chartDom:null,
       dialogSelectVisible:false,
+      header:{
+        token:localStorage.getItem("token"),
+      }
     }
   },
   created() {
@@ -427,6 +445,7 @@ export default {
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
       <el-button type="primary" @click="handleAdd" >新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleLoad" v-if="search_mood>0">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="exports" >信息导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
@@ -642,6 +661,21 @@ export default {
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogSelectVisible = false">关 闭</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="信息上传" :visible.sync="fileLoadVisible" width="30%" :before-close="handleClose">
+      <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
+        <el-form label-width="80px" size="small" >
+          <el-upload class="upload-demo" drag :action="importUrl" multiple accept=".xls, .xlsx"
+                     :on-success="handleFileUploadSuccess" :headers="header">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传excel文件，且不超过500kb</div>
+          </el-upload>
+        </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
       </div>
     </el-dialog>
   </div>

@@ -96,7 +96,6 @@ export default {
         this.$message.error(res.msg)
         this.load()
       }
-
     },handleClose(){
       _ => {
         done();
@@ -251,10 +250,6 @@ export default {
       <div slot="footer" class="dialog-footer">
       </div>
     </el-dialog>
-
-
-
-
 
 
   </div>
