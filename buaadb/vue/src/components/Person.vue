@@ -117,7 +117,7 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
-          this.dialogVisible=false;
+          this.dialogFormVisible=false;
         })
       }else if(this.mood==2){
         request.post("http://localhost:9090/teacher/add",this.teacher).then(res=>{
@@ -128,7 +128,7 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
-          this.dialogVisible=false;
+          this.dialogFormVisible=false;
         })
       }else if(this.mood==3){
         request.post("http://localhost:9090/student/add",this.student).then(res=>{
@@ -138,7 +138,7 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
-          this.dialogVisible=false;
+          this.dialogFormVisible=false;
         })
       }
     },
