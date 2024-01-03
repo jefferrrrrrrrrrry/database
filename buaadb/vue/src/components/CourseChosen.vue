@@ -332,13 +332,13 @@ export default {
     </el-table-column>
     <el-table-column prop="ctype" label="课程类型" width="100">
     </el-table-column>
-    <el-table-column prop="tname" label="开课教师" width="130">
+    <el-table-column prop="tname" label="开课教师" width="100">
     </el-table-column>
-    <el-table-column prop="cpos" label="校区" width="130">
+    <el-table-column prop="cpos" label="校区" width="80">
     </el-table-column>
     <el-table-column prop="ccredit" label="学分" width="60">
     </el-table-column>
-    <el-table-column prop="score" label="成绩" width="80">
+    <el-table-column prop="score" label="成绩" width="80" v-if="this.loc==0">
     </el-table-column>
     <el-table-column prop="cremain" label="剩余人数" width="80">
     </el-table-column>
