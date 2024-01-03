@@ -63,7 +63,7 @@ export default {
           this.total=res.data.total;
         });
       }else if(this.search_mood==1){
-        this.importUrl = "http://localhost:9090/student/import";
+        this.importUrl = "http://localhost:9090/manager/import";
         request.get("http://localhost:9090/manager/find",{
           params:{
             mno:this.s_no,
@@ -92,7 +92,7 @@ export default {
           this.total=res.data.total;
         });
       }else if(this.search_mood==3){
-        this.importUrl = "http://localhost:9090/manager/import";
+        this.importUrl = "http://localhost:9090/student/import";
         request.get("http://localhost:9090/student/find",{
           params:{
             sno:this.s_no,
@@ -260,9 +260,9 @@ export default {
     },exports(){
       let url = "";
       if(this.search_mood==0) url = "http://localhost:9090/user";
-      else if(this.search_mood==1) url = "http://localhost:9090/student/find";
+      else if(this.search_mood==1) url = "http://localhost:9090/manager/find";
       else if(this.search_mood==2) url = "http://localhost:9090/teacher/find";
-      else if(this.search_mood==3) url = "http://localhost:9090/manager/find";
+      else if(this.search_mood==3) url = "http://localhost:9090/student/find";
       request.get(url,{
         params:{
           pageNum:1,
@@ -455,9 +455,9 @@ export default {
       </el-table-column>
       <el-table-column prop="sysPassword" label="密码" width="300"  v-if="search_mood==0">
       </el-table-column>
-      <el-table-column prop="mname" label="管理员名" width="300" v-if="search_mood==1">
-      </el-table-column>
       <el-table-column prop="mno" label="工号" width="300" v-if="search_mood==1">
+      </el-table-column>
+      <el-table-column prop="mname" label="管理员名" width="300" v-if="search_mood==1">
       </el-table-column>
 <!--      <el-table-column prop="sys_password" label="密码" width="300" v-if="search_mood==1">-->
 <!--      </el-table-column>-->
@@ -537,11 +537,11 @@ export default {
             <el-option label="学生" value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="管理员名" v-if="mood==1">
-          <el-input v-model="manager.mname" placeholder="请输入管理员名"></el-input>
-        </el-form-item>
         <el-form-item label="工号" v-if="mood==1">
           <el-input v-model="manager.mno" placeholder="请输入工号"></el-input>
+        </el-form-item>
+        <el-form-item label="管理员名" v-if="mood==1">
+          <el-input v-model="manager.mname" placeholder="请输入管理员名"></el-input>
         </el-form-item>
         <el-form-item label="密码" v-if="mood==1">
           <el-input v-model="manager.mpassword" placeholder="请输入密码"></el-input>
@@ -600,11 +600,11 @@ export default {
             <el-option label="学生" value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="管理员名" v-if="mood==1">
-          <el-input v-model="manager.mname" placeholder="请输入密码"></el-input>
-        </el-form-item>
         <el-form-item label="账号" v-if="mood==1">
           <el-input v-model="manager.mno" placeholder="请输入账号"></el-input>
+        </el-form-item>
+        <el-form-item label="管理员名" v-if="mood==1">
+          <el-input v-model="manager.mname" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item label="密码" v-if="mood==1">
           <el-input v-model="manager.mpassword" placeholder="请输入密码"></el-input>

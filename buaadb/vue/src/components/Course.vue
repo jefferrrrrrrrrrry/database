@@ -373,9 +373,9 @@ export default {
       <el-form-item label="学分">
         <el-input v-model="form.ccredit" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="剩余人数">
-        <el-input v-model="form.cremain" autocomplete="off"></el-input>
-      </el-form-item>
+<!--      <el-form-item label="剩余人数">-->
+<!--        <el-input v-model="form.cremain" autocomplete="off"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="容量">
         <el-input v-model="form.ccapacity" autocomplete="off"></el-input>
       </el-form-item>
