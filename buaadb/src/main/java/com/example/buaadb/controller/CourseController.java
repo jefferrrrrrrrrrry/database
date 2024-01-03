@@ -189,14 +189,18 @@ public class CourseController {
         if (TokenUtils.getCurrentUser().getPermission() < 3 && !Objects.equals(course.getTno(), TokenUtils.getUsername())) {
             throw new ServiceException(Status.ERROR, "你没有权限更改此成绩");
         }
+        boolean b = true;
         try {
             System.out.println(sel);
             QueryWrapper<Sel> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("cno", sel.getCno().replace("\"", ""));
             queryWrapper.eq("sno", sel.getSno().replace("\"", ""));
-            selService.update(sel, queryWrapper);
+            b = selService.update(sel, queryWrapper);
         } catch (Exception e) {
             throw new ServiceException(Status.ERROR, "操作失败");
+        }
+        if (!b) {
+            throw new ServiceException(Status.ERROR, "未找到对应学生");
         }
         return Result.success();
     }

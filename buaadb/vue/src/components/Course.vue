@@ -358,7 +358,7 @@ export default {
         <template slot-scope="scope" >
           <el-button v-if="loc==0"
               size="mini"
-              type="danger"
+              type="primary"
               @click="choose(scope.row.cno)">选课</el-button>
           <el-button v-if="loc==2"
                      size="mini"

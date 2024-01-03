@@ -334,7 +334,7 @@ export default {
     </el-table-column>
     <el-table-column prop="tname" label="开课教师" width="100">
     </el-table-column>
-    <el-table-column prop="cpos" label="校区" width="80">
+    <el-table-column prop="cpos" label="校区" width="120">
     </el-table-column>
     <el-table-column prop="ccredit" label="学分" width="60">
     </el-table-column>
@@ -342,7 +342,7 @@ export default {
     </el-table-column>
     <el-table-column prop="cremain" label="剩余人数" width="80">
     </el-table-column>
-    <el-table-column prop="ccapacity" label="容量" width="60">
+    <el-table-column prop="ccapacity" label="容量" width="90">
     </el-table-column>
     <el-table-column label="操作" v-if="this.loc==0">
       <template slot-scope="scope">
