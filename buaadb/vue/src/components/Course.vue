@@ -64,8 +64,9 @@ export default {
           this.load();
         }else{
           this.$message.error(res.msg)
-        }
+        }this.dialogChangeVisible = false
       })
+      
     },
     choose(id){
       request.post("http://localhost:9090/course/selectCourse",id).then(res=>{
@@ -88,6 +89,7 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
+          this.dialogFormVisible = false
         })
       }else{
         request.post("http://localhost:9090/course/manageradd",this.form).then(res=>{
@@ -98,9 +100,10 @@ export default {
           }else{
             this.$message.error(res.msg)
           }
+          this.dialogFormVisible = false
         })
       }
-      //this.dialogFormVisible = false
+      
     }, formatText(text) {
       // 将换行符 \n 替换为 <br>
       return text.replace(/\n/g, "<br>");

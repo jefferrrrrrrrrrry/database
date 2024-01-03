@@ -74,8 +74,9 @@ export default {
         }else{
           this.$message.error(res.msg)
         }
+        this.dialogFormVisible = false
       })
-      this.dialogFormVisible = false
+      
     },save(){
       request.post("http://localhost:9090/school/add",this.form).then(res=>{
         if(res.status=="SUCCESS"){
@@ -85,8 +86,9 @@ export default {
         }else{
           this.$message.error(res.msg)
         }
+        
       })
-      this.dialogFormVisible = false
+      
     },handleFileUploadSuccess(res) {
       if(res.status==="SUCCESS"){
         this.$message.success("添加成功")

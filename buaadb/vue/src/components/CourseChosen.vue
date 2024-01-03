@@ -124,7 +124,9 @@ export default {
         }else{
           this.$message.error(res.msg)
         }
+        this.dialogVisible = false;
       })
+
     },
     formatText(text) {
       // 将换行符 \n 替换为 <br>

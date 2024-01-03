@@ -113,11 +113,12 @@ export default {
         request.post("http://localhost:9090/manager/add",this.manager).then(res=>{
           if(res.status==="SUCCESS"){
             this.$message.success("添加成功")
-            this.dialogVisible=false;
+            
             this.find();
           }else{
             this.$message.error(res.msg)
           }
+          this.dialogVisible=false;
         })
       }else if(this.mood==2){
         request.post("http://localhost:9090/teacher/add",this.teacher).then(res=>{
@@ -685,7 +686,7 @@ export default {
           <el-input v-model="student.spassword" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="add">添加</el-button>
+          <el-button type="primary" @click="add">添 加</el-button>
           <el-button type="warning" @click="dialogFormVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
