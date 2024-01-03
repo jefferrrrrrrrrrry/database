@@ -183,9 +183,9 @@ export default {
     </el-breadcrumb>
     <div style="padding:10px 0;display:flex">
       <el-input style="flex:1;width:200px"  placeholder="请输入班级代码" suffix-icon="el-icon-search" v-model="s_clno"
-                clearable></el-input>
+                clearable type="number"></el-input>
       <el-input style="flex:1; width:200px"  placeholder="请输入院系代码" suffix-icon="el-icon-search" v-model="s_scno"
-                clearable></el-input>
+                clearable type="number"></el-input>
       <el-input style="flex:1; width:200px"  placeholder="请输入学院名" suffix-icon="el-icon-search" v-model="s_scname"
                 clearable></el-input>
       <el-button style="margin-left:5px " type="primary" @click="find()">搜索</el-button>
@@ -195,9 +195,9 @@ export default {
       <el-button type="primary" @click="exports" >班级导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
-      <el-table-column prop="clno" label="班级代码" width="200">
+      <el-table-column prop="clno" label="班级代码" width="200" type="number">
       </el-table-column>
-      <el-table-column prop="scno" label="院系代码" width="200">
+      <el-table-column prop="scno" label="院系代码" width="200" type="number">
       </el-table-column>
       <el-table-column prop="scname" label="学院" width="200">
       </el-table-column>
@@ -230,10 +230,10 @@ export default {
     <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="班级">
-          <el-input v-model="form.clno" autocomplete="off" ></el-input>
+          <el-input v-model="form.clno" autocomplete="off" type="number"></el-input>
         </el-form-item>
         <el-form-item label="院系代码">
-          <el-input v-model="form.scno" autocomplete="off"></el-input>
+          <el-input v-model="form.scno" autocomplete="off" type="number"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -244,10 +244,10 @@ export default {
     <el-dialog title="课程信息" :visible.sync="dialogUpdateVisible" width="30%" :before-close="handleClose">
       <el-form label-width="80px" size="small">
         <el-form-item label="班级">
-          <el-input v-model="form.clno" autocomplete="off" disabled="true"></el-input>
+          <el-input v-model="form.clno" autocomplete="off" disabled="true" type="number"></el-input>
         </el-form-item>
         <el-form-item label="院系代码">
-          <el-input v-model="form.scno" autocomplete="off" ></el-input>
+          <el-input v-model="form.scno" autocomplete="off" type="number"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

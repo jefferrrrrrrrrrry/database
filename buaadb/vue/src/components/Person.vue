@@ -579,11 +579,11 @@ export default {
       </el-table-column>
       <el-table-column prop="sname" label="姓名" width="120" v-if="search_mood==3">
       </el-table-column>
-      <el-table-column prop="sage" label="年龄" width="120" v-if="search_mood==3">
+      <el-table-column prop="sage" label="年龄" width="120" v-if="search_mood==3" >
       </el-table-column>
       <el-table-column prop="ssex" label="性别" width="120" v-if="search_mood==3">
       </el-table-column>
-      <el-table-column prop="sgrade" label="年级" width="120" v-if="search_mood==3">
+      <el-table-column prop="sgrade" label="年级" width="120" v-if="search_mood==3" >
       </el-table-column>
       <el-table-column prop="scredit" label="总学分" width="120" v-if="search_mood==3">
       </el-table-column>
@@ -674,10 +674,10 @@ export default {
           <el-input v-model="student.ssex" placeholder="请输入性别"></el-input>
         </el-form-item>
         <el-form-item label="年龄" v-if="mood==3">
-          <el-input v-model="student.sage" placeholder="请输入年龄"></el-input>
+          <el-input v-model="student.sage" placeholder="请输入年龄" type="number"></el-input>
         </el-form-item>
         <el-form-item label="年级" v-if="mood==3">
-          <el-input v-model="student.sgrade" placeholder="请输入年级"></el-input>
+          <el-input v-model="student.sgrade" placeholder="请输入年级" type="number"></el-input>
         </el-form-item>
         <el-form-item label="班级" v-if="mood==3">
           <el-input v-model="student.clno" placeholder="请输入班级"></el-input>
