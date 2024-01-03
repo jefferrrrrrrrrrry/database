@@ -137,7 +137,7 @@ export default {
       this.dialogSelectVisible=false;
       this.dialogFormVisible = false;
       this.dialogChangeVisible=false;
-    },exports(mood){
+    },exports(){
       request.get("http://localhost:9090/course/find",{
         params:{
           pageNum:1,
@@ -149,8 +149,7 @@ export default {
         const ws = XLSX.utils.json_to_sheet(this.tableData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        if(mood==0)XLSX.writeFile(wb, '全部课程.xlsx');
-        else XLSX.writeFile(wb, '模板.xlsx');
+        XLSX.writeFile(wb, '全部课程.xlsx');
         this.find();
       });
       
@@ -165,6 +164,46 @@ export default {
           cno: row.cno
         }
       })
+    },template(){
+      var Data;
+      Data=[{
+          cno:"B01",
+          cname:"航空航天概论A",
+          cpos:"学院路校区",
+          tno:"10002",
+          ctype:"必修",
+          ccredit:2,
+          ccapacity:50
+        },{
+          cno:"B02",
+          cname:"航空航天概论B",
+          cpos:"学院路校区",
+          tno:"10002",
+          ctype:"必修",
+          ccredit:2,
+          ccapacity:50
+        },{
+          cno:"B03",
+          cname:"航空航天概论C",
+          cpos:"学院路校区",
+          tno:"10002",
+          ctype:"必修",
+          ccredit:2,
+          ccapacity:50
+        },{
+          cno:"B04",
+          cname:"航空航天概论D",
+          cpos:"学院路校区",
+          tno:"10002",
+          ctype:"必修",
+          ccredit:2,
+          ccapacity:50
+        }
+      ]
+      const ws = XLSX.utils.json_to_sheet(Data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, '课程模板.xlsx');
     }
   },
   data(){
@@ -296,7 +335,7 @@ export default {
       <el-button style="margin-left:5px " type="warning" @click="reset()">重置</el-button>
       <el-button type="primary" @click="handleAdd" v-if="loc==1||loc==2">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-button type="primary" @click="handleLoad" v-if="loc==2">文件上传 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" @click="exports(0)" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="exports()" >课程导出 <i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
     <el-table :data="tableData">
       <el-table-column prop="cno" label="课程代码" width="100">
@@ -429,7 +468,7 @@ export default {
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="exports(1)">模板下载</el-button>
+        <el-button type="primary" @click="template()">模板下载</el-button>
       </div>
     </el-dialog>
     <el-dialog title="课程信息" :visible.sync="dialogSelectVisible" width="30%"
