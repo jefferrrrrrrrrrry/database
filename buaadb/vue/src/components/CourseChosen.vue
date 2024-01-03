@@ -260,7 +260,6 @@ export default {
         show: true,
         feature: {
           mark: { show: true },
-          restore: { show: true },
           saveAsImage: { show: true }
         }
       },

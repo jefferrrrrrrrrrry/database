@@ -253,7 +253,12 @@ export default {
         this.student.ssex=item.ssex;
       }
     },exports(){
-      request.get("http://localhost:9090/user",{
+      let url = "";
+      if(this.search_mood==0) url = "http://localhost:9090/user";
+      else if(this.search_mood==1) url = "http://localhost:9090/student/find";
+      else if(this.search_mood==2) url = "http://localhost:9090/teacher/find";
+      else if(this.search_mood==3) url = "http://localhost:9090/manager/find";
+      request.get(url,{
         params:{
           pageNum:1,
           pageSize:10000,
@@ -343,7 +348,7 @@ export default {
   },mounted() {
     this.option = {
       title: {
-        text: '课程优良率',
+        text: '学生学习情况',
         left: 'center'
       },
       tooltip: {
@@ -353,7 +358,6 @@ export default {
         show: true,
         feature: {
           mark: { show: true },
-          restore: { show: true },
           saveAsImage: { show: true }
         }
       },

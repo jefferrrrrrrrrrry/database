@@ -23,7 +23,7 @@ export default {
           // clno:this.s_clno,
           clno:this.s_clno,
           scno:this.s_scno,
-          scame:this.s_scname,
+          scname:this.s_scname,
           pageNum:this.currentPage,
           pageSize:this.pageSize
         }

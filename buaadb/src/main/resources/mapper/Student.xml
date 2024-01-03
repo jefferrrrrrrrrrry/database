@@ -20,7 +20,7 @@
         FROM student JOIN class ON class.Clno = student.Clno
                      JOIN school ON class.Scno = school.Scno
                      JOIN sel ON sel.sno = student.sno
-        WHERE student.sno IN (SELECT sno FROM sel WHERE cno = #{cno})
+        WHERE cno = #{cno}
         ORDER BY sno
     </select>
 
