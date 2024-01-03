@@ -298,7 +298,96 @@ export default {
         this.$message.error(res.msg)
         this.load()
       }
-    },
+    },template(){
+      if(this.search_mood==1){
+        var Data=[]
+        const ws = XLSX.utils.json_to_sheet(Data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '管理员模板.xlsx');
+      }else if(this.search_mood==2){
+        var Data=[
+          {
+            tno:"10002",
+            tname:"张一",
+            tsex:"男",
+            ttitle:"教授",
+            scno:"6",
+            tpassword:"123456"
+          },{
+            tno:"10003",
+            tname:"张二",
+            tsex:"男",
+            ttitle:"讲师",
+            scno:"6",
+            tpassword:"123456"
+          },{
+            tno:"10004",
+            tname:"张三",
+            tsex:"男",
+            ttitle:"教授",
+            scno:"6",
+            tpassword:"123456"
+          },{
+            tno:"10005",
+            tname:"张四",
+            tsex:"男",
+            ttitle:"副教授",
+            scno:"6",
+            tpassword:"123456"
+          }
+        ]
+        const ws = XLSX.utils.json_to_sheet(Data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '教师模板.xlsx');
+      }else if(this.search_mood==3){
+        var Data=[
+          {
+            sno:"21373333",
+            sname:"张学生1",	
+            sage:12,
+            ssex:"女",
+            sgrade:2021,	
+            scredit:0,
+            spassword:"abccc",
+            clno:"210604"
+          },{
+            sno:"21373334",
+            sname:"张学生2",	
+            sage:12,
+            ssex:"女",
+            sgrade:2021,	
+            scredit:0,
+            spassword:"abccc",
+            clno:"210604"
+          },{
+            sno:"21373335",
+            sname:"张学生3",	
+            sage:12,
+            ssex:"女",
+            sgrade:2021,	
+            scredit:0,
+            spassword:"abccc",
+            clno:"210604"
+          },{
+            sno:"21373336",
+            sname:"张学生4",	
+            sage:23,
+            ssex:"男",
+            sgrade:2021,	
+            scredit:0,
+            spassword:"abccc",
+            clno:"210604"
+          },
+        ]
+        const ws = XLSX.utils.json_to_sheet(Data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, '学生模板.xlsx');
+      }
+      
+    }
   },
   data(){
     return{
@@ -402,8 +491,9 @@ export default {
     search_mood(newValue, oldValue) {
     this.find();
   },select_sno(){
-      //console.log("666")
+      
       this.$nextTick(() => {
+        
         this.chartDom = document.getElementById('main');
         this.myChart = echarts.init(this.chartDom);
         request.get("http://localhost:9090/echarts/getratesno",{
@@ -411,7 +501,7 @@ export default {
             sno:this.select_sno
           }
         }).then(res => {
-              //console.log(res)
+              console.log(res)
               this.option.series[0].data = res.data;
               this.myChart.setOption(this.option);
             }
@@ -654,7 +744,7 @@ export default {
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="课程信息" :visible.sync="dialogSelectVisible" width="30%"
+    <el-dialog title="学生信息" :visible.sync="dialogSelectVisible" width="30%"
                :before-close="handleClose">
       <div style="display: flex; justify-content: center; align-items: center;width: 100%;">
         <div id="main" style="width: 500px; height: 400px"></div>
@@ -676,6 +766,7 @@ export default {
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="template()">模板下载</el-button>
       </div>
     </el-dialog>
   </div>

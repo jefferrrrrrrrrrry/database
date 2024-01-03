@@ -22,7 +22,6 @@ request.interceptors.request.use(config => {
 // 可以在接口响应后统一处理结果
 request.interceptors.response.use(
     response => {
-        
         console.log(response)
         let res = response.data;
         // 如果是返回的文件
